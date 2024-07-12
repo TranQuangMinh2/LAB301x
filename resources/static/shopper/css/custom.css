@@ -1,0 +1,166 @@
+
+.padding-0{
+	padding: 0 !important;
+}
+
+.min-w-100{
+	min-width: 100px;
+}
+
+.min-w-105{
+	min-width: 105px;
+}
+
+.min-w-120{
+	min-width: 120px;
+}
+
+.min-w-320{
+	min-width: 320px;
+}
+
+.font-weight-400{
+	font-weight: 400;
+}
+
+::placeholder {
+  color: #999 !important;
+}
+
+/* --- */
+
+.lbl_total_amount{
+	font-weight: 600;
+	font-size: 15px;
+	color: #595959;
+}
+.ordered_date{
+	float: right;
+	font-size: 16px;
+    color: rgb(36, 36, 36);
+    font-weight: normal;
+}
+
+.tt-table-shop-01{
+	font-size: 15px;
+}
+
+.tt-table-shop-01 thead th{
+	font-size: 15px;
+}
+
+.price{
+    font-weight: 400;
+}
+
+.total_amount{
+	color: rgb(255, 59, 39);
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.back{
+	margin-top: 10px;
+}
+
+.back a{
+	color: #2879fe;
+	font-family: Roboto, sans-serif;
+	font-weight: 300;
+}
+
+.back a:hover{
+	color: #000;
+}
+
+.paid{
+	color: green;
+}
+
+.unpaid{
+	color: red;
+}
+
+.refunded{
+	color: blue;
+}
+
+.check_info{
+	font-family: Roboto, sans-serif;
+    font-weight: 300;
+    font-size: 12.5px;
+    color: #6f6e6e;
+    cursor: default;
+}
+
+.check_info:hover{
+	color: #2879fe;
+}
+
+@media (min-width: 790px) {
+	.tt-shopcart-col .form-control {
+	    height: 90px;
+	}
+}
+
+.radio.checkbox-group{
+	user-select: none;
+	font-family: Roboto, sans-serif;
+}
+
+.radio .check:before {
+    font-size: 12px !important;
+    line-height: 15px !important;
+    left: 2.2px !important;
+    top: 1.5px !important;
+}
+
+.radio input[type=checkbox]:checked ~ label .check {
+    border-radius: 50%;
+}
+
+.radio.checkbox-group label .box {
+    border-radius: 50%;
+}
+
+.help-block {
+	color: #dc235f;
+	margin: 3px 0px 0px 3px;
+	font-family: Roboto, sans-serif;
+    font-size: 12.5px;
+}
+
+.tt-page404 p {
+    margin-top: 8px;
+    font-size: 21px;
+    font-family: Roboto, sans-serif;
+}
+
+span.order_id {
+	font-weight: 400;
+}
+
+a.btn.btn-show-detail {
+	font-size: 1.1em;
+}
+
+.tt-table-shop-01 tbody td a {
+	color: #155ed6;
+}
+
+.tt-filter-list li.active a:hover::before {
+    color: #2879fe;
+}
+
+.tt-filter-list li a:hover::before {
+	color: #2879fe;
+}
+
+
+
+
+
+
+
+
+
