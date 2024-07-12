@@ -1,0 +1,33 @@
+.order_web_info {
+	font-size: 15px;
+}
+
+.order_web_info .lbl_title {
+	font-weight: 500;
+}
+
+.order_web_info>div {
+	margin-bottom: 10px;
+}
+
+.delivery_status_action {
+	margin-top: 10px;
+}
+
+.delivery_status_action button {
+	margin-right: 12px;
+	font-size: 12px;
+}
+
+.action_hr {
+	border-top: 0.1px solid #94a9d4;
+    width: 100%;
+}
+
+.delivery_status_action .undo_action {
+	float: right;
+	font-size: 13px;
+}
+
+
+
