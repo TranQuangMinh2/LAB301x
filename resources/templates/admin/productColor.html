@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Product Color</title>
+	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
+	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+	<link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="kt-portlet kt-portlet--mobile">
+		<div class="kt-portlet__head kt-portlet__head--lg">
+			<div class="kt-portlet__head-label">
+				<span class="kt-portlet__head-icon">
+					<i class="kt-font-brand flaticon2-line-chart"></i>
+				</span>
+				<h3 class="kt-portlet__head-title">Product Color</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Create At</th>
+							<th>Update At</th>
+							<th>Color Id</th>
+							<th>Product Id</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="productColor : ${productColor}">
+							<td th:text="${productColor.id}"></td>
+							<td th:text="${productColor.createdAt}"></td>
+							<td th:text="${productColor.updatedAt}"></td>
+							<td th:text="${productColor.colorId}"></td>
+							<td th:text="${productColor.productId}"></td>
+							<td>
+								<a th:href="@{/updateProductColor/{id}(id=${productColor.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="kt-portlet__head kt-portlet__head--lg">
+			<div class="kt-portlet__head-toolbar">
+				<div class="kt-portlet__head-wrapper">
+					<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+						<i class="la la-long-arrow-left"></i>
+						Quay Lại
+					</a>
+					<br>
+					<div class="dropdown dropdown-inline">
+					    <a href="/addProductColor" class="btn btn-brand btn-icon-sm">
+					        <i class="flaticon2-plus"></i> Thêm Mới
+					    </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+

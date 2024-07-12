@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal</title>
+	<base th:replace="~{shopper/fragments/common :: base}">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+
+<!-- Index Modal -->
+<!-- modal (AddToCartProduct) -->
+<div class="modal fade" th:fragment="addToCart" id="modalAddToCartProduct" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="tt-modal-addtocart mobile">
+					<div class="tt-modal-messages">
+						<i class="icon-f-68"></i> Added to cart successfully!
+					</div>
+					<a href="#" class="btn-link btn-close-popup">CONTINUE SHOPPING</a>
+			        <a href="/cart" class="btn-link">VIEW CART</a>
+			        <a href="page404.html" class="btn-link">PROCEED TO CHECKOUT</a>
+				</div>
+				<div class="tt-modal-addtocart desctope">
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="tt-modal-messages">
+								<i class="icon-f-68"></i> Added to cart successfully!
+							</div>
+							<div class="tt-modal-product">
+								<div class="tt-img">
+									<img src="images/loader.svg" data-src="images/product/product-01.jpg" alt="">
+								</div>
+								<h2 class="tt-title"><p th:if="${cartProduct != null}" th:text="${cartProduct.name}">Flared Shift Dress</p></h2>
+								<h2 class="tt-title"><a href="/product">Flared Shift Dress</a></h2>
+								<div class="tt-qty">
+									QTY: <span>1</span>
+								</div>
+							</div>
+							<div class="tt-product-total">
+								<div class="tt-total">
+									TOTAL: <span class="tt-price" >$324</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<a href="#" class="tt-cart-total">
+								There are 1 items in your cart
+								<div class="tt-total">
+									TOTAL: <span class="tt-price">$324</span>
+								</div>
+							</a>
+							<a href="#" class="btn btn-border btn-close-popup">CONTINUE SHOPPING</a>
+							<a href="/cart" class="btn btn-border">VIEW CART</a>
+							<a href="#" class="btn">PROCEED TO CHECKOUT</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- modal (quickViewModal) -->
+<div class="modal fade" th:fragment="quickView" id="ModalquickView" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="tt-modal-quickview desctope">
+					<div class="row">
+						<div class="col-12 col-md-5 col-lg-6">
+							<div class="tt-mobile-product-slider arrow-location-center">
+								<div><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></div>
+								<div><img src="images/loader.svg" data-src="images/product/product-01-02.jpg" alt=""></div>
+								<div><img src="images/loader.svg" data-src="images/product/product-01-03.jpg" alt=""></div>
+								<div><img src="images/loader.svg" data-src="images/product/product-01-04.jpg" alt=""></div>
+								<div>
+									<div class="tt-video-block">
+										<a href="#" class="link-video"></a>
+										<video class="movie" src="video/video.mp4" poster="video/video_img.jpg"></video>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-7 col-lg-6">
+							<div class="tt-product-single-info">
+								<div class="tt-add-info">
+									<ul>
+										<li><span>SKU:</span> 001</li>
+										<li><span>Availability:</span> 40 in Stock</li>
+									</ul>
+								</div>
+								<h2 class="tt-title">Cotton Blend Fleece Hoodie</h2>
+								<div class="tt-price">
+									<span class="new-price">$29</span>
+									<span class="old-price"></span>
+								</div>
+								<div class="tt-review">
+									<div class="tt-rating">
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star-half"></i>
+										<i class="icon-star-empty"></i>
+									</div>
+									<a href="#">(1 Customer Review)</a>
+								</div>
+								<div class="tt-wrapper">
+									Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+								</div>
+								<div class="tt-swatches-container">
+									<div class="tt-wrapper">
+										<div class="tt-title-options">SIZE</div>
+										<form class="form-default">
+											<div class="form-group">
+												<select class="form-control">
+													<option>21</option>
+													<option>25</option>
+													<option>36</option>
+												</select>
+											</div>
+										</form>
+									</div>
+									<div class="tt-wrapper">
+										<div class="tt-title-options">COLOR</div>
+										<form class="form-default">
+											<div class="form-group">
+												<select class="form-control">
+													<option>Red</option>
+													<option>Green</option>
+													<option>Brown</option>
+												</select>
+											</div>
+										</form>
+									</div>
+									<div class="tt-wrapper">
+										<div class="tt-title-options">TEXTURE:</div>
+										<ul class="tt-options-swatch options-large">
+											<li><a class="options-color" href="#">
+												<span class="swatch-img">
+													<img src="images/loader.svg" data-src="images/custom/texture-img-01.jpg" alt="">
+												</span>
+												<span class="swatch-label color-black"></span>
+											</a></li>
+											<li class="active"><a class="options-color" href="#">
+												<span class="swatch-img">
+													<img src="images/loader.svg" data-src="images/custom/texture-img-02.jpg" alt="">
+												</span>
+												<span class="swatch-label color-black"></span>
+											</a></li>
+											<li><a class="options-color" href="#">
+												<span class="swatch-img">
+													<img src="images/loader.svg" data-src="images/custom/texture-img-03.jpg" alt="">
+												</span>
+												<span class="swatch-label color-black"></span>
+											</a></li>
+											<li><a class="options-color" href="#">
+												<span class="swatch-img">
+													<img src="images/loader.svg" data-src="images/custom/texture-img-04.jpg" alt="">
+												</span>
+												<span class="swatch-label color-black"></span>
+											</a></li>
+											<li><a class="options-color" href="#">
+												<span class="swatch-img">
+													<img src="images/loader.svg" data-src="images/custom/texture-img-05.jpg" alt="">
+												</span>
+												<span class="swatch-label color-black"></span>
+											</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="tt-wrapper">
+									<div class="tt-row-custom-01">
+										<div class="col-item">
+											<div class="tt-input-counter style-01">
+												<span class="minus-btn"></span>
+												<input type="text" value="1" size="5">
+												<span class="plus-btn"></span>
+											</div>
+										</div>
+										<div class="col-item">
+											<a href="#" class="btn btn-lg"><i class="icon-f-39"></i>ADD TO CART</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal (quickViewModal) -->
+<div class="modal fade" th:fragment="quickViewAjax" id="ModalquickView" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="tt-modal-quickview desctope">
+					<div class="row">
+						<div class="col-12 col-md-5 col-lg-6">
+							<div class="tt-mobile-product-slider arrow-location-center">
+								<div><img src="images/loader.svg" th:src="${cartProduct.primaryImage()}" alt=""></div>
+								<div>
+ 									<div class="tt-video-block"> 
+ 										<a href="#" class="link-video"></a> 
+ 										<video class="movie" src="video/video.mp4" poster="video/video_img.jpg"></video> 
+ 									</div> 
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-7 col-lg-6">
+							<div class="tt-product-single-info">
+								<div class="tt-add-info">
+									<ul>
+										<li><span>ID:</span> <span th:text="${cartProduct.id}"></span></li>
+<!-- 										<li><span>Availability:</span> 40 in Stock</li> 
+									</ul>
+								</div>
+								<h2 class="tt-title" th:text="${cartProduct.name}">Cotton Blend Fleece Hoodie</h2>
+								<div class="tt-price">
+									<span class="new-price" th:text="${cartProduct.formatPrice()}">$29</span>
+<!-- 									<span class="old-price"></span> 
+								</div>
+								<div class="tt-review">
+									<div class="tt-rating">
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star"></i>
+										<i class="icon-star-half"></i>
+										<i class="icon-star-empty"></i>
+									</div>
+<!-- 									<a href="#">(1 Customer Review)</a> 
+								</div>
+								<div class="tt-wrapper" th:text="${cartProduct.description}">
+									Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+								</div>
+								<div class="tt-swatches-container">
+									<div class="tt-wrapper">
+										<div class="tt-title-options">SIZE</div>
+										<form class="form-default">
+											<div class="form-group">
+												<!--<select class="form-control">
+													<option th:each="size : ${cartProduct.sizes}" th:text="${size.size}">21</option>
+												</select>
+											</div>
+										</form>
+									</div>
+
+								</div>
+								<div class="tt-wrapper">
+									<div class="tt-row-custom-01">
+<!-- 										<div class="col-item"> -->
+<!-- 											<div class="tt-input-counter style-01"> -->
+<!-- 												<span class="minus-btn"></span> -->
+<!-- 												<input type="text" value="1" size="5"> -->
+<!-- 												<span class="plus-btn"></span> -->
+<!-- 											</div> -->
+<!-- 										</div> 
+										<div class="col-item">
+											<a href="#" class="btn btn-lg"><i class="icon-f-39"></i>ADD TO CART</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Product Modal -->
+<!-- modalVideoProduct -->
+<div class="modal fade" th:fragment="videoProduct" id="modalVideoProduct" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-video">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-video-content">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- modal (ModalSubsribeGood) -->
+<div class="modal fade" th:fragment="subsribeGood"  id="ModalSubsribeGood" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xs">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="tt-modal-subsribe-good">
+					<i class="icon-f-68"></i> You have successfully signed!
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- modal (shipping) -->
+<div class="modal fade" th:fragment="shipping" id="modalProductInfo-02" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="tt-layout-product-info-02">
+					<h6 class="tt-title">SHIPPING</h6>
+					<ul>
+						<li>Complimentary ground shipping within 1 to 7 business days</li>
+						<li>In-store collection available within 1 to 7 business days</li>
+						<li>Next-day and Express delivery options also available</li>
+						<li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception of certain items</li>
+						<li>See the delivery FAQs for details on shipping methods, costs and delivery times</li>
+					</ul>
+					<h6 class="tt-title">RETURNS AND EXCHANGES</h6>
+					<ul>
+						<li>Easy and complimentary, within 14 days</li>
+						<li>See conditions and procedure in our return FAQs</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- modal (size guide) -->
+<div class="modal fade" th:fragment="size_guide"  id="modalProductInfo" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content ">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+			</div>
+			<div class="modal-body">
+				<div class="tt-layout-product-info">
+					<h6 class="tt-title">SIZE GUIDE</h6>
+					This is an approximate conversion table to help you find your size.
+					<div class="tt-table-responsive-md">
+						<table class="tt-table-modal-info">
+							<thead>
+								<tr>
+									<th>Italian</th>
+									<th>Spanish</th>
+									<th>German</th>
+									<th>UK</th>
+									<th>US</th>
+									<th>Japanese</th>
+									<th>Chinese</th>
+									<th>Russian</th>
+									<th>Korean</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>34</td>
+									<td>30</td>
+									<td>28</td>
+									<td>4</td>
+									<td>00</td>
+									<td>3</td>
+									<td>155/75A</td>
+									<td>36</td>
+									<td>44</td>
+								</tr>
+								<tr>
+									<td>36</td>
+									<td>32</td>
+									<td>30</td>
+									<td>6</td>
+									<td>0</td>
+									<td>5</td>
+									<td>155/80A</td>
+									<td>38</td>
+									<td>44</td>
+								</tr>
+								<tr>
+									<td>38</td>
+									<td>34</td>
+									<td>32</td>
+									<td>8</td>
+									<td>2</td>
+									<td>7</td>
+									<td>160/84A</td>
+									<td>40</td>
+									<td>55</td>
+								</tr>
+								<tr>
+									<td>40</td>
+									<td>36</td>
+									<td>34</td>
+									<td>10</td>
+									<td>4</td>
+									<td>9</td>
+									<td>165/88A</td>
+									<td>42</td>
+									<td>55</td>
+								</tr>
+								<tr>
+									<td>42</td>
+									<td>38</td>
+									<td>36</td>
+									<td>12</td>
+									<td>6</td>
+									<td>11</td>
+									<td>170/92A</td>
+									<td>44</td>
+									<td>66</td>
+								</tr>
+								<tr>
+									<td>44</td>
+									<td>40</td>
+									<td>38</td>
+									<td>14</td>
+									<td>8</td>
+									<td>13</td>
+									<td>175/96A</td>
+									<td>46</td>
+									<td>66</td>
+								</tr>
+								<tr>
+									<td>46</td>
+									<td>42</td>
+									<td>40</td>
+									<td>16</td>
+									<td>10</td>
+									<td>15</td>
+									<td>170/98A</td>
+									<td>48</td>
+									<td>77</td>
+								</tr>
+								<tr>
+									<td>48</td>
+									<td>44</td>
+									<td>42</td>
+									<td>18</td>
+									<td>12</td>
+									<td>17</td>
+									<td>170/100B</td>
+									<td>50</td>
+									<td>77</td>
+								</tr>
+								<tr>
+									<td>50</td>
+									<td>46</td>
+									<td>44</td>
+									<td>20</td>
+									<td>14</td>
+									<td>19</td>
+									<td>175/100B</td>
+									<td>52</td>
+									<td>88</td>
+								</tr>
+								<tr>
+									<td>52</td>
+									<td>48</td>
+									<td>46</td>
+									<td>22</td>
+									<td>16</td>
+									<td>21</td>
+									<td>180/104B</td>
+									<td>54</td>
+									<td>88</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

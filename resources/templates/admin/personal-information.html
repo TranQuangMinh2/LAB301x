@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thông tin cá nhân</title>
+    <!-- Add your CSS and JavaScript files here -->
+	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
+	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+	<link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" /> 
+	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	    <!-- header -->
+	<header th:replace="admin/fragments/header"></header>
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+				<!-- begin:: Aside -->
+				<div th:replace="admin/fragments/sidebar"></div>
+				<!-- end:: Aside -->
+				
+				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+					<!-- begin:: Header -->
+					<!--<div th:replace="admin/fragments/header :: header"></div>-->
+					<!-- end:: Header -->
+
+					<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+						<!-- begin:: Content Head -->
+						<!--<div th:replace="admin/fragments/header :: sub_header"></div>-->
+						<!-- end:: Content Head -->
+						
+						<!-- begin:: Content -->
+						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+							 <h3 class="kt-portlet__head-title text-center">
+								Thông tin cá nhân
+							</h3>
+							<table class="w3-table-all">
+							    <thead>
+							        <tr>
+							            <th>Tên</th>
+							            <th>Email</th>
+							            <th>Địa chỉ</th>
+							            <th>Ngày sinh</th>
+							            <th>Giới tính</th>
+							            <th>Số điện thoại</th>
+							            <th>Vai trò</th>
+							        </tr>
+							    </thead>
+							    <tbody>
+									<tr th:each="user : ${user}" th:if="${user.role} == 'admin'">				
+							            <td th:text="${user.name}"></td>
+							            <td th:text="${user.email}"></td>
+							            <td th:text="${user.address}"></td>
+							            <td th:text="${#dates.format(user.dateOfBirth, 'dd/mm/yyyy')}"></td>
+							            <td th:text="${user.gender ? 'Nam' : 'Nữ'}"></td>
+							            <td th:text="${user.phone}"></td>
+							            <td th:text="${user.role}"></td>
+							        </tr>
+							    </tbody>
+							</table>
+								<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+									<i class="la la-long-arrow-left"></i>Quay Lại
+								</a>
+						</div>
+						<!-- end:: Content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	<footer th:replace="admin/fragments/footer"></footer>
+</body>
+</html>

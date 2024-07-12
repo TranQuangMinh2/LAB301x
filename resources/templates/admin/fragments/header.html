@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Library Store - Trang chủ</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Thêm tệp CSS mới tại đây -->
+	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
+	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+	<link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" /> 
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<div th:fragment="header" id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
+
+	<!-- begin:: Header Menu -->
+
+	<!--Uncomment this to display the close button of the panel  -->
+<button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
+
+	<div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
+		<div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+			<div class="kt-header_brand-logo">
+				<img alt="Logo" src="assets/media/logos/logo_51.png" style="width: 35%; margin-top: 15px; cursor: pointer;"/>
+			</div>	
+			<ul class="kt-menu_nav ">
+
+				
+
+			</ul>
+		</div>
+	</div>
+
+	<!-- end:: Header Menu -->
+
+	<!-- begin:: Header Topbar -->
+	<div class="kt-header__topbar">
+		<!--begin: Search -->
+
+		<!--begin: Search -->
+		<div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
+			<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
+				<span class="kt-header__topbar-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+						height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<rect x="0" y="0" width="24" height="24" />
+							<path
+								d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+								fill="#000000" fill-rule="nonzero" opacity="0.3" />
+							<path
+								d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+								fill="#000000" fill-rule="nonzero" />
+						</g>
+					</svg> </span>
+			</div>
+			<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-lg">
+				<div class="kt-quick-search kt-quick-search--dropdown kt-quick-search--result-compact"
+					id="kt_quick_search_dropdown">
+					<form method="get" class="kt-quick-search__form">
+						<div class="input-group">
+							<div class="input-group-prepend"><span class="input-group-text"><i
+										class="flaticon2-search-1"></i></span></div>
+							<input type="text" class="form-control kt-quick-search__input" placeholder="Tìm kiếm">
+							<div class="input-group-append"><span class="input-group-text"><i
+										class="la la-close kt-quick-search__close"></i></span></div>
+						</div>
+					</form>
+					<div class="kt-quick-search__wrapper kt-scroll" data-scroll="true" data-height="325"
+						data-mobile-height="200">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<!--begin: Language bar -->
+		<div class="kt-header__topbar-item kt-header__topbar-item--langs">
+			<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
+				<span class="kt-header__topbar-icon">
+					<img class="" src="assets/media/flags/220-vietnam.svg" alt="Tiếng Việt" />
+				</span>
+			</div>
+		</div>
+
+		<!--end: Language bar -->
+
+		<!--begin: User Bar -->
+		<div class="kt-header__topbar-item kt-header__topbar-item--user">
+			<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
+			    <div class="kt-header__topbar-user">
+			        <span class="kt-header__topbar-welcome kt-hidden-mobile">Xin Chào,</span>
+			        <span class="kt-header__topbar-username kt-hidden-mobile" th:text="${session.loggedInUser.name}">Tên người dùng</span>
+			        <img class="kt-hidden" alt="Pic" src="assets/media/users/300_25.jpg" />
+			
+			        <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+			        <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold" th:text="${session.loggedInUser.name.charAt(0)}">T</span>
+			    </div>
+			</div>
+
+			<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
+			<!--<div>-->
+				<!--begin: Navigation -->
+				<div class="kt-notification">
+					<a href="/personal-information" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-calendar-3 kt-font-success"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Thông tin tài khoản
+							</div>
+						</div>
+					</a>
+					<a href="/product" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-rocket-1 kt-font-danger"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Quản lý sản phẩm
+							</div>
+						</div>
+					</a>
+					<a href="/orders" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-hourglass kt-font-brand"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Quản lý đơn hàng
+							</div>
+						</div>
+					</a>
+					<a href="/brand" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-cardiogram kt-font-warning"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Quản lý tác giả
+							</div>
+
+						</div>
+					</a>
+					<div class="kt-notification__custom kt-space-between">
+						<a href="/customer/logout" class="btn btn-label btn-label-brand btn-sm btn-bold">Đăng Xuất</a>
+					</div>
+				</div>
+
+				<!--end: Navigation -->
+			</div>
+		</div>
+
+		<!--end: User Bar -->
+	</div>
+
+	<!-- end:: Header Topbar -->
+</div>
+
+
+
+<!-- Header Mobile -->
+<div th:fragment="header_mobile" id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
+	<div class="kt-header-mobile__logo">
+		<a href="/admin">
+			<img alt="Logo" src="assets/media/logos/logo_51.png" style="width: 30%; margin-top: -10px;" />
+		</a>
+	</div>
+	<div class="kt-header-mobile__toolbar">
+		<button class="kt-header-mobile__toggler kt-header-mobile__toggler--left"
+			id="kt_aside_mobile_toggler"><span></span>
+		</button>
+		<!--<button class="kt-header-mobile__toggler" id="kt_header_mobile_toggler"><span></span></button>
+		<button class="kt-header-mobile__topbar-toggler" id="kt_header_mobile_topbar_toggler">
+			<i class="flaticon-more"></i>
+		</button>-->
+	</div>
+</div>
+
+
+<!-- Sub Header -->
+<div th:fragment="sub_header_mobile" class="kt-subheader  kt-grid__item" id="kt_subheader">
+	<div class="kt-container  kt-container--fluid ">
+		<div class="kt-subheader__main">
+			<span class="kt-subheader__separator kt-subheader__separator--v"></span>
+		</div>
+		<div class="kt-subheader__toolbar">
+			<div class="kt-subheader__wrapper">
+		<!--begin: User Bar -->
+		<div class="kt-header__topbar-item kt-header__topbar-item--user">
+			<div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
+			    <div class="kt-header__topbar-user">
+			        <span class="kt-header__topbar-welcome kt-mobile">Xin Chào,</span>
+			        <span class="kt-header__topbar-username kt-mobile" th:text="${session.loggedInUser.name}">Tên người dùng</span>
+			        <img class="kt-hidden" alt="Pic" src="assets/media/users/300_25.jpg" />
+			
+			        <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+			        <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold" th:text="${session.loggedInUser.name.charAt(0)}">T</span>
+			    </div>
+			</div>
+
+			<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
+			<!--<div>-->
+				<!--begin: Navigation -->
+				<div class="kt-notification">
+					<a href="/personal-information" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-calendar-3 kt-font-success"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Thông tin tài khoản
+							</div>
+						</div>
+					</a>
+					<a href="/product" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-rocket-1 kt-font-danger"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Quản lý sản phẩm
+							</div>
+						</div>
+					</a>
+					<a href="/orders" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-hourglass kt-font-brand"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Quản lý đơn hàng
+							</div>
+						</div>
+					</a>
+					<a href="/brand" class="kt-notification__item">
+						<div class="kt-notification__item-icon">
+							<i class="flaticon2-cardiogram kt-font-warning"></i>
+						</div>
+						<div class="kt-notification__item-details">
+							<div class="kt-notification__item-title kt-font-bold">
+								Quản lý tác giả
+							</div>
+
+						</div>
+					</a>
+					<div class="kt-notification__custom kt-space-between">
+						<a href="/customer/logout" class="btn btn-label btn-label-brand btn-sm btn-bold">Đăng Xuất</a>
+					</div>
+				</div>
+
+				<!--end: Navigation -->
+			</div>
+		</div>
+
+		<!--end: User Bar -->
+
+			</div>
+		</div>
+	</div>
+</div>
+	<script th:src="@{/admin/assets/plugins/global/plugins.bundle.js}" type="text/javascript"></script>
+	<script th:src="@{/admin/assets/js/scripts.bundle.js}" type="text/javascript"></script>
+</body>
+</html>

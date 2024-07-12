@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Chúng tôi</title>
+	<meta name="keywords" content="About">
+	<meta name="description" content="About - Library">
+	<meta name="author" content="Library">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<base th:replace="shopper/fragments/common :: base">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<!-- header -->
+<header th:replace="shopper/fragments/header"></header>
+
+<div class="tt-breadcrumb">
+	<div class="container">
+		<ul>
+			<li><a href="/index">Trang Chủ</a></li>
+			<li>Thư Viện</li>
+		</ul>
+	</div>
+</div>
+<div id="tt-pageContent">
+	<div class="container-fluid">
+		<div class="tt-slick-slider arrow-slick-main">
+			<div class="tt-slick-main-item">
+				<img src="images/banners/banner_01.jpg" alt="">
+				<div class="tt-description tt-point-h-r">
+					<div class="tt-description-wrapper">
+<!--						<div class="tt-title-small"><span class="tt-base-color">Ready To</span></div>
+-->						<div class="tt-title-large"><span class="tt-white-color">VỀ CHÚNG TÔI<br></span></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-indent">
+		<div class="container container-fluid-custom-mobile-padding">
+			<div class="tt-block-title">
+				<h1 class="tt-title">VỀ CHÚNG TÔI</h1>
+			<p>Chào mừng bạn đến với Hệ Thống Quản Lý Thư Viện của chúng tôi, giải pháp tối ưu để quản lý tài nguyên thư viện một cách hiệu quả và dễ dàng. Chúng tôi cam kết mang đến cho bạn trải nghiệm thư viện liền mạch, cung cấp một loạt các dịch vụ để đáp ứng tất cả nhu cầu đọc và nghiên cứu của bạn.
+				Được thành lập vào năm 2021, hệ thống quản lý thư viện của chúng tôi được phát triển với tầm nhìn hiện đại hóa các hoạt động thư viện và tăng cường tương tác với người dùng. Nền tảng của chúng tôi đã phát triển đáng kể, hiện đang phục vụ các thư viện lớn nhỏ trên khắp cả nước.</p>
+			</div>
+			<div class="tt-block-title">
+				<h2 class="tt-title">DỊCH VỤ CỦA CHÚNG TÔI</h2>
+				<p>Quản Lý Danh Mục: Quản lý và tổ chức bộ sưu tập của thư viện một cách hiệu quả.</p>
+                <p>Danh Mục Trực Tuyến: Cho phép người dùng duyệt và tìm kiếm sách và tài nguyên trực tuyến.</p>
+                <p>Mượn Và Trả: Quy trình mượn và trả sách được đơn giản hóa.</p>
+                <p>Quản Lý Thành Viên: Dễ dàng quản lý thành viên thư viện và theo dõi hoạt động của người dùng.</p>
+                <p>Báo Cáo Và Phân Tích: Tạo ra các báo cáo chi tiết để hỗ trợ quyết định và hoạt động thư viện.</p>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<!-- footer -->
+<footer th:replace="shopper/fragments/footer"></footer>
+
+<!-- modal -->
+<div th:replace="shopper/fragments/modal :: addToCart"></div>
+<div th:replace="shopper/fragments/modal :: quickView"></div>
+<div th:replace="shopper/fragments/modal :: videoProduct"></div>
+<div th:replace="shopper/fragments/modal :: subsribeGood"></div>
+
+<script src="external/jquery/jquery.min.js"></script>
+<script src="external/bootstrap/js/bootstrap.min.js"></script>
+<script src="external/slick/slick.min.js"></script>
+<script src="external/panelmenu/panelmenu.js"></script>
+<script src="external/lazyLoad/lazyload.min.js"></script>
+<script src="js/main.js"></script>
+<!-- form validation and sending to mail -->
+<script src="external/form/jquery.form.js"></script>
+<script src="external/form/jquery.validate.min.js"></script>
+<script src="external/form/jquery.form-init.js"></script>
+<!-- custom -->
+<script src="js/toastr.min.js" type="text/javascript"></script>
+<script src="js/header.js" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/e8c97ff706.js" crossorigin="anonymous"></script>
+</body>
+</html>

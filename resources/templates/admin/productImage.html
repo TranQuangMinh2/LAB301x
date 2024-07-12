@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Product Image</title>
+	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
+	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+	<link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
+	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	 <!-- header -->
+	<header th:replace="admin/fragments/header"></header>
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+				<!-- begin:: Aside -->
+				<div th:replace="admin/fragments/sidebar"></div>
+				<!-- end:: Aside -->
+				
+				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+					<!-- begin:: Header -->
+					<!--<div th:replace="admin/fragments/header :: header"></div>-->
+					<!-- end:: Header -->
+
+					<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+						<!-- begin:: Content Head -->
+						<!--<div th:replace="admin/fragments/header :: sub_header"></div>-->
+						<!-- end:: Content Head -->
+						
+						<!-- begin:: Content -->
+						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+							<div class="kt-portlet kt-portlet--mobile">
+								<h3 class="kt-portlet__head-title text-center">
+									Ảnh sản phẩm
+								</h3>
+								<div class="kt-portlet__head kt-portlet__head--lg">
+									<div class="kt-portlet__head-label">
+										<table class="w3-table-all">
+										    <thead>
+										        <tr>
+										            <th>ID</th>
+										            <th>Ngày tạo</th>
+										            <th>Ngày cập nhật</th>
+										            <th>Chính?</th>
+										            <th>Đường dẫn</th>
+										            <!--<th>kích</th>-->
+										            <th>Id tài liệu</th>
+										            <th>Hành động</th>
+										        </tr>
+										    </thead>
+										    <tbody>
+										        <tr th:each="productImage: ${productImage}">
+										            <td th:text="${productImage.id}"></td>
+										            <td th:text="${productImage.createdAt}"></td>
+										            <td th:text="${productImage.updatedAt}"></td>
+										            <td th:text="${productImage.isPrimary}"></td>
+										            <td th:text="${productImage.path}"></td>
+										            <!--<td th:text="${productImage.size}"></td>-->
+										            <td th:text="${productImage.productId}"></td>
+										            <td>
+										                <a th:href="@{/updateProductImage/{id}(id=${productImage.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+										                <a th:href="@{/productImage/delete/{id}(id=${productImage.id})}" onclick="return confirm('Are you sure you want to delete this item?');">
+	                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+	                                                    </a>
+										            </td>
+										        </tr>
+										    </tbody>
+										</table>
+						
+									</div>
+								</div>
+								<div class="kt-portlet__head kt-portlet__head--lg">
+									<div class="kt-portlet__head-toolbar">
+										<div class="kt-portlet__head-wrapper">
+											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+												<i class="la la-long-arrow-left"></i>
+												Quay Lại
+											</a>
+											<br>
+											<div class="dropdown dropdown-inline">
+											    <a href="/addProductImage" class="btn btn-brand btn-icon-sm">
+											        <i class="flaticon2-plus"></i> Thêm Mới
+											    </a>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+						<!-- end:: Content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	<footer th:replace="admin/fragments/footer"></footer>
+</body>
+</html>
+

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Giỏ hàng của tôi</title>
+	<meta name="keywords" content="Library">
+	<meta name="description" content="Library - Cart">
+	<meta name="author" content="Library">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<base th:replace="~{shopper/fragments/common :: base}">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		.checkout-form {
+		    display: flex;
+		    justify-content: center;
+		    margin-top: 20px;
+		}
+		
+		.checkout-button {
+		    background-color: #008CBA; /* Blue background */
+		    color: white; /* White text */
+		    padding: 10px 20px; /* Some padding */
+		    border: none; /* Remove borders */
+		    border-radius: 5px; /* Rounded corners */
+		    cursor: pointer; /* Pointer/hand icon on hover */
+		    font-size: 16px; /* Increase font size */
+		    display: flex;
+		    align-items: center;
+		}
+		
+		.checkout-button i {
+		    margin-right: 10px; /* Add space between icon and text */
+		}
+		
+		.checkout-button:hover {
+		    background-color: #007bb5; /* Darker blue on hover */
+		}
+		
+		.checkout-button:focus {
+		    outline: none; /* Remove outline on focus */
+		}
+		
+		.checkout-button:active {
+		    background-color: #005f73; /* Even darker blue when button is pressed */
+		    box-shadow: 0 5px #666; /* Add a shadow */
+		    transform: translateY(4px); /* Move button 4px down */
+		}
+		.remove-cart-form {
+		    display: inline-block;
+		    margin: 5px; /* Adjust margin as needed */
+		}
+		
+		.delete-button {
+		    background-color: #f44336; /* Red background */
+		    color: white; /* White text */
+		    padding: 8px 12px; /* Some padding */
+		    border: none; /* Remove borders */
+		    border-radius: 5px; /* Rounded corners */
+		    cursor: pointer; /* Pointer/hand icon on hover */
+		    font-size: 14px; /* Font size */
+		    display: flex;
+		    align-items: center;
+		}
+		
+		.delete-button i {
+		    margin-right: 5px; /* Add space between icon and text if you plan to add text */
+		}
+		
+		.delete-button:hover {
+		    background-color: #d32f2f; /* Darker red on hover */
+		}
+		
+		.delete-button:focus {
+		    outline: none; /* Remove outline on focus */
+		}
+		
+		.delete-button:active {
+		    background-color: #b71c1c; /* Even darker red when button is pressed */
+		    box-shadow: 0 4px #666; /* Add a shadow */
+		    transform: translateY(2px); /* Move button down slightly */
+		}
+		.delete-cart-form {
+		    display: flex;
+		    justify-content: center;
+		    margin-top: 20px;
+		}
+		
+		.delete-all-button {
+		    background-color: #e53935; /* Red background */
+		    color: white; /* White text */
+		    padding: 10px 20px; /* Some padding */
+		    border: none; /* Remove borders */
+		    border-radius: 5px; /* Rounded corners */
+		    cursor: pointer; /* Pointer/hand icon on hover */
+		    font-size: 16px; /* Increase font size */
+		}
+		
+		.delete-all-button:hover {
+		    background-color: #d32f2f; /* Darker red on hover */
+		}
+		
+		.delete-all-button:focus {
+		    outline: none; /* Remove outline on focus */
+		}
+		
+		.delete-all-button:active {
+		    background-color: #b71c1c; /* Even darker red when button is pressed */
+		    box-shadow: 0 5px #666; /* Add a shadow */
+		    transform: translateY(4px); /* Move button 4px down */
+		}
+	</style>
+</head>
+<body>
+
+<!-- header -->
+<header th:replace="~{shopper/fragments/header}"></header>
+
+<div class="tt-breadcrumb">
+	<div class="container">
+		<ul>
+			<li><a href="/index">Trang Chủ</a></li>
+			<li>Giỏ Hàng</li>
+		</ul>
+	</div>
+</div>
+<div id="tt-pageContent">
+	<div class="container-indent">
+		<div class="container" >
+			<h1 class="tt-title-subpages noborder">GIỎ HÀNG</h1>
+			<div class="tt-shopcart-table-02">
+				<table>
+					<tbody>
+						<tr th:each="cartItem : ${cartItems}" th:with="product = ${cartItem.productSize.product}">
+							<td>
+								<div class="tt-product-img">
+									<img th:src="${product.primaryImage()}" alt="">
+								</div>
+							</td>
+							<td>
+								<h2 class="tt-title" th:text="${product.name}">
+									<a href="#">name</a>
+								</h2>
+								<ul class="tt-list-description">
+									<!--<li>Size: <span th:text="${cartItem.productSize.size}"></span></li>-->
+									<!--<li>Version: <span th:text="${product.versionName}"></span></li>-->
+									<li>Price: <span th:text="${product.formatPrice()}"></span></li>
+								</ul>
+								<ul class="tt-list-parameters">
+									<li>
+										<div class="tt-price" th:text="${product.formatPrice()}">
+											price mobile
+										</div>
+									</li>
+									<!--<li>
+										<div class="detach-quantity-mobile"></div>
+									</li>-->
+									<li>
+										<div class="tt-price subtotal" th:text="${cartItem.formatPrice(product.price * cartItem.quantity)}">
+											sub total mobile
+										</div>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<div class="tt-price" th:text="${product.formatPrice()}">
+									price
+								</div>
+							</td>
+							<td>
+								<div class="detach-quantity-desctope">
+									<div class="tt-input-counter style-01" style="user-select: none;">
+										
+										<!--<a th:href="@{/change-quantity?id=} + ${cartItem.id} + '&change=minus'"><span class="minus-btn"></span></a>-->
+										<!--<input type="text" th:value="${cartItem.quantity}" size="5" style="cursor: default;" readonly>-->
+										<!--<a th:href="@{/change-quantity?id=} + ${cartItem.id} + '&change=plus'"><span class="plus-btn"></span></a>-->
+										
+									</div>
+								</div>
+							</td>
+							<!--<td>
+								<div class="tt-price subtotal" th:text="${cartItem.formatPrice(product.price * cartItem.quantity)}" >
+									sub total
+								</div>
+							</td>-->
+							<td>
+								<!--<a th:href="@{/remove-cart/} + ${cartItem.id}" class="tt-btn-close"></a>-->
+								<form th:action="@{/remove-cart/{id}(id=${cartItem.id})}" method="post" class="remove-cart-form">
+								    <button type="submit" class="delete-button"><i class="fa fa-trash" aria-hidden="true"></i>Xóa</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="tt-shopcart-btn">
+					<div class="col-left">
+						<a class="btn-link" href="/index"><i class="icon-e-19"></i>Tiếp tục mua sắm</a>
+					</div>
+					<div class="col-right">
+						<form action="/delete-cart" method="post" class="delete-cart-form">
+						    <button type="submit" class="delete-all-button">Xóa hết</button>
+						</form>
+						<!--<a class="btn-link" href="/delete-cart"><i class="icon-h-02"></i>Xóa hết</a>-->
+<!-- 						<a class="btn-link" href="#"><i class="icon-h-48"></i>UPDATE CART</a> -->
+					</div>
+				</div>
+			</div>
+			<div class="tt-shopcart-col">
+				<div class="row">
+					<div class="col-md-6 col-lg-4">
+						<div class="tt-shopcart-box">
+							<h4 class="tt-title">
+								Thông tin giao hàng
+							</h4>
+ 							<p>Enter your destination to get a shipping estimate.</p>
+							<form id="checkout_info" method="post" action="/checkout" class="form-default">
+								<div class="form-group">
+									<label for="name">Người nhận hàng <sup>*</sup></label>
+									<input minlength="2" type="text" th:value="${user?.name}" id="name" name="name" placeholder="Nhập họ tên" class="form-control" required>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group">
+									<label for="phone">Điện thoại <sup>*</sup></label>
+									<input minlength="8" pattern="[0-9]*" th:value="${user?.phone}"  oninvalid="this.setCustomValidity('Số điện thoại không hợp lệ')" oninput="this.setCustomValidity('')" type="tel" name="phone" class="form-control" id="phone" placeholder="Nhập điện thoại" required>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group">
+									<label minlength="2" for="address">Địa chỉ <sup>*</sup></label>
+									<textarea minlength="5" class="form-control" th:text="${user?.address}" id="address" name="address" rows="3" placeholder="Nhập địa chỉ giao hàng" required></textarea>
+									<div class="help-block"></div>
+								</div>
+								<div>
+									<input type="hidden" id="paymentMethod" name="paymentMethod">
+								</div>
+								<ul class="tt-list-dot list-dot-large">
+									<li><span class="check_info">Kiểm tra lại thông tin của bạn trước khi đặt mua</span></li>
+								</ul>
+							</form>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4">
+						<div class="tt-shopcart-box">
+							<h4 class="tt-title">
+								Phương thức thanh toán
+							</h4>
+							<br>
+<!-- 							<p>Add special instructions for your order...</p> -->
+							<!--<div class="radio checkbox-group">
+								<input type="checkbox" id="checkATM" name="checkbox">
+								<label for="checkATM">
+									<span class="check"></span>
+									<span class="box"></span>
+									Thẻ ATM nội địa/Internet Banking
+								</label>
+							</div>-->
+							<br>
+							<div class="radio checkbox-group">
+								<input type="checkbox" id="checkCOD" name="checkbox">
+								<label for="checkCOD">
+									<span class="check"></span>
+									<span class="box"></span>
+									Thanh toán tiền mặt khi nhận hàng
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4">
+						<div class="tt-shopcart-box tt-boredr-large">
+							<table class="tt-shopcart-table01">
+								<tbody>
+<!-- 									<tr> -->
+<!-- 										<th>SUBTOTAL</th> -->
+<!-- 										<td>$324</td> -->
+<!-- 									</tr> -->
+								</tbody>
+								<tfoot>
+									<tr>
+										<th>THÀNH TIỀN</th>
+										<td id="totalAmount" th:text="${totalAmount}">total</td>
+									</tr>
+								</tfoot>
+							</table>
+							<form action="/checkout" method="post" th:if="${not #lists.isEmpty(cartItems)}" class="checkout-form">
+							    <button type="submit" class="checkout-button"><i class="fa fa-money" aria-hidden="true"></i>Thanh toán</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- footer -->
+<footer th:replace="~{shopper/fragments/footer}"></footer>
+
+<!-- modal -->
+<div th:replace="~{shopper/fragments/modal :: addToCart}"></div>
+<div th:replace="~{shopper/fragments/modal :: quickView}"></div>
+<div th:replace="~{shopper/fragments/modal :: subsribeGood}"></div>
+
+<script src="external/jquery/jquery.min.js"></script>
+<script src="external/bootstrap/js/bootstrap.min.js"></script>
+<script src="external/slick/slick.min.js"></script>
+<script src="external/panelmenu/panelmenu.js"></script>
+<script src="external/lazyLoad/lazyload.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/cart.js"></script>
+<!-- form validation and sending to mail -->
+<script src="external/form/jquery.form.js"></script>
+<script src="external/form/jquery.validate.min.js"></script>
+<script src="external/form/jquery.form-init.js"></script>
+<!-- custom -->
+<script src="js/toastr.min.js" type="text/javascript"></script>
+<script src="js/header.js" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/e8c97ff706.js" crossorigin="anonymous"></script>
+</body>
+</html>

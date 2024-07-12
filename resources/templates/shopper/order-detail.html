@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Chi tiết đơn hàng</title>
+	<meta name="keywords" content="Library">
+	<meta name="description" content="Account - Library">
+	<meta name="author" content="Library">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<base th:replace="shopper/fragments/common :: base">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<!-- header -->
+<header th:replace="shopper/fragments/header"></header>
+
+<div class="tt-breadcrumb">
+	<div class="container">
+		<ul>
+			<li><a href="/index">Home</a></li>
+			<li>Order detail</li>
+		</ul>
+	</div>
+</div>
+<div id="tt-pageContent">
+	<div class="container-indent">
+		<div class="container container-fluid-custom-mobile-padding">
+<!-- 			<h1 class="tt-title-subpages noborder">ORDER DETAIL</h1> -->
+			<div class="tt-shopping-layout">
+				<h2 class="tt-title-border">
+					Đơn hàng #<span th:text="${orderWeb.getFormatId()}" id="order_id"></span> - <span th:text="${orderWeb.deliveryStatus}" id="delivery_status"></span>
+					<span class="ordered_date">Ngày đặt hàng: <span th:text="${orderWeb.createdAt}" class="date">18:31 20/04/2020</span></span>
+				</h2>
+				<div class="tt-wrapper">
+					<h3 class="tt-title">Chi tiết</h3>
+					<div class="tt-table-responsive">
+						<table class="tt-table-shop-01">
+							<thead>
+								<tr>
+									<th class="min-w-320">Sản phẩm</th>
+									<th>Size</th>
+									<th class="min-w-100">Giá</th>
+									<th>Số lượng</th>
+									<th class="text-right min-w-120">Tạm tính</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="item : ${orderWeb.orderWebDetails}" th:with="product=${item.productSize.Product}">
+									<td><a th:href="'/product/' + ${product.id}" th:text="${product.name2()}"></a></td>
+									<td th:text="${item.productSize.size}"></td>
+									<td th:text="${orderWeb.formatPrice(item.price)}"></td>
+									<td th:text="${item.quantity}"></td>
+									<td th:text="${orderWeb.formatPrice(item.totalAmount)}" class="text-right price"></td>
+								</tr>
+								<tr>
+									<td colspan="4" class="lbl_total_amount text-right">Tổng cộng</td>
+									<td th:text="${orderWeb.formatPrice(orderWeb.totalAmount)}" class="total_amount text-right"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="back"><a href="/my-account"><i class="icon-e-19"></i> Quay lại</a></div>
+				<div class="tt-wrapper">
+					<h3 class="tt-title">Thông tin</h3>
+					<div class="tt-table-responsive">
+						<table class="tt-table-shop-02">
+							<tbody>
+								<tr>
+									<td>Người nhận hàng:</td>
+									<td th:text="${orderWeb.consignee}"></td>
+								</tr>
+								<tr>
+									<td>Địa chỉ:</td>
+									<td th:text="${orderWeb.deliveryAddress}"></td>
+								</tr>
+								<tr>
+									<td>Điện thoại:</td>
+									<td th:text="${orderWeb.consigneePhone}"></td>
+								</tr>
+								<tr>
+									<td>Hình thức thanh toán:</td>
+									<td th:text="${orderWeb.paymentMethod}"></td>
+								</tr>
+								<tr>
+									<td>Trạng thái thanh toán:</td>
+									<td th:text="${orderWeb.paymentStatus}" th:class="${'roboto ' + psColor}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<a href="javascript:;" th:if="${btnCancel}" id="cancel_order" class="btn btn-border d-none">HỦY ĐƠN HÀNG</a>
+				</div>
+				
+				
+				<div class="tt-wrapper">
+					<h3 class="tt-title">Lịch sử trạng thái</h3>
+					<div class="tt-table-responsive">
+						<table class="tt-table-shop-02">
+							<tbody>
+								<tr th:each="d : ${dlog}">
+									<td th:text="${d.createdAt}">Người nhận hàng:</td>
+									<td th:text="${d.deliveryStatus}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<a href="javascript:;" th:if="${btnCancel}" id="cancel_order" class="btn btn-border d-none">HỦY ĐƠN HÀNG</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- footer -->
+<footer th:replace="shopper/fragments/footer"></footer>
+
+<!-- modal -->
+<div th:replace="shopper/fragments/modal :: addToCart"></div>
+<div th:replace="shopper/fragments/modal :: quickView"></div>
+<div th:replace="shopper/fragments/modal :: videoProduct"></div>
+<div th:replace="shopper/fragments/modal :: subsribeGood"></div>
+
+<script src="external/jquery/jquery.min.js"></script>
+<script src="external/bootstrap/js/bootstrap.min.js"></script>
+<script src="external/slick/slick.min.js"></script>
+<script src="external/panelmenu/panelmenu.js"></script>
+<script src="external/lazyLoad/lazyload.min.js"></script>
+<script src="js/main.js"></script>
+<!-- form validation and sending to mail -->
+<script src="external/form/jquery.form.js"></script>
+<script src="external/form/jquery.validate.min.js"></script>
+<script src="external/form/jquery.form-init.js"></script>
+<!-- custom -->
+<script src="js/toastr.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9" type="text/javascript"></script>
+<script src="js/header.js" type="text/javascript"></script>
+<script src="js/order-detail.js" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/e8c97ff706.js" crossorigin="anonymous"></script>
+</body>
+</html>

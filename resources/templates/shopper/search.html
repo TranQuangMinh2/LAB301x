@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Search Results</title>
+	<meta name="keywords" content="Library">
+	<meta name="description" content="Library - Search">
+	<meta name="author" content="wokiee">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<base th:replace="~{shopper/fragments/common :: base}">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<!-- header -->
+<header th:replace="~{shopper/fragments/header}"></header>
+
+<div class="tt-breadcrumb">
+	<div class="container">
+		<ul>
+			<li><a href="/index">Home</a></li>
+			<li>Kết quả tìm kiếm</li>
+		</ul>
+	</div>
+</div>
+<div id="tt-pageContent">
+	<h2 class="tt-title-subpages noborder" th:if="${not #lists.isEmpty(products)}" style="margin-top: 20px;">
+      KẾT QUẢ TÌM KIẾM CHO "<span th:text="${text}">abcd</span>"
+    </h2>
+	<div class="container-indent">
+		<div class="container container-fluid-custom-mobile-padding">
+			<div class="row tt-layout-product-item">
+				<div th:each ="product : ${pagedProducts}" class="col-6 col-md-4 col-lg-3">
+					<div class="tt-product thumbprod-center">
+						<div class="tt-image-box">
+							<!--<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Xem Trước" data-tposition="left"></a>-->
+							<a href="#" class="tt-btn-wishlist" data-tooltip="Yêu Thích" th:if="${isSignedIn}" th:classappend="${product.isWishList} ? 'active' : ''" data-tposition="left"></a>
+							<input class="productBoxId" type="hidden" th:value="${product.id}">
+							<a th:href="@{/product/} + ${product.id}">
+								<span class="tt-img"><img src="images/loader.svg" th:data-src="${product.primaryImage()}" alt=""></span>
+								<!--<span class="tt-img-roll-over" th:each="image,iter : ${product.otherImages()}">-->
+									<!--<img th:if="${iter.index==0}" src="images/loader.svg" th:data-src="${image}" alt="">-->
+								</span>
+								<span class="tt-label-location">
+									<span class="tt-label-new" th:text="${product.status}">Mới</span>
+								</span>
+							</a>
+						</div>
+						<div class="tt-description">
+							<div class="tt-row">
+								<ul class="tt-add-info">
+									<li><a href="#"><br></a></li>
+								</ul>
+							</div>
+							<h2 class="tt-title">
+								<a th:href="@{/product/} + ${product.id}" th:text="${product.brand.name + ' ' + product.name + ' - ' + product.versionName}">Name</a>
+							</h2>
+							<div class="tt-price" th:text="${product.formatPrice()}">
+								price
+							</div>
+							<div class="tt-product-inside-hover">
+ 								<div class="tt-row-btn"> 
+									<p th:if="${message}" th:text="${message}"></p>
+									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
+
+									<style>
+										.disabled {
+									    pointer-events: none;
+									    cursor: default;
+									}
+									</style>
+ 								</div> 
+								<div class="tt-row-btn">
+									<!--<a th:href="@{/product/} + ${product.id}" class="tt-btn-quickview" data-tooltip="Xem Trước" data-toggle="modal" data-target="#ModalquickView">Xem Trước</a>
+									<a href="#" class="tt-btn-wishlist" data-tooltip="Danh sách yêu thích">Danh sách yêu thích</a>-->
+								</div>
+							</div>
+							<!--<div class="tt-product-inside-hover">
+
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+									<a href="#" class="tt-btn-wishlist"></a>
+									<a href="#" class="tt-btn-compare"></a>
+								</div>
+							</div>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:if="${totalPages > 1}">
+				<div class="w3-bar w3-border w3-round">
+					<div class="w3-bar-item w3-button">
+						<a th:if="${currentPage > 1}"
+							th:href="@{'/search/page/' + '1' + '?q=' + ${text}}"><i class="fa fa-fast-backward" aria-hidden="true"></i></a> <span
+							th:unless="${currentPage > 1}"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+					</div>
+					<div class="w3-bar-item w3-button">
+						<a th:if="${currentPage > 1}"
+							th:href="@{'/search/page/' + (${currentPage - 1}) + '?q=' + ${text}}"><i class="fa fa-step-backward" aria-hidden="true"></i></a> <span
+							th:unless="${currentPage > 1}"><i class="fa fa-step-backward" aria-hidden="true"></i></span>
+					</div>
+					<div>
+						<span th:each="i: ${#numbers.sequence(1, totalPages)}"
+								class="w3-bar-item w3-button"> <a
+								th:if="${currentPage != i}" th:href="@{'/search/page/' + ${i} + '?q=' + ${text}}">[[${i}]]</a>
+								<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+						</span>
+					</div>
+					<div class="w3-bar-item w3-button">
+						<a th:if="${currentPage < totalPages}"
+							th:href="@{'/search/page/' + (${currentPage + 1}) + '?q=' + ${text}}"><i class="fa fa-step-forward" aria-hidden="true"></i></a> <span
+							th:unless="${currentPage < totalPages}"><i class="fa fa-step-forward" aria-hidden="true"></i></span>
+					</div>
+
+					<div class="w3-bar-item w3-button">
+						<a th:if="${currentPage < totalPages}"
+							th:href="@{'/search/page/' + ${totalPages} + '?q=' + ${text}}"><i class="fa fa-fast-forward" aria-hidden="true"></i></a> <span
+							th:unless="${currentPage < totalPages}"><i class="fa fa-fast-forward" aria-hidden="true"></i></span>
+					</div>
+				</div>
+			</div>
+			<div class="text-center tt_product_showmore d-none">
+				<a th:href="@{/product-listing}" class="btn btn-border">XEM THÊM</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-indent nomargin">
+		<div class="tt-empty-search" th:if="${#lists.isEmpty(products)}" style="padding-top: 10px;">
+			<span class="tt-icon icon-f-85"></span>
+			<h1 class="tt-title">KHÔNG CÓ SẢN PHẨM.</h1>
+			<p>Kết quả tìm kiếm cho "<span class="tt-base-dark-color" th:text="${text}">'dddddd'</span>"</p>
+		</div>
+	</div>
+</div>
+
+<!-- footer -->
+<footer th:replace="~{shopper/fragments/footer}"></footer>
+
+<!-- modal -->
+<div th:replace="~{shopper/fragments/modal :: subsribeGood}"></div>
+
+<script src="external/jquery/jquery.min.js"></script>
+<script src="external/bootstrap/js/bootstrap.min.js"></script>
+<script src="external/panelmenu/panelmenu.js"></script>
+<script src="external/slick/slick.min.js"></script>
+<script src="external/lazyLoad/lazyload.min.js"></script>
+<script src="js/main.js"></script>
+<!-- form validation and sending to mail -->
+<script src="external/form/jquery.form.js"></script>
+<script src="external/form/jquery.validate.min.js"></script>
+<script src="external/form/jquery.form-init.js"></script>
+<!-- custom -->
+<script th:src="@{/shopper/js/cart.js}"></script>
+<script th:src="@{/shopper/js/header.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/main.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/map-init.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/order-detail.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/product.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/product-box.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/product-listing.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/toastr.min.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/wishlist.js}" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/e8c97ff706.js" crossorigin="anonymous"></script>
+</body>
+</html>

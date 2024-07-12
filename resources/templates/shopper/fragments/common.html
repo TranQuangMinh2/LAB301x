@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<base th:href="@{/shopper/}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Fragments</title>
+</head>
+<body>
+
+	<div th:fragment="cart-header" class="tt-dropdown-menu">
+		<input type="hidden" id="totalQuantityInput" th:value="${totalQuantity}">
+		<div class="tt-mobile-add">
+			<h6 class="tt-title">GIỎ HÀNG</h6>
+			<button class="tt-close">Close</button>
+		</div>
+		<div class="tt-dropdown-inner">
+			<div class="tt-cart-layout">
+
+				<div class="tt-cart-content">
+					<a class="tt-cart-empty d-none" href="/cart" title="Xem túi">
+		              <i class="icon-f-39"></i>
+		              <p class="roboto">Chưa có sản phẩm</p>
+		            </a>
+					<div class="tt-cart-list">
+
+						<div class="tt-item" th:each="item : ${cartItemHeaders}" th:with="product = ${item.productSize.product}">
+							<a th:href="${'/product/' + product.id}">
+								<div class="tt-item-img">
+									<img src="images/loader.svg" th:src="${product.primaryImage()}" alt="">
+								</div>
+								<div class="tt-item-descriptions">
+									<h2 class="tt-title" th:text="${product.name}"></h2>
+									<ul class="tt-add-info">
+										<li>Version: <span th:text="${product.versionName}"></span></li>
+										<li>Size: <b th:text="${item.productSize.size}"></b></li>
+									</ul>
+									<div class="tt-quantity">
+										<span th:text="${item.quantity}"></span> X
+									</div>
+									<div class="tt-price" th:text="${product.formatPrice()}">$18</div>
+								</div>
+							</a>
+							<div class="tt-item-close">
+								<a th:href="${'/remove-cart-header/' + item.id}" class="tt-btn-close remove-cart-header"></a>
+							</div>
+						</div>
+
+					</div>
+					<div class="tt-cart-total-row">
+						<div class="tt-cart-total-title">TỔNG CỘNG:</div>
+						<div class="tt-cart-total-price" th:text="${totalAmount}">$324</div>
+					</div>
+					<div class="tt-cart-btn">
+						<div class="tt-item">
+							<a th:href="@{/cart}" class="btn">XEM GIỎ HÀNG</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

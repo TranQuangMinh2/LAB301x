@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Product Detail</title>
+	<meta name="keywords" content="Product Detail">
+	<meta name="description" content="Product Detail">
+	<meta name="author" content="Library">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<base th:replace="~{shopper/fragments/common :: base}">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 2em;
+            color: #ddd;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        .rating label::before {
+            content: "☆";  /* Blank star */
+        }
+
+        .rating input:checked ~ label::before,
+        .rating label:hover::before,
+        .rating label:hover ~ label::before {
+            content: "★";  /* Filled star */
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body class="tt-page-product-single">
+
+<!-- header -->
+<header th:replace="shopper/fragments/header"></header>
+
+<div class="tt-breadcrumb">
+	<div class="container">
+		<ul>
+			<li><a href="/index">Trang chủ</a></li>
+			<li><a href="/product-listing">Danh sách tài liệu</a></li>
+			<li><a th:text="${product[1]}">Tên</a></li>
+		</ul>
+	</div>
+</div>
+<div id="tt-pageContent">
+	<div class="container-indent">
+		<!-- mobile product slider  -->
+		<div class="tt-mobile-product-layout visible-xs">
+			<div class="tt-mobile-product-slider arrow-location-center slick-animated-show-js">
+				<div><img src="images/product/product-32.jpg" alt=""></div>
+				<div><img src="images/product/product-32-01.jpg" alt=""></div>
+				<div><img src="images/product/product-32-02.jpg" alt=""></div>
+				<div><img src="images/product/product-32-03.jpg" alt=""></div>
+				<!-- <div>
+					<div class="embed-responsive embed-responsive-16by9">
+						<iframe class="embed-responsive-item" src="http://www.youtube.com/embed/GhyKqj_P2E4" allowfullscreen></iframe>
+					</div>
+				</div> -->
+				<!-- <div>
+					<div class="tt-video-block">
+						<a href="#" class="link-video"></a>
+						<video class="movie" src="video/video.mp4" poster="video/video_img.jpg"></video>
+					</div>
+				</div> -->
+			</div>
+		</div>
+		<!-- /mobile product slider  -->
+		<div class="container container-mobile-airSticky">
+			<div class="row airSticky_stop-block">
+				<div class="col-6 hidden-xs">
+					<div class="product-images-static hidden-xs">
+						<ul  data-scrollzoom="false">
+							<li><img th:src="${product[7]}" alt="Product image" /> <!-- Image Path --></li>
+							<!--<li><img class="zoom-product" src="images/product/product-32-01.jpg" alt=""></li>
+							<li><img class="zoom-product" src="images/product/product-32-02.jpg" alt=""></li>
+							<li><img class="zoom-product" src="images/product/product-32-03.jpg" alt=""></li>-->
+							<!-- <li>
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item" src="http://www.youtube.com/embed/GhyKqj_P2E4" allowfullscreen></iframe>
+								</div>
+							</li> -->
+							<!-- <li>
+								<div class="tt-video-block">
+									<a href="#" class="link-video"></a>
+									<video class="movie" src="video/video.mp4" poster="video/video_img.jpg"></video>
+								</div>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="airSticky">
+						<div class="tt-product-single-info">
+							<div class="tt-add-info">
+								<ul>
+									<li><span>Tình trạng: </span><span th:text="${product[4]}">Tình trạng</span> </li> <!-- Status -->
+<!--									<li><span>Version: </span><span th:text="${product[5]}">Version Name</span> </li>
+-->									<!--<li><span>Availability:</span> <span th:text="${product[9]}">Số lượng</span> in Stock</li>-->
+								</ul>
+							</div>
+							<h1 class="tt-title" th:text="${product[1]}">Tên</h1>
+							<div class="tt-price">
+								<span class="new-price" th:text="${#numbers.formatCurrency(product[3])}">Giá</span>
+								<span class="old-price"></span>
+							</div>
+							<!--<p><span>Kích cỡ: </span><span th:text="${product[8]}">Size</span></p>  Size 
+							<p><span>Mã màu sắc: </span><span th:text="${product[6]}">Color ID</span></p>  Size 
+							<div class="tt-review">
+								<div class="tt-rating">
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star-half"></i>
+									<i class="icon-star-empty"></i>
+								</div>
+								<a href="#">(1 Customer Review)</a>
+							</div>-->
+							<!--<div class="tt-wrapper" th:text="${product[2]}">Mô tả</div>-->
+							<div class="tt-collapse-block">
+								<div class="tt-item">
+									<div class="tt-collapse-title">Mô tả</div>
+									<div class="tt-collapse-content" th:text="${product[2]}">
+										Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.
+	
+									</div>
+								</div>
+								
+							<div class="tt-wrapper">
+								<div class="tt-row-custom-01">
+									<!--<div class="col-item">
+										<div class="tt-input-counter style-01">
+											<span class="minus-btn"></span>
+											<input type="text" value="1" size="5"/>
+											<span class="plus-btn"></span>
+										</div>
+									</div>-->
+									<!--<div class="col-item">
+										<a th:href="@{/addToCart/}+${product[0]}" th:class="${product[4] == 'Hết sách' ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}"><i class="icon-f-39"></i>ADD TO CART</a>
+									</div>-->
+									<div class="tt-product-inside-hover">
+		 								<div class="tt-row-btn"> 
+											<p th:if="${message}" th:text="${message}"></p>
+											<a th:href="@{/addToCart/}+${product[0]}" th:class="${product[4] == 'Hết sách' or user == null ? 'disabled' : 'btn btn-lg'}"><i class="icon-f-39"></i>Thêm vào túi</a>
+
+											<style>
+												.disabled {
+											    pointer-events: none;
+											    cursor: default;
+											}
+											</style>
+		 								</div> 
+										<div class="tt-row-btn">
+											<!--<a th:href="@{/product/} + ${product.id}" class="tt-btn-quickview" data-tooltip="Xem Trước" data-toggle="modal" data-target="#ModalquickView">Xem Trước</a>
+											<a href="#" class="tt-btn-wishlist" data-tooltip="Danh sách yêu thích">Danh sách yêu thích</a>-->
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tt-collapse-block">
+								<div class="tt-collapse-title tt-poin-comments">BÌNH LUẬN</div>
+									<div class="tt-collapse-content">
+										<div class="tt-review-block">
+											<div class="tt-row-custom-02">
+												<div class="col-item">
+													<!-- <h2 class="tt-title" th:text="productReview.size()">
+														1 REVIEW FOR VARIABLE PRODUCT
+													</h2> -->
+												</div>
+												<div class="col-item">
+													<a href="/addReview">Viết đánh giá</a>
+												</div>
+											</div>
+											<div class="tt-review-comments" th:each="review: ${productReview}">
+												<div class="tt-item">
+													<div class="tt-content">
+														<div class="tt-rating">
+												            <i th:each="star : ${review.starRating}" th:classappend="${star} ? 'icon-star' : 'icon-star-empty'"></i>
+												        </div>
+														<div class="tt-comments-info">
+															<span class="username"><span  th:text="${review.user.name}" th:if="${user != null}">ADRIAN</span></span>
+															<span class="username"><span  th:text="${name}" th:if="${name != null}">ADRIAN</span></span>
+															<span class="time"> <span th:text="${review.createdAt}"> January 14, 2017</span></span>
+														</div>
+														<div class="tt-comments-title" th:text="${review.title}">Very Good!</div>
+														<p th:text="${review.content}">
+															Ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+														</p>
+													</div>
+												</div>
+											</div>
+											<div class="tt-review-form">
+											    <div class="tt-message-info">
+											        TRỞ THÀNH NGƯỜI ĐẦU TIÊN ĐÁNH GIÁ<span>“<span th:text="${product[1]}"></span>”</span>
+											    </div>
+											    <div class="tt-rating-indicator">
+											        <div class="tt-title">
+											            ĐÁNH GIÁ CỦA BẠN 
+											            
+											        </div>
+											    </div>
+											    <form class="form-default" th:action="@{/addReview}" method="POST">
+											        <input type="hidden" name="productId" th:value="${product[0]}">
+											        <span class="rating">
+												        <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 stars"></label>
+												        <input type="radio" id="star4" name="rating" value="4" required><label for="star4" title="4 stars"></label>
+												        <input type="radio" id="star3" name="rating" value="3" required><label for="star3" title="3 stars"></label>
+												        <input type="radio" id="star2" name="rating" value="2" required><label for="star2" title="2 stars"></label>
+												        <input type="radio" id="star1" name="rating" value="1" required><label for="star1" title="1 star"></label>
+													</span>
+											        <div class="form-group">
+											            <label for="inputTitle" class="control-label">TIÊU ĐỀ</label>
+											            <input type="text" class="form-control" id="inputTitle" placeholder="Enter your title" name="title" required>
+											        </div>
+											        <div class="form-group">
+											            <label for="textarea" class="control-label">NHẬN XÉT</label>
+											            <textarea class="form-control" id="textarea" placeholder="Enter your review" rows="8" name="content" required></textarea>
+											        </div>
+											        <div class="form-group">
+											            <button type="submit" class="btn">GỬI</button>
+											        </div>
+											    </form>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-indent wrapper-social-icon">
+		<div class="container">
+			<ul class="tt-social-icon justify-content-center">
+				<li><a class="icon-g-64" href="http://www.facebook.com/"></a></li>
+				<li><a class="icon-h-58" href="http://www.twitter.com/"></a></li>
+				<li><a class="icon-g-66" href="http://www.google.com/"></a></li>
+				<li><a class="icon-g-67" href="http://instagram.com/"></a></li>
+			</ul>
+		</div>
+	</div>
+	<!--<div class="container-indent">
+		<div class="container container-fluid-custom-mobile-padding">
+			<div class="tt-block-title text-left">
+				<h3 class="tt-title-small">Cùng thể loại</h3>
+			</div>
+				<div class="tt-carousel-products row arrow-location-right-top tt-alignment-img tt-layout-product-item slick-animated-show-js">
+				<div class="col-2 col-md-4 col-lg-3">
+					<div class="tt-product thumbprod-center">
+						<div class="tt-image-box">
+							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
+							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
+							<a href="product.html">
+								<span class="tt-img"><img src="images/product/product-16.jpg" alt=""></span>
+								<span class="tt-img-roll-over"><img src="images/product/product-16-02.jpg" alt=""></span>
+							</a>
+						</div>
+						<div class="tt-description">
+							<div class="tt-row">
+								<ul class="tt-add-info">
+									<li><a href="#">T-SHIRTS</a></li>
+								</ul>
+							</div>
+							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
+							<div class="tt-price">
+								$24
+							</div>
+							<div class="tt-product-inside-hover">
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
+								</div>
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+									<a href="#" class="tt-btn-wishlist"></a>
+									<a href="#" class="tt-btn-compare"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2 col-md-4 col-lg-3">
+					<div class="tt-product thumbprod-center">
+						<div class="tt-image-box">
+							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
+							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
+							<a href="product.html">
+								<span class="tt-img"><img src="images/product/product-17.jpg" alt=""></span>
+								<span class="tt-img-roll-over"><img src="images/product/product-17-01.jpg" alt=""></span>
+							</a>
+						</div>
+						<div class="tt-description">
+							<div class="tt-row">
+								<ul class="tt-add-info">
+									<li><a href="#">T-SHIRTS</a></li>
+								</ul>
+								<div class="tt-rating">
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star-half"></i>
+									<i class="icon-star-empty"></i>
+								</div>
+							</div>
+							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
+							<div class="tt-price">
+								$8
+							</div>
+							<div class="tt-product-inside-hover">
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
+								</div>
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+									<a href="#" class="tt-btn-wishlist"></a>
+									<a href="#" class="tt-btn-compare"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2 col-md-4 col-lg-3">
+					<div class="tt-product thumbprod-center">
+						<div class="tt-image-box">
+							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
+							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
+							<a href="product.html">
+								<span class="tt-img"><img src="images/product/product-18.jpg" alt=""></span>
+								<span class="tt-img-roll-over"><img src="images/product/product-18-02.jpg" alt=""></span>
+							</a>
+						</div>
+						<div class="tt-description">
+							<div class="tt-row">
+								<ul class="tt-add-info">
+									<li><a href="#">T-SHIRTS</a></li>
+								</ul>
+							</div>
+							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
+							<div class="tt-price">
+								$46
+							</div>
+							<div class="tt-option-block">
+								<ul class="tt-options-swatch">
+									<li><a class="options-color tt-color-bg-01" href="#"></a></li>
+									<li><a class="options-color tt-color-bg-02" href="#"></a></li>
+								</ul>
+							</div>
+							<div class="tt-product-inside-hover">
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
+								</div>
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+									<a href="#" class="tt-btn-wishlist"></a>
+									<a href="#" class="tt-btn-compare"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2 col-md-4 col-lg-3">
+					<div class="tt-product thumbprod-center">
+						<div class="tt-image-box">
+							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
+							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
+							<a href="product.html">
+								<span class="tt-img"><img src="images/product/product-19.jpg" alt=""></span>
+								<span class="tt-img-roll-over"><img src="images/product/product-19-02.jpg" alt=""></span>
+							</a>
+						</div>
+						<div class="tt-description">
+							<div class="tt-row">
+								<ul class="tt-add-info">
+									<li><a href="#">T-SHIRTS</a></li>
+								</ul>
+								<div class="tt-rating">
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+									<i class="icon-star"></i>
+								</div>
+							</div>
+							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
+							<div class="tt-price">
+								$35
+							</div>
+							<div class="tt-product-inside-hover">
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
+								</div>
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+									<a href="#" class="tt-btn-wishlist"></a>
+									<a href="#" class="tt-btn-compare"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2 col-md-4 col-lg-3">
+					<div class="tt-product thumbprod-center">
+						<div class="tt-image-box">
+							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
+							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
+							<a href="product.html">
+								<span class="tt-img"><img src="images/product/product-14.jpg" alt=""></span>
+								<span class="tt-img-roll-over"><img src="images/product/product-14-02.jpg" alt=""></span>
+							</a>
+						</div>
+						<div class="tt-description">
+							<div class="tt-row">
+								<ul class="tt-add-info">
+									<li><a href="#">T-SHIRTS</a></li>
+								</ul>
+							</div>
+							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
+							<div class="tt-price">
+								$12
+							</div>
+							<div class="tt-product-inside-hover">
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
+								</div>
+								<div class="tt-row-btn">
+									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+									<a href="#" class="tt-btn-wishlist"></a>
+									<a href="#" class="tt-btn-compare"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>-->
+	<div class="container-indent">
+	    <div class="container container-fluid-custom-mobile-padding">
+	        <div class="tt-block-title text-left">
+	            <h3 class="tt-title-small">Cùng thể loại</h3>
+	        </div>
+	        <div class="tt-carousel-products row arrow-location-right-top tt-alignment-img tt-layout-product-item slick-animated-show-js">
+	            <div th:each="product : ${relatedProducts}" class="col-2 col-md-4 col-lg-3">
+	                <div class="tt-product thumbprod-center">
+	                    <div class="tt-image-box">
+	                        <!--<a th:href="@{'/product/' + ${product.id}}" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView" data-tooltip="Quick View" data-tposition="left"></a>
+	                        <a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
+	                        <a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>-->
+	                        <a href="#" class="tt-btn-wishlist" th:if="${isSignedIn}" data-tooltip="Yêu thích" th:classappend="${product.isWishList} ? 'active' : ''" data-tposition="left"></a>
+							<input class="productBoxId" type="hidden" th:value="${product.id}">
+							<a th:href="@{/product/} + ${product.id}">
+								<span class="tt-img"><img th:src="${product.primaryImage()}" alt="image"></span>
+							</a>
+	                    </div>
+	                    <div class="tt-description">
+	                        <div class="tt-row">
+	                            <ul class="tt-add-info">
+	                                <li><a href="#" th:text="${product.brand.name}"></a></li>
+	                            </ul>
+	                        </div>
+	                        <h2 class="tt-title"><a th:href="@{/product/} + ${product.id}">
+								<td th:text="${product.name}"></td></a> <!-- + <' - ' + product.versionName-->
+							</h2>
+	                        <div class="tt-price" th:text="${product.formatPrice()}">price</div>
+	                        <div th:text="${product.status}">status</div>
+	                        <div class="tt-product-inside-hover">
+	                            <div class="tt-row-btn"> 
+									<p th:if="${message}" th:text="${message}"></p>
+									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
+
+									<style>
+										.disabled {
+									    pointer-events: none;
+									    cursor: default;
+									}
+									</style>
+ 								</div>
+	                            <!--<div class="tt-row-btn">
+	                                <a th:href="@{'/product/' + ${product.id}}" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+	                                <a href="#" class="tt-btn-wishlist"></a>
+	                                <a href="#" class="tt-btn-compare"></a>
+	                            </div>-->
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+
+<!-- footer -->
+<footer th:replace="shopper/fragments/footer"></footer>
+
+<!-- Modal -->
+<div th:replace="shopper/fragments/modal :: size_guide"></div>
+<div th:replace="shopper/fragments/modal :: shipping"></div>
+
+<script src="external/jquery/jquery.min.js"></script>
+<script src="external/bootstrap/js/bootstrap.min.js"></script>
+<script src="external/elevatezoom/jquery.elevatezoom.js"></script>
+<script src="external/slick/slick.min.js"></script>
+<script src="external/panelmenu/panelmenu.js"></script>
+<script src="external/air-sticky/air-sticky-block.min.js"></script>
+<script src="external/lazyLoad/lazyload.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.querySelector('.tt-collapse-btn');
+    const content = document.querySelector('.tt-collapse-content');
+
+    btn.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent event bubbling
+        content.classList.toggle('open');
+    });
+
+    // Optional: Close the collapsible content when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!btn.contains(event.target) && !content.contains(event.target)) {
+            content.classList.remove('open');
+        }
+    });
+});
+</script>
+<!-- form validation and sending to mail -->
+<script th:src="@{/shopper/js/cart.js}"></script>
+<script th:src="@{/shopper/js/header.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/main.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/map-init.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/order-detail.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/product.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/product-box.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/product-listing.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/toastr.min.js}" type="text/javascript"></script>
+<script th:src="@{/shopper/js/wishlist.js}" type="text/javascript"></script>
+<script src="https://kit.fontawesome.com/e8c97ff706.js" crossorigin="anonymous"></script>
+</body>
+</html>

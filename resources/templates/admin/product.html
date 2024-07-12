@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Product</title>
+	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
+	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+	<link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
+	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<!-- header -->
+	<header th:replace="admin/fragments/header"></header>
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+				<!-- begin:: Aside -->
+				<div th:replace="admin/fragments/sidebar"></div>
+				<!-- end:: Aside -->
+				
+				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+					<!-- begin:: Header -->
+					<!--<div th:replace="admin/fragments/header :: header"></div>-->
+					<!-- end:: Header -->
+
+					<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+						<!-- begin:: Content Head -->
+						<!--<div th:replace="admin/fragments/header :: sub_header"></div>-->
+						<!-- end:: Content Head -->
+						
+						<!-- begin:: Content -->
+						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+							<div class="kt-portlet kt-portlet--mobile">
+								<h3 class="kt-portlet__head-title text-center">
+									Danh Sách Tài Liệu
+								</h3>
+								<div class="kt-portlet__head kt-portlet__head--lg">
+									<div class="kt-portlet__head-label">
+										<table class="w3-table-all">
+										    <thead>
+										        <tr>
+										            <th>ID</th>
+										            <th>Tên</th>
+										            <th>Mô tả</th>
+										            <!--<th>Price</th>-->
+										            <th>Is Delete</th>
+										            <th>Trạng thái</th><!--
+										            <th>Version Name</th>-->
+										            <th>Tác giả</th>
+										            <th>Thể loại</th>
+										            <th>Hành động</th>
+										        </tr>
+										    </thead>
+										    <tbody>
+										        <tr th:each="product : ${product}">
+										            <td th:text="${product.id}"></td>
+										            <td th:text="${product.name}"></td>
+										            <td th:text="${product.description}"></td>
+										            <!--<td th:text="${product.formatPrice()}"></td>-->
+										            <td th:text="${product.isDelete}"></td>
+										            <td th:text="${product.status}"></td>
+										            <!--<td th:text="${product.versionName}"></td>-->
+										            <td th:text="${product.brandId} + ' : ' + ${product.brand.name}"></td>
+										            <td th:text="${product.categoryId} + ' : ' + ${product.category.name}"></td>
+										            <td>
+										                <a th:href="@{/update/{id}(id=${product.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+										            </td>
+										        </tr>
+										    </tbody>
+										</table>
+									</div>
+								</div>
+								<div class="kt-portlet__head kt-portlet__head--lg">
+									<div class="kt-portlet__head-toolbar">
+										<div class="kt-portlet__head-wrapper">
+											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+												<i class="la la-long-arrow-left"></i>
+												Quay Lại
+											</a>
+											&nbsp;
+											<div class="dropdown dropdown-inline">
+											    <a href="/addProduct" class="btn btn-brand btn-icon-sm">
+											        <i class="flaticon2-plus"></i> Thêm Mới
+											    </a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end:: Content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	<footer th:replace="admin/fragments/footer"></footer>
+</body>
+</html>
