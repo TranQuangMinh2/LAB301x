@@ -15,34 +15,69 @@
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <h1>Update Product Size</h1>
-	<form action="#" th:action="@{/updateProductSize/{id}(id=${productSize.id})}" th:object="${productSize}" method="post">
-	    <table>
-			<tr>
-				<td>
-					<div class="form-group">
-				        <label for="">Quantity</label>
-				        <input type="text" th:field="*{quantity}" id="" class="form-control">
-				    </div>
-				</td>
-				<td>
-					<div class="form-group">
-				        <label for="">Size</label>
-				        <input type="text" th:field="*{size}" id="" class="form-control">
-				    </div>
-				</td>
-			</tr>
-			<tr>
-	            <td colspan="2">
-					<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
-						<i class="la la-long-arrow-left"></i>Quay Lại
-					</a>
-				</td>
-				<td>
-					<button type="submit" class="btn btn-primary">Update</button>			
-				</td>
-			</tr>
-		</table>
-	</form>
+	<!-- header -->
+	<header th:replace="admin/fragments/header"></header>
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+				<!-- begin:: Aside -->
+				<div th:replace="admin/fragments/sidebar"></div>
+				<!-- end:: Aside -->
+				
+				<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+					<!-- begin:: Header -->
+					<!--<div th:replace="admin/fragments/header :: header"></div>-->
+					<!-- end:: Header -->
+
+					<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+						<!-- begin:: Content Head -->
+						<!--<div th:replace="admin/fragments/header :: sub_header"></div>-->
+						<!-- end:: Content Head -->
+						
+						<!-- begin:: Content -->
+						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+							<div class="kt-portlet kt-portlet--mobile">
+							<h1>Cập nhật kích cỡ sách</h1>
+							<form action="#" th:action="@{/updateProductSize/{id}(id=${productSize.id})}" th:object="${productSize}" method="post">
+							    <table>
+									<tr>
+										<!-- <td>
+											<div class="form-group">
+										        <label for="">Quantity</label>
+										        <input type="text" th:field="*{quantity}" id="" class="form-control">
+										    </div>
+										</td> -->
+										<td>
+											<div class="form-group">
+										        <label for="">Kích cỡ</label>
+										        <select th:field="*{size}" id="size" class="form-control">
+												    <option value="0">0</option>
+												    <option value="1">1</option>
+												</select>
+										    </div>
+										</td>
+									</tr>
+									<tr>
+							            <td colspan="2">
+											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+												<i class="la la-long-arrow-left"></i>Quay Lại
+											</a>
+										</td>
+										<td>
+											<button type="submit" class="btn btn-primary">Cập nhật</button>			
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+						<!-- end:: Content -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="admin/fragments/footer"></footer>
 </body>
 </html>

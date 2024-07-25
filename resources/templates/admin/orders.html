@@ -16,7 +16,88 @@
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+	<style>
+		/* CSS thêm vào */
+		.kt-container {
+		    max-width: 100%;
+		    overflow-x: auto;
+		}
+		.search-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-form .form-group {
+            margin-bottom: 15px;
+        }
+        .search-form .form-control, .search-form .bootstrap-select {
+            border-radius: 4px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        .search-form .form-control:focus, .search-form .bootstrap-select:focus {
+            border-color: #5d78ff;
+        }
+        .search-form label {
+            font-weight: 600;
+        }
+        .search-form .btn-default {
+            background-color: #5d78ff;
+            border-color: #5d78ff;
+            color: #fff;
+        }
+        .search-form .btn-default:hover {
+            background-color: #4c67d6;
+            border-color: #4c67d6;
+        }
+        .search-form .kt-input-icon__icon--left span {
+            color: #888;
+        }
+        .pagination-controls {
+		    text-align: center;
+		    margin-top: 20px;
+		}
+		
+		.pagination-control {
+		    margin: 0 5px;
+		    padding: 10px;
+		    border: 1px solid #ddd;
+		    border-radius: 4px;
+		    background-color: #f9f9f9;
+		    cursor: pointer;
+		    font-size: 16px;
+		}
+		
+		.pagination-control:hover {
+		    background-color: #ddd;
+		}
+		
+		.pagination-control:focus {
+		    outline: none;
+		}
+		
+		.page-button {
+		    margin: 0 5px;
+		    padding: 5px 10px;
+		    border: 1px solid #ddd;
+		    border-radius: 4px;
+		    background-color: #f9f9f9;
+		    cursor: pointer;
+		}
+		
+		.page-button:hover {
+		    background-color: #ddd;
+		}
+		
+		.page-button:focus {
+		    outline: none;
+		}
+		
+		.page-button.current {
+		    font-weight: bold;
+		}
+	</style>
 </head>
 <body>
 <header th:replace="admin/fragments/header"></header>
@@ -46,7 +127,7 @@
 									Danh Sách Đơn Hàng
 								</h3>
 								<div class="kt-portlet__head kt-portlet__head--lg">
-									<div class="kt-portlet__head-label">
+									<div class="kt-portlet__head-label" style="overflow-x:auto;">
 									</div>
 									<div class="kt-portlet__head-toolbar d-none">
 										<div class="kt-portlet__head-wrapper">
@@ -66,94 +147,63 @@
 								<div class="kt-portlet__body">
 						
 									<!--begin: Search Form -->
-								<form action="/orders" method="get">
-									<div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
-										<div class="row align-items-center">
-											<div class="col-xl-12 order-2 order-xl-1">
-												<div class="row align-items-center">
-													<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-														<div class="kt-input-icon kt-input-icon--left">
-															<input type="text" class="form-control" placeholder="Tìm kiếm Tên, Địa chỉ" name="generalSearch" autocomplete="off">
-															<span class="kt-input-icon__icon kt-input-icon__icon--left">
-																<span><i class="la la-search"></i></span>
-															</span>
-														</div>
-													</div>
-													<div style="" class="col-md-2 kt-margin-b-20-tablet-and-mobile">
-														<div class="kt-form__group kt-form__group--inline">
-															<div class="kt-form__label">
-																<label>Phương thức:</label>
-															</div>
-															<div class="kt-form__control">
-																<select class="form-control bootstrap-select kt_form_method" id="kt_form_type" name="paymentMethod">
-																	<option value="">Tất cả</option>
-																	<option value="ATM">ATM</option>
-																	<option value="COD">COD</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<div style="" class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-														<div class="kt-form__group kt-form__group--inline">
-															<div class="kt-form__label">
-																<label>Thanh toán:</label>
-															</div>
-															<div class="kt-form__control">
-																<select class="form-control bootstrap-select kt_form_payment" id="kt_form_status" name="paymentStatus">
-																	<option value="">Tất cả</option>
-																	<option value="Chờ thanh toán ATM">Chờ thanh toán ATM</option>
-																	<option value="Chưa thanh toán">Chưa thanh toán</option>
-																	<option value="Đã thanh toán">Đã thanh toán</option>
-																	<option value="Đã hoàn tiền">Đã hoàn tiền</option>
-																	<option value="Đã hủy bỏ">Đã hủy bỏ</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<div style="" class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-														<div class="kt-form__group kt-form__group--inline">
-															<div class="kt-form__label">
-																<label>Vận chuyển:</label>
-															</div>
-															<div class="kt-form__control">
-																<select class="form-control bootstrap-select kt_form_delivery" id="kt_form_status" name="deliveryStatus">
-																	<option value="">Tất cả</option>
-																	<option value="Chưa xét duyệt">Chưa xét duyệt</option>
-																	<option value="Chờ giao hàng">Chờ giao hàng</option>
-																	<option value="Chờ giao hàng lần 2">Chờ giao hàng lần 2</option>
-																	<option value="Đang giao hàng">Đang giao hàng</option>
-																	<option value="Đang giao hàng lần 2">Đang giao hàng lần 2</option>
-																	<option value="Giao hàng thành công">Giao hàng thành công</option>
-																	<option value="Đã hủy">Đã hủy</option>
-																</select>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-													    <div class="kt-form__group kt-form__group--inline">
-													        <div class="kt-form__label">
-													            <label>Tổng số tiền:</label>
-													        </div>
-													        <div class="kt-form__control">
-													            <input type="number" class="form-control" placeholder="Tổng số tiền" name="totalAmount" min="0">
-													        </div>
-													    </div>
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-4 order-1 order-xl-2 kt-align-right">
-						                <button type="submit" class="btn btn-default">
-						                    <i class="la la-search"></i> Tìm kiếm
-						                </button>
-												<div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
-											</div>
-										
-										</div>
-									</div>
-								</form>
-									<!--end: Search Form -->
+                            <form action="/orders" method="get" class="search-form">
+                                <div class="form-row align-items-center">
+                                    <div class="col-md-3 form-group">
+                                        <label for="generalSearch">Tìm kiếm Tên, Địa chỉ</label>
+                                        <div class="kt-input-icon kt-input-icon--left">
+                                            <input type="text" class="form-control" id="generalSearch" placeholder="Tìm kiếm Tên, Địa chỉ" name="generalSearch" autocomplete="off">
+                                            <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="kt_form_type">Phương thức</label>
+                                        <select class="form-control bootstrap-select kt_form_method" id="kt_form_type" name="paymentMethod">
+                                            <option value="">Tất cả</option>
+                                            <option value="ATM">ATM</option>
+                                            <option value="COD">COD</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="kt_form_status">Thanh toán</label>
+                                        <select class="form-control bootstrap-select kt_form_payment" id="kt_form_status" name="paymentStatus">
+                                            <option value="">Tất cả</option>
+                                            <option value="Chờ thanh toán ATM">Chờ thanh toán ATM</option>
+                                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                            <option value="Đã thanh toán">Đã thanh toán</option>
+                                            <option value="Đã hoàn tiền">Đã hoàn tiền</option>
+                                            <option value="Đã hủy bỏ">Đã hủy bỏ</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="kt_form_status">Vận chuyển</label>
+                                        <select class="form-control bootstrap-select kt_form_delivery" id="kt_form_status" name="deliveryStatus">
+                                            <option value="">Tất cả</option>
+                                            <option value="Chưa xét duyệt">Chưa xét duyệt</option>
+                                            <option value="Chờ giao hàng">Chờ giao hàng</option>
+                                            <option value="Chờ giao hàng lần 2">Chờ giao hàng lần 2</option>
+                                            <option value="Đang giao hàng">Đang giao hàng</option>
+                                            <option value="Đang giao hàng lần 2">Đang giao hàng lần 2</option>
+                                            <option value="Giao hàng thành công">Giao hàng thành công</option>
+                                            <option value="Đã hủy">Đã hủy</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label for="totalAmount">Tổng số tiền</label>
+                                        <input type="number" class="form-control" id="totalAmount" placeholder="Tổng số tiền" name="totalAmount" min="0">
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="la la-search"></i> Tìm kiếm
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--end: Search Form -->
 								</div>
-								<div class="kt-portlet__body kt-portlet__body--fit">
+								<div class="kt-portlet__body kt-portlet__body--fit" style="overflow-x:auto;">
 									<!--begin: Datatable -->
 									<!--<div class="kt-datatable" id="ajax_data"></div>-->
 									<table class="w3-table-all">
@@ -174,7 +224,7 @@
 									            <th>Xem chi tiết</th>
 									        </tr>
 									    </thead>
-									    <tbody>
+									    <tbody id="productTableBody">
 									        <tr th:each="orderWeb : ${orderWebs}">
 									            <td th:text="${orderWeb.id}"></td>
 									            <td th:text="${orderWeb.createdAt}"></td>
@@ -196,7 +246,14 @@
 									        </tr>
 									    </tbody>
 									</table>
-						
+									<!-- Pagination Controls -->
+									<div id="paginationControls" class="pagination-controls">
+									    <button id="firstPage" class="pagination-control"><i class="fa fa-angle-double-left"></i></button>
+									    <button id="prevPage" class="pagination-control"><i class="fa fa-angle-left"></i></button>
+									    <!-- Các số trang sẽ được tạo động ở đây -->
+									    <button id="nextPage" class="pagination-control"><i class="fa fa-angle-right"></i></button>
+									    <button id="lastPage" class="pagination-control"><i class="fa fa-angle-double-right"></i></button>
+									</div>
 									<!--end: Datatable -->
 								</div>
 							</div>
@@ -207,6 +264,128 @@
 			</div>
 		</div>
 	<footer th:replace="admin/fragments/footer"></footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const rowsPerPage = 5; // Số hàng trên mỗi trang
+    let currentPage = 1; // Trang hiện tại
+
+    function paginateTable() {
+        const rows = Array.from(document.querySelectorAll('#productTableBody tr'));
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+        }
+
+        function createPaginationControls() {
+            const paginationControls = document.getElementById('paginationControls');
+            paginationControls.innerHTML = '';
+
+            const firstButton = document.createElement('button');
+            firstButton.id = 'firstPage';
+            firstButton.className = 'pagination-control';
+            firstButton.innerHTML = '<i class="fa fa-angle-double-left"></i>';
+            firstButton.addEventListener('click', () => {
+                currentPage = 1;
+                showPage(currentPage);
+                updatePaginationControls();
+            });
+            paginationControls.appendChild(firstButton);
+
+            const prevButton = document.createElement('button');
+            prevButton.id = 'prevPage';
+            prevButton.className = 'pagination-control';
+            prevButton.innerHTML = '<i class="fa fa-angle-left"></i>';
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    updatePaginationControls();
+                }
+            });
+            paginationControls.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = 'page-button';
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updatePaginationControls();
+                });
+                paginationControls.appendChild(button);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.id = 'nextPage';
+            nextButton.className = 'pagination-control';
+            nextButton.innerHTML = '<i class="fa fa-angle-right"></i>';
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                    updatePaginationControls();
+                }
+            });
+            paginationControls.appendChild(nextButton);
+
+            const lastButton = document.createElement('button');
+            lastButton.id = 'lastPage';
+            lastButton.className = 'pagination-control';
+            lastButton.innerHTML = '<i class="fa fa-angle-double-right"></i>';
+            lastButton.addEventListener('click', () => {
+                currentPage = totalPages;
+                showPage(currentPage);
+                updatePaginationControls();
+            });
+            paginationControls.appendChild(lastButton);
+        }
+
+        function updatePaginationControls() {
+            const buttons = document.querySelectorAll('#paginationControls .page-button');
+            buttons.forEach((button, index) => {
+                button.classList.toggle('current', index + 1 === currentPage);
+            });
+
+            // Cập nhật trạng thái của các nút phân trang đặc biệt
+            document.getElementById('firstPage').disabled = (currentPage === 1);
+            document.getElementById('prevPage').disabled = (currentPage === 1);
+            document.getElementById('nextPage').disabled = (currentPage === totalPages);
+            document.getElementById('lastPage').disabled = (currentPage === totalPages);
+        }
+
+        showPage(currentPage);
+        createPaginationControls();
+    }
+
+    paginateTable();
+
+    function updateTable() {
+        var name = document.getElementById('generalSearch').value.toLowerCase();
+        var status = document.getElementById('kt_form_status').value.toLowerCase();
+
+        var rows = Array.from(document.querySelectorAll('#productTableBody tr'));
+        rows.forEach(function(row) {
+            var cellName = row.cells[1].textContent.toLowerCase();
+            var cellStatus = row.cells[3].textContent.toLowerCase();
+
+            var matchesName = name === '' || cellName.includes(name);
+            var matchesStatus = status === '' || cellStatus.includes(status);
+
+            row.style.display = (matchesName && matchesStatus) ? '' : 'none';
+        });
+
+        paginateTable();
+    }
+
+    document.getElementById('searchButton').addEventListener('click', updateTable);
+    document.getElementById('kt_form_status').addEventListener('change', updateTable);
+});
+</script>
 </body>
 </html>
 

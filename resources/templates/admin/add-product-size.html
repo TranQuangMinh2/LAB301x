@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Product</title>
+    <title>Add Product Size</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
 	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
@@ -14,7 +14,7 @@
 	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <!-- header -->
@@ -40,62 +40,38 @@
 						
 						<!-- begin:: Content -->
 						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-							<h1>Thêm tài liệu</h1>
-						    <form action="#" th:action="@{/addProduct}" method="post"> <!--  th:object="${product}" -->
-						        <table class="w3-table-all">
-						            <tr>
-						                <td>Tên:</td>
-						                <td><input type="text" th:field="*{product.name}" /></td>
-						            </tr>
-						            <tr>
-						                <td>Mô tả:</td>
-						                <td><input type="text" th:field="*{product.description}" /></td>
-						            </tr>
-						            <tr>
-						                <td>Giá:</td>
-						                <td><input type="text" th:field="*{product.price}"/></td>
-						            </tr>
+							<div class="kt-portlet kt-portlet--mobile">
+							<h1>Add Product Size</h1>
+						    <form action="#" th:action="@{/addProductSize}" th:object="${productSize}" method="post">
+						        <table>
 						            <!-- <tr>
-						                <td>Xóa?:</td>
-						                <td><input type="checkbox" th:field="*{product.isDelete}" /></td>
+						                <td>Quantity:</td>
+						                <td><input type="text" th:field="*{quantity}" /></td>
 						            </tr> -->
 						            <tr>
-						                <td>Trạng thái:</td>
+						                <td>Kích cỡ:</td>
 						                <td>
-						                    <select th:field="*{product.status}">
-						                        <option value="Còn sách">Còn sách</option>
-												<option value="Hết sách">Hết sách</option>
+						                <select th:field="*{size}" id="size" class="form-control">
+										    <option value="0">0</option>
+										    <option value="1">1</option>
+										</select>
+										</td>
+						            </tr>
+						            <tr>
+						                <td>Tài liệu:</td>
+						                <td>
+						                    <select th:field="*{productId}">
+						                        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.id} + ' : ' + ${product.name}"></option>
 						                    </select>
 						                </td>
 						            </tr>
-									<tr>
-									    <td>Tác giả:</td>
-									    <td>
-									        <select th:field="*{product.brandId}">
-									            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.id} + ' : ' + ${brand.name}"></option>
-									        </select>
-									    </td>
-									</tr>
 						            <tr>
-						                <td>Danh mục:</td>
-						                <td>
-									        <select th:field="*{product.categoryId}">
-									            <option th:each="category : ${categorys}" th:value="${category.id}" th:text="${category.id} + ' : ' + ${category.name}"></option>
-									        </select>
-								        </td>
-						            </tr>
-						            <tr>
-						            	<td><input type="hidden" th:field="*{product.versionName}" th:value="v1.0"/></td>
-	                                    <td><input type="hidden" th:field="*{productSize.size}" th:value="41"/></td>
-						            </tr>
-						            <tr>
-										<td>
+						                <td colspan="2">
 											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
-												<i class="la la-long-arrow-left"></i>
-												Quay Lại
+												<i class="la la-long-arrow-left"></i>Quay Lại
 											</a>
 										</td>
-						                <td colspan="2"><button type="submit" class="btn btn-brand btn-icon-sm">Thêm sản phẩm</button></td>
+						                <td colspan="2"><button type="submit" class="btn btn-brand btn-icon-sm">Thêm kích cỡ tài liệu</button></td>
 						            </tr>
 						        </table>
 						    </form>
@@ -105,6 +81,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	<footer th:replace="admin/fragments/footer"></footer>
 </body>
 </html>

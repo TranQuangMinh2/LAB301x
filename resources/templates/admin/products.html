@@ -14,6 +14,80 @@
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+        .search-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search-form .form-group {
+            margin-bottom: 15px;
+        }
+        .search-form .form-control, .search-form .bootstrap-select {
+            border-radius: 4px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        .search-form .form-control:focus, .search-form .bootstrap-select:focus {
+            border-color: #5d78ff;
+        }
+        .search-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .search-form .btn-brand {
+            background-color: #5d78ff;
+            border-color: #5d78ff;
+            color: #fff;
+        }
+        .search-form .btn-brand:hover {
+            background-color: #4c67d6;
+            border-color: #4c67d6;
+        }
+        .search-form .input-group-append .btn {
+            border-radius: 0 4px 4px 0;
+        }
+        .search-form .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .search-form .input-group .form-control {
+            flex: 1;
+        }
+        .search-form .input-group-append {
+            margin-left: -1px;
+        }
+        .search-form .form-group select {
+            width: 100%;
+        }
+        @media (max-width: 767.98px) {
+            .search-form .row {
+                flex-direction: column;
+            }
+            .search-form .input-group,
+            .search-form .form-group {
+                width: 100%;
+            }
+            .search-form .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .search-form .row {
+            margin: 0 -15px;
+        }
+        .search-form .col-md-6, .search-form .col-xl-4 {
+            padding: 0 15px;
+        }
+    </style>
 </head>
 <body>
 	<!-- header -->
@@ -47,34 +121,39 @@
 								
 								</div> -->
 								<div class="kt-portlet__head kt-portlet__head--lg">
-									<div class="kt-portlet__head-label">
-										<table class="w3-table-all w-100" style="width: 100%;">
-										    <tr>
-										        <th>ID</th>
-										        <th>Tên</th>
-										        <th>Mô tả</th>
-										        <!--<th>Price</th>-->
-										        <th>Trạng thái</th>
-										        <!--<th>Version Name</th>
-										        <th>Color ID</th>-->
-										        <th>Ảnh</th>
-										        <!--<th>Size</th>-->
-										        <th>Số lượng</th>
-										    </tr>
-										    <tr th:each="product : ${products}">
-										        <td th:text="${product[0]}"></td>
-										        <td th:text="${product[1]}"></td>
-										        <td th:text="${product[2]}"></td>
-										        <!--<td th:text="${#numbers.formatCurrency(product[3])}"></td>-->
-										        <td th:text="${product[4]}"></td>
-										       <!-- <td th:text="${product[5]}"></td>
-										        <td th:text="${product[6]}"></td>-->
-										        <td><img th:src="${product[7]}" alt="Product image" style="width: 60px; height: 60px;"/></td>
-										        <!--<td th:text="${product[8]}"></td>-->
-										        <td th:text="${product[9]}"></td>
-										    </tr>
-										</table>
-									</div>
+									<div class="kt-portlet__body">
+										<!--begin: Search Form -->
+			                            <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 search-form">
+			                                <div class="row align-items-center">
+			                                    <div class="col-xl-8 order-2 order-xl-1">
+			                                        <div class="row align-items-center">
+			                                            <div class="col-md-6 kt-margin-b-20-tablet-and-mobile">
+			                                                <div class="input-group">
+			                                                    <input type="text" class="form-control" placeholder="Tìm kiếm theo tên..." id="generalSearch">
+			                                                </div>
+			                                            </div>
+			                                            <div class="col-md-6 kt-margin-b-20-tablet-and-mobile">
+			                                                <div class="form-group">
+			                                                    <label for="kt_form_status">Trạng thái:</label>
+			                                                    <select class="form-control bootstrap-select" id="kt_form_status">
+			                                                        <option value="">Chọn</option>
+			                                                        <option value="Còn sách">Còn sách</option>
+			                                                        <option value="Hết sách">Hết sách</option>
+			                                                    </select>
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
+			                                        <button id="searchButton" class="btn btn-brand btn-icon-sm">
+			                                            <i class="la la-search"></i> Tìm kiếm
+			                                        </button>
+			                                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <!--end: Search Form -->
+									</div>		
 								</div>
 								<div class="kt-portlet__head kt-portlet__head--lg">
 									<div class="kt-portlet__head-toolbar">
@@ -87,68 +166,33 @@
 											</a>
 										</div>
 									</div>
-								</div>		
-								<div class="kt-portlet__head kt-portlet__head--lg">
-									<div class="kt-portlet__body">
-										<!--begin: Search Form -->
-										<div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
-											<div class="row align-items-center">
-												<div class="col-xl-8 order-2 order-xl-1">
-													<div class="row align-items-center">
-														<div class="row">
-														    <div class="row">
-															    <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-															        <div class="input-group">
-															            <input type="text" class="form-control" placeholder="Tìm kiếm theo tên..." id="generalSearch">
-															            <div class="input-group-append">
-															                <button id="searchButton" class="btn btn-brand btn-icon-sm">
-															                    <i class="la la-search"></i> Tìm kiếm
-															                </button>
-															            </div>
-															        </div>
-															    </div>
-															    <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-															        <div class="form-group">
-															            <label for="kt_form_status">Trạng thái:</label>
-															            <select class="form-control bootstrap-select" id="kt_form_status">
-															                <option value="">Chọn</option>
-															                <option value="Còn sách">Còn sách</option>
-															                <option value="Hết sách">Hết sách</option>
-															            </select>
-															        </div>
-															    </div>
-															</div>
-														</div>
-														<!--<div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-															<div class="kt-form__group kt-form__group--inline">
-																<div class="kt-form__label">
-																	<label>Chương trình:</label>
-																</div>
-																<div class="kt-form__control">
-																	<select class="form-control bootstrap-select" id="kt_form_type">
-																		<option value="">Tất cả</option>
-																		<option value="1">Giảm giá</option>
-																		<option value="2">Không giảm giá</option>
-																	</select>
-																</div>
-															</div>
-														</div>-->
-													</div>
-												</div>
-												<div class="col-xl-4 order-1 order-xl-2 kt-align-right">
-													<a href="#" class="btn btn-default kt-hidden">
-														<i class="la la-cart-plus"></i> New Order
-													</a>
-													<div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
-												</div>
-											</div>
-										</div>
-							
-										<!--end: Search Form -->
-									</div>		
-								</div>
-							
-							
+								</div>	
+										<table class="w3-table-all w-100" style="width: 100%;">
+										    <tr>
+										        <th>ID</th>
+										        <th>Tên</th>
+										        <th>Mô tả</th>
+										        <!--<th>Price</th>-->
+										        <th>Trạng thái</th>
+										        <!--<th>Version Name</th>
+										        <th>Color ID</th>-->
+										        <th>Ảnh</th>
+										        <!--<th>Size</th>
+										        <th>Số lượng</th>-->
+										    </tr>
+										    <tr th:each="product : ${products}">
+										        <td th:text="${product[0]}"></td>
+										        <td th:text="${product[1]}"></td>
+										        <td th:text="${product[2]}"></td>
+										        <!--<td th:text="${#numbers.formatCurrency(product[3])}"></td>-->
+										        <td th:text="${product[4]}"></td>
+										       <!-- <td th:text="${product[5]}"></td>
+										        <td th:text="${product[6]}"></td>-->
+										        <td><img th:src="${product[7]}" alt="Product image" style="width: 60px; height: 60px;"/></td>
+										        <!--<td th:text="${product[8]}"></td>
+										        <td th:text="${product[9]}"></td>-->
+										    </tr>
+										</table>
 								<div class="kt-portlet__body kt-portlet__body--fit">
 							
 									<!--begin: Datatable -->

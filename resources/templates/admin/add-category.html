@@ -49,7 +49,12 @@
 							            <td><input type="text" th:field="*{name}" /></td>
 							        </tr>
 							        <tr>
-							            <td colspan="2"><button type="submit">Thêm danh mục</button></td>
+							        	<td colspan="2">
+							                <a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+							                    <i class="la la-long-arrow-left"></i>Quay Lại
+							                </a>
+							            </td>
+							            <td colspan="2"><button type="submit" class="btn btn-brand btn-icon-sm">Thêm danh mục</button></td>
 							        </tr>
 							    </table>
 							</form>
@@ -59,6 +64,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	<footer th:replace="admin/fragments/footer"></footer>
 </body>
 </html>

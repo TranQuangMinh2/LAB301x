@@ -35,6 +35,7 @@
 		<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	</head>
 
 	<!-- end::Head -->
@@ -66,15 +67,7 @@
 										<input class="form-control" type="password" placeholder="Nhập mật khẩu" name="password">
 									</div>
 									<div class="row kt-login__extra">
-										<div class="col">
-											<label class="kt-checkbox">
-												<input type="checkbox" name="remember"> Ghi nhớ
-												<span></span>
-											</label>
-										</div>
-										<div class="col kt-align-right">
-											<a href="javascript:;" id="kt_login_forgot" class="kt-login__link">Quên mật khẩu ?</a>
-										</div>
+										<div class="g-recaptcha" data-sitekey="6LcoJwEqAAAAAOQgi7yl3hrLtQen3VKAHrTdQA2F"></div>
 									</div>
 									<div class="kt-login__actions">
 										<button id="kt_login_signin_submit" class="btn btn-brand btn-elevate kt-login__btn-primary">Đăng Nhập</button>

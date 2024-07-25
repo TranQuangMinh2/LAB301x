@@ -41,7 +41,7 @@
 						<!-- begin:: Content -->
 						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 							<div class="kt-portlet kt-portlet--mobile">
-							<h1><i class="fa fa-pencil-square" aria-hidden="true"></i> người dùng</h1>
+							<h1>Cập nhật người dùng</h1>
 						    <form action="#" th:action="@{/updateUser/{id}(id=${user.id})}" th:object="${user}" method="post">
 								<table class="w3-table-all">
 								    <tr>
@@ -84,7 +84,7 @@
 												<i class="la la-long-arrow-left"></i>Quay Lại
 											</a>
 										</td>		
-								        <td colspan="2"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></button></td>
+								        <td colspan="2"><button type="submit" class="btn btn-primary">Cập nhật</button></td>
 								    </tr>
 								</table>
 						    </form>
@@ -94,6 +94,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	<footer th:replace="admin/fragments/footer"></footer>
 </body>
 </html>

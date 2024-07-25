@@ -41,7 +41,7 @@
 						<!-- begin:: Content -->
 						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 							<div class="kt-portlet kt-portlet--mobile">
-							<h1><i class="fa fa-pencil-square" aria-hidden="true"></i> tài liệu</h1>
+							<h1>Cập nhật tài liệu</h1>
 					    <form action="#" th:action="@{/update/{id}(id=${product.id})}" th:object="${product}" method="post">
 							<table class="w3-table-all">
 							    <tr>
@@ -56,10 +56,10 @@
 							        <td>Price:</td>
 							        <td><input type="text" th:field="*{price}" class="form-control"/></td>
 							    </tr>
-							    <tr>
+							    <!-- <tr>
 							        <td>Xóa?:</td>
 							    <td><input type="checkbox" th:field="*{isDelete}" /></td>
-							    </tr>
+							    </tr> -->
 							    <tr>
 							        <td>Trạng thái:</td>
 									<td>
@@ -94,7 +94,7 @@
 											<i class="la la-long-arrow-left"></i>Quay Lại
 										</a>
 									</td>		
-							        <td colspan="2"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></button></td>
+							        <td colspan="2"><button type="submit" class="btn btn-primary">Cập nhật</button></td>
 							    </tr>
 							</table>
 					

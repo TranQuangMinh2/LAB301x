@@ -14,6 +14,123 @@
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+        .search-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search-form .form-group {
+            margin-bottom: 15px;
+        }
+        .search-form .form-control, .search-form .bootstrap-select {
+            border-radius: 4px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        .search-form .form-control:focus, .search-form .bootstrap-select:focus {
+            border-color: #5d78ff;
+        }
+        .search-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .search-form .btn-brand {
+            background-color: #5d78ff;
+            border-color: #5d78ff;
+            color: #fff;
+        }
+        .search-form .btn-brand:hover {
+            background-color: #4c67d6;
+            border-color: #4c67d6;
+        }
+        .search-form .input-group-append .btn {
+            border-radius: 0 4px 4px 0;
+        }
+        .search-form .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .search-form .input-group .form-control {
+            flex: 1;
+        }
+        .search-form .input-group-append {
+            margin-left: -1px;
+        }
+        .search-form .form-group select {
+            width: 100%;
+        }
+        @media (max-width: 767.98px) {
+            .search-form .row {
+                flex-direction: column;
+            }
+            .search-form .input-group,
+            .search-form .form-group {
+                width: 100%;
+            }
+            .search-form .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .search-form .row {
+            margin: 0 -15px;
+        }
+        .search-form .col-md-6, .search-form .col-xl-4 {
+            padding: 0 15px;
+        }
+        .pagination-controls {
+		    text-align: center;
+		    margin-top: 20px;
+		}
+		
+		.pagination-control {
+		    margin: 0 5px;
+		    padding: 10px;
+		    border: 1px solid #ddd;
+		    border-radius: 4px;
+		    background-color: #f9f9f9;
+		    cursor: pointer;
+		    font-size: 16px;
+		}
+		
+		.pagination-control:hover {
+		    background-color: #ddd;
+		}
+		
+		.pagination-control:focus {
+		    outline: none;
+		}
+		
+		.page-button {
+		    margin: 0 5px;
+		    padding: 5px 10px;
+		    border: 1px solid #ddd;
+		    border-radius: 4px;
+		    background-color: #f9f9f9;
+		    cursor: pointer;
+		}
+		
+		.page-button:hover {
+		    background-color: #ddd;
+		}
+		
+		.page-button:focus {
+		    outline: none;
+		}
+		
+		.page-button.current {
+		    font-weight: bold;
+		}
+    </style>
 </head>
 <body>
 	<!-- header -->
@@ -44,31 +161,6 @@
 									Tác giả
 								</h3>
 								<div class="kt-portlet__head kt-portlet__head--lg">
-								<div class="kt-portlet__head-label">
-										<table class="w3-table-all">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>Tên</th>
-													<th>Hành động</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="brand : ${brand}">
-													<td th:text="${brand.id}"></td>
-													<td th:text="${brand.name}"></td>
-													<td>
-														<a th:href="@{/brand/{id}(id=${brand.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
-														<a th:href="@{/brand/delete/{id}(id=${brand.id})}" onclick="return confirm('Are you sure you want to delete this item?');">
-		                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-		                                                </a>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="kt-portlet__head kt-portlet__head--lg">
 									<div class="kt-portlet__head-toolbar">
 										<div class="kt-portlet__head-wrapper">
 											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
@@ -84,13 +176,165 @@
 										</div>
 									</div>
 								</div>
-						</div>
+									<table class="w3-table-all">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Tên</th>
+												<th>Hành động</th>
+											</tr>
+										</thead>
+										<tbody id="brandTableBody">
+											<tr th:each="brand : ${brand}">
+												<td th:text="${brand.id}"></td>
+												<td th:text="${brand.name}"></td>
+												<td>
+													<a th:href="@{/brand/{id}(id=${brand.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+													<a th:href="@{/brand/delete/{id}(id=${brand.id})}" onclick="return confirm('Are you sure you want to delete this item?');">
+	                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+	                                                </a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<!-- Pagination Controls -->
+									<div id="paginationControls" class="pagination-controls">
+									    <button id="firstPage" class="pagination-control"><i class="fa fa-angle-double-left"></i></button>
+									    <button id="prevPage" class="pagination-control"><i class="fa fa-angle-left"></i></button>
+									    <!-- Các số trang sẽ được tạo động ở đây -->
+									    <button id="nextPage" class="pagination-control"><i class="fa fa-angle-right"></i></button>
+									    <button id="lastPage" class="pagination-control"><i class="fa fa-angle-double-right"></i></button>
+									</div>
+								</div>
+							</div>
 						<!-- end:: Content -->
 					</div>
 				</div>
 			</div>
 		</div>
 	<footer th:replace="admin/fragments/footer"></footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const rowsPerPage = 5; // Số hàng trên mỗi trang
+    let currentPage = 1; // Trang hiện tại
+
+    function paginateTable() {
+        const rows = Array.from(document.querySelectorAll('#brandTableBody tr'));
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+        }
+
+        function createPaginationControls() {
+            const paginationControls = document.getElementById('paginationControls');
+            paginationControls.innerHTML = '';
+
+            const firstButton = document.createElement('button');
+            firstButton.id = 'firstPage';
+            firstButton.className = 'pagination-control';
+            firstButton.innerHTML = '<i class="fa fa-angle-double-left"></i>';
+            firstButton.addEventListener('click', () => {
+                currentPage = 1;
+                showPage(currentPage);
+                updatePaginationControls();
+            });
+            paginationControls.appendChild(firstButton);
+
+            const prevButton = document.createElement('button');
+            prevButton.id = 'prevPage';
+            prevButton.className = 'pagination-control';
+            prevButton.innerHTML = '<i class="fa fa-angle-left"></i>';
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    updatePaginationControls();
+                }
+            });
+            paginationControls.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = 'page-button';
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updatePaginationControls();
+                });
+                paginationControls.appendChild(button);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.id = 'nextPage';
+            nextButton.className = 'pagination-control';
+            nextButton.innerHTML = '<i class="fa fa-angle-right"></i>';
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                    updatePaginationControls();
+                }
+            });
+            paginationControls.appendChild(nextButton);
+
+            const lastButton = document.createElement('button');
+            lastButton.id = 'lastPage';
+            lastButton.className = 'pagination-control';
+            lastButton.innerHTML = '<i class="fa fa-angle-double-right"></i>';
+            lastButton.addEventListener('click', () => {
+                currentPage = totalPages;
+                showPage(currentPage);
+                updatePaginationControls();
+            });
+            paginationControls.appendChild(lastButton);
+        }
+
+        function updatePaginationControls() {
+            const buttons = document.querySelectorAll('#paginationControls .page-button');
+            buttons.forEach((button, index) => {
+                button.classList.toggle('current', index + 1 === currentPage);
+            });
+
+            // Cập nhật trạng thái của các nút phân trang đặc biệt
+            document.getElementById('firstPage').disabled = (currentPage === 1);
+            document.getElementById('prevPage').disabled = (currentPage === 1);
+            document.getElementById('nextPage').disabled = (currentPage === totalPages);
+            document.getElementById('lastPage').disabled = (currentPage === totalPages);
+        }
+
+        showPage(currentPage);
+        createPaginationControls();
+    }
+
+    paginateTable();
+
+    function updateTable() {
+        var name = document.getElementById('generalSearch').value.toLowerCase();
+        var status = document.getElementById('kt_form_status').value.toLowerCase();
+
+        var rows = Array.from(document.querySelectorAll('#brandTableBody tr'));
+        rows.forEach(function(row) {
+            var cellName = row.cells[1].textContent.toLowerCase();
+            var cellStatus = row.cells[3].textContent.toLowerCase();
+
+            var matchesName = name === '' || cellName.includes(name);
+            var matchesStatus = status === '' || cellStatus.includes(status);
+
+            row.style.display = (matchesName && matchesStatus) ? '' : 'none';
+        });
+
+        paginateTable();
+    }
+
+    document.getElementById('searchButton').addEventListener('click', updateTable);
+    document.getElementById('kt_form_status').addEventListener('change', updateTable);
+});
+</script>
 </body>
 </html>
 

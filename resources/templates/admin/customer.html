@@ -1,3 +1,221 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thông tin người dùng</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+    <link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/admin/assets/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/admin/assets/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
+    <th:block th:insert="admin/fragments/common :: global_css"></th:block>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .search-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search-form .form-group {
+            margin-bottom: 15px;
+        }
+        .search-form .form-control, .search-form .bootstrap-select {
+            border-radius: 4px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        .search-form .form-control:focus, .search-form .bootstrap-select:focus {
+            border-color: #5d78ff;
+        }
+        .search-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .search-form .btn-brand {
+            background-color: #5d78ff;
+            border-color: #5d78ff;
+            color: #fff;
+        }
+        .search-form .btn-brand:hover {
+            background-color: #4c67d6;
+            border-color: #4c67d6;
+        }
+        .search-form .input-group-append .btn {
+            border-radius: 0 4px 4px 0;
+        }
+        .search-form .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .search-form .input-group .form-control {
+            flex: 1;
+        }
+        .search-form .input-group-append {
+            margin-left: -1px;
+        }
+        .search-form .form-group select {
+            width: 100%;
+        }
+        @media (max-width: 767.98px) {
+            .search-form .row {
+                flex-direction: column;
+            }
+            .search-form .input-group,
+            .search-form .form-group {
+                width: 100%;
+            }
+            .search-form .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .search-form .row {
+            margin: 0 -15px;
+        }
+        .search-form .col-md-6, .search-form .col-xl-4 {
+            padding: 0 15px;
+        }
+    </style>
+</head>
+<body>
+    header
+    <header th:replace="admin/fragments/header"></header>
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+            begin:: Aside
+            <div th:replace="admin/fragments/sidebar"></div>
+            end:: Aside
+
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+                begin:: Header
+                <div th:replace="admin/fragments/header :: header"></div>
+                end:: Header
+
+                <div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+
+                    begin:: Content Head
+                    <div th:replace="admin/fragments/header :: sub_header"></div>
+                    end:: Content Head
+
+                    begin:: Content
+                    <div id="router-outlet" class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+                        <div class="kt-portlet kt-portlet--mobile">
+                            <h3 class="kt-portlet__head-title text-center">
+								Danh sách người dùng
+							</h3>
+							
+							<div class="kt-portlet__head kt-portlet__head--lg">
+                                <div class="kt-portlet__head-toolbar">
+                                    <div class="kt-portlet__head-wrapper">
+                                        <a onclick="history.back()" class="btn btn-clean btn-icon-sm">
+                                            <i class="la la-long-arrow-left"></i>
+                                            Quay Lại
+                                        </a>
+                                        <br>
+                                        <div class="dropdown dropdown-inline">
+                                            <a href="/addUser" class="btn btn-brand btn-icon-sm">
+                                                <i class="flaticon2-plus"></i> Thêm Mới
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__head kt-portlet__head--lg">
+									<div class="kt-portlet__body">
+										Search Form
+								        <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 search-form">
+								            <div class="row align-items-center">
+								                <div class="col-xl-8 order-2 order-xl-1">
+								                    <div class="row align-items-center">
+								                        <div class="col-md-6 kt-margin-b-20-tablet-and-mobile">
+								                            <div class="input-group">
+								                                <input type="text" class="form-control" placeholder="Tìm kiếm theo tên..." id="generalSearch">
+								                            </div>
+								                        </div>
+								                    </div>
+								                </div>
+								                <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
+								                    <button id="searchButton" class="btn btn-primary">
+								                        <i class="fa fa-search"></i> Tìm kiếm
+								                    </button>
+								                </div>
+								            </div>
+								        </div>
+							            end: Search Form
+									</div>		
+								</div>
+                            <table class="w3-table-all">
+                                <thead>
+                                    <tr>
+                                        <th>Tên</th>
+                                        <th>Email</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Ngày sinh</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Vai trò</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTableBody">
+                                    <tr th:each="user : ${user}">
+                                        <td th:text="${user.name}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td th:text="${user.address}"></td>
+                                        <td th:text="${#dates.format(user.dateOfBirth, 'dd/mm/yyyy')}"></td>
+                                        <td th:text="${user.phone}"></td>
+                                        <td th:text="${user.role}"></td>
+                                        <td>
+                                            <a th:href="@{/updateUser/{id}(id=${user.id})}"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                            <a th:href="@{/delete/{id}(id=${user.id})}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        end:: Content
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="admin/fragments/footer"></footer>
+<script>
+        document.getElementById('searchButton').addEventListener('click', function() {
+            var name = document.getElementById('generalSearch').value.toLowerCase();
+            
+            var rows = document.querySelectorAll('#userTableBody tr');
+            rows.forEach(function(row) {
+                var cellName = row.cells[1].textContent.toLowerCase();
+                var cellStatus = row.cells[3].textContent.toLowerCase();
+
+                var matchesName = name === '' || cellName.includes(name);
+                var matchesStatus = status === '' || cellStatus.includes(status);
+
+                if (matchesName && matchesStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html> -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -15,6 +233,80 @@
     <th:block th:insert="admin/fragments/common :: global_css"></th:block>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .search-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search-form .form-group {
+            margin-bottom: 15px;
+        }
+        .search-form .form-control, .search-form .bootstrap-select {
+            border-radius: 4px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+        .search-form .form-control:focus, .search-form .bootstrap-select:focus {
+            border-color: #5d78ff;
+        }
+        .search-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .search-form .btn-brand {
+            background-color: #5d78ff;
+            border-color: #5d78ff;
+            color: #fff;
+        }
+        .search-form .btn-brand:hover {
+            background-color: #4c67d6;
+            border-color: #4c67d6;
+        }
+        .search-form .input-group-append .btn {
+            border-radius: 0 4px 4px 0;
+        }
+        .search-form .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .search-form .input-group .form-control {
+            flex: 1;
+        }
+        .search-form .input-group-append {
+            margin-left: -1px;
+        }
+        .search-form .form-group select {
+            width: 100%;
+        }
+        @media (max-width: 767.98px) {
+            .search-form .row {
+                flex-direction: column;
+            }
+            .search-form .input-group,
+            .search-form .form-group {
+                width: 100%;
+            }
+            .search-form .btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .search-form .row {
+            margin: 0 -15px;
+        }
+        .search-form .col-md-6, .search-form .col-xl-4 {
+            padding: 0 15px;
+        }
+    </style>
 </head>
 <body>
     <!-- header -->
@@ -42,35 +334,9 @@
                     <div id="router-outlet" class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
                         <div class="kt-portlet kt-portlet--mobile">
                             <h3 class="kt-portlet__head-title text-center">
-								Danh sách người dùng
-							</h3>
-                            <table class="w3-table-all">
-                                <thead>
-                                    <tr>
-                                        <th>Tên</th>
-                                        <th>Email</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Ngày sinh</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Vai trò</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="user : ${user}">
-                                        <td th:text="${user.name}"></td>
-                                        <td th:text="${user.email}"></td>
-                                        <td th:text="${user.address}"></td>
-                                        <td th:text="${#dates.format(user.dateOfBirth, 'dd/mm/yyyy')}"></td>
-                                        <td th:text="${user.phone}"></td>
-                                        <td th:text="${user.role}"></td>
-                                        <td>
-                                            <a th:href="@{/delete/{id}(id=${user.id})}"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                            <a th:href="@{/user/update/{id}(id=${user.id})}"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                Danh sách người dùng
+                            </h3>
+                            
                             <div class="kt-portlet__head kt-portlet__head--lg">
                                 <div class="kt-portlet__head-toolbar">
                                     <div class="kt-portlet__head-wrapper">
@@ -87,6 +353,71 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="kt-portlet__head kt-portlet__head--lg">
+                                <div class="kt-portlet__body">
+                                    <!-- Search Form -->
+                                    <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 search-form">
+                                        <div class="row align-items-center">
+                                            <div class="col-xl-8 order-2 order-xl-1">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-6 kt-margin-b-20-tablet-and-mobile">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" placeholder="Tìm kiếm theo tên..." id="generalSearch">
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-md-6 kt-margin-b-20-tablet-and-mobile">
+                                                        <div class="form-group">
+                                                            <label for="kt_form_status">Trạng thái:</label>
+                                                            <select class="form-control" id="kt_form_status">
+                                                                <option value="">Chọn</option>
+                                                                <option value="Còn sách">Còn sách</option>
+                                                                <option value="Hết sách">Hết sách</option>
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
+                                                <button id="searchButton" class="btn btn-brand btn-icon-sm">
+                                                    <i class="la la-search"></i> Tìm kiếm
+                                                </button>
+                                                <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end: Search Form -->
+                                </div>      
+                            </div>
+							<div style="overflow-x:auto;">
+	                            <table class="w3-table-all">
+	                                <thead>
+	                                    <tr>
+	                                        <th>Tên</th>
+	                                        <th>Email</th>
+	                                        <th>Địa chỉ</th>
+	                                        <th>Ngày sinh</th>
+	                                        <th>Số điện thoại</th>
+	                                        <th>Vai trò</th>
+	                                        <th>Hành động</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody id="userTableBody">
+	                                    <tr th:each="user : ${user}">
+	                                        <td th:text="${user.name}"></td>
+	                                        <td th:text="${user.email}"></td>
+	                                        <td th:text="${user.address}"></td>
+	                                        <td th:text="${#dates.format(user.dateOfBirth, 'dd/MM/yyyy')}"></td>
+	                                        <td th:text="${user.phone}"></td>
+	                                        <td th:text="${user.role}"></td>
+	                                        <td>
+	                                            <a th:href="@{/updateUser/{id}(id=${user.id})}"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+	                                            <a th:href="@{/delete/{id}(id=${user.id})}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+	                                        </td>
+	                                    </tr>
+	                                </tbody>
+	                            </table>
+	                         </div>
                         </div>
                         <!-- end:: Content -->
                     </div>
@@ -95,5 +426,27 @@
         </div>
     </div>
     <footer th:replace="admin/fragments/footer"></footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('searchButton').addEventListener('click', function() {
+                var name = document.getElementById('generalSearch').value.toLowerCase();
+                
+                var rows = document.querySelectorAll('#userTableBody tr');
+                rows.forEach(function(row) {
+                    var cellName = row.cells[0].textContent.toLowerCase();
+                    var cellStatus = row.cells[5].textContent.toLowerCase();
+
+                    var matchesName = name === '' || cellName.includes(name);
+                    var matchesStatus = status === '' || cellStatus.includes(status);
+
+                    if (matchesName && matchesStatus) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
