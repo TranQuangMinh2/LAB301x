@@ -14,34 +14,96 @@
 	<link rel="stylesheet" href="css/toastr.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style>
-        .rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-        }
-
-        .rating input {
-            display: none;
-        }
-
-        .rating label {
-            font-size: 2em;
-            color: #ddd;
-            cursor: pointer;
-            padding: 0 5px;
-        }
-
-        .rating label::before {
-            content: "☆";  /* Blank star */
-        }
-
-        .rating input:checked ~ label::before,
-        .rating label:hover::before,
-        .rating label:hover ~ label::before {
-            content: "★";  /* Filled star */
-            color: #FFD700;
-        }
-    </style>
+	    .rating {
+	        display: flex;
+	        flex-direction: row-reverse;
+	        justify-content: center;
+	        font-size: 2em; /* Đặt kích thước font cho các ngôi sao */
+	    }
+	
+	    .rating input {
+	        display: none;
+	    }
+	
+	    .rating label {
+	        color: #ddd;
+	        cursor: pointer;
+	        padding: 0 5px;
+	        transition: color 0.2s; /* Thêm hiệu ứng chuyển màu khi hover */
+	    }
+	
+	    .rating label::before {
+	        content: "☆";  /* Ngôi sao rỗng */
+	    }
+	
+	    .rating input:checked ~ label::before,
+	    .rating label:hover::before,
+	    .rating label:hover ~ label::before {
+	        content: "★";  /* Ngôi sao đầy */
+	        color: #FFD700; /* Màu vàng cho ngôi sao đầy */
+	    }
+	
+	    .tt-review-comments-container {
+	        max-height: 400px; /* Chiều cao tối đa của khối bình luận */
+	        overflow-y: auto; /* Hiển thị thanh cuộn dọc nếu nội dung vượt quá chiều cao */
+	        margin-bottom: 20px; /* Khoảng cách dưới để tách khỏi form đánh giá */
+	        padding: 10px; /* Thêm khoảng cách nội bộ để làm cho nội dung dễ đọc hơn */
+	        border: 1px solid #ddd; /* Thêm viền để tách biệt khối bình luận */
+	        border-radius: 5px; /* Bo tròn góc viền */
+	        background-color: #f9f9f9; /* Màu nền cho khối bình luận */
+	    }
+	
+	    /* Style cho thanh cuộn */
+	    .tt-review-comments-container::-webkit-scrollbar {
+	        width: 8px;
+	    }
+	
+	    .tt-review-comments-container::-webkit-scrollbar-thumb {
+	        background-color: #ccc;
+	        border-radius: 4px;
+	    }
+	
+	    .tt-review-comments-container::-webkit-scrollbar-thumb:hover {
+	        background-color: #aaa;
+	    }
+	
+	    .disabled {
+	        pointer-events: none;
+	        cursor: default;
+	    }
+	    .tt-review-form {
+	        max-width: 100%; /* Đảm bảo rằng form không vượt quá chiều rộng của container */
+	        box-sizing: border-box; /* Đảm bảo padding và border được tính vào tổng chiều rộng */
+	        padding: 15px; /* Thêm padding để nội dung không bị dính vào viền */
+	        border: 1px solid #ddd; /* Thêm viền để phân biệt form */
+	        border-radius: 5px; /* Bo tròn góc viền */
+	        background-color: #f9f9f9; /* Màu nền của form */
+	        overflow: hidden; /* Ẩn các phần tử bị tràn */
+	    }
+	
+	    .tt-review-form .form-group {
+	        margin-bottom: 15px; /* Khoảng cách dưới cho các nhóm form */
+	    }
+	
+	    .tt-review-form .form-control {
+	        width: 100%; /* Đảm bảo các input và textarea không vượt quá chiều rộng của form */
+	        box-sizing: border-box; /* Đảm bảo padding và border được tính vào tổng chiều rộng */
+	    }
+	
+	    .tt-review-form .btn {
+	        background-color: #007bff; /* Màu nền cho nút gửi */
+	        color: #fff; /* Màu chữ cho nút gửi */
+	        border: none; /* Xóa viền của nút gửi */
+	        padding: 10px 20px; /* Padding cho nút gửi */
+	        border-radius: 5px; /* Bo tròn góc nút gửi */
+	        cursor: pointer; /* Con trỏ khi hover vào nút gửi */
+	        font-size: 1em; /* Kích thước font cho nút gửi */
+	    }
+	
+	    .tt-review-form .btn:hover {
+	        background-color: #0056b3; /* Màu nền khi hover vào nút gửi */
+	    }
+	</style>
 </head>
 <body class="tt-page-product-single">
 
@@ -62,10 +124,10 @@
 		<!-- mobile product slider  -->
 		<div class="tt-mobile-product-layout visible-xs">
 			<div class="tt-mobile-product-slider arrow-location-center slick-animated-show-js">
-				<div><img src="images/product/product-32.jpg" alt=""></div>
-				<div><img src="images/product/product-32-01.jpg" alt=""></div>
+				<div><img th:src="${product[7]}" alt="Product image" /></div>
+				<!-- <div><img src="images/product/product-32-01.jpg" alt=""></div>
 				<div><img src="images/product/product-32-02.jpg" alt=""></div>
-				<div><img src="images/product/product-32-03.jpg" alt=""></div>
+				<div><img src="images/product/product-32-03.jpg" alt=""></div> -->
 				<!-- <div>
 					<div class="embed-responsive embed-responsive-16by9">
 						<iframe class="embed-responsive-item" src="http://www.youtube.com/embed/GhyKqj_P2E4" allowfullscreen></iframe>
@@ -130,8 +192,9 @@
 								</div>
 								<a href="#">(1 Customer Review)</a>
 							</div>-->
-							<!--<div class="tt-wrapper" th:text="${product[2]}">Mô tả</div>-->
-							<div class="tt-collapse-block">
+							<div>Mô tả: </div>
+							<div class="tt-wrapper" th:text="${product[2]}">Mô tả</div>
+							<!-- <div class="tt-collapse-block">
 								<div class="tt-item">
 									<div class="tt-collapse-title">Mô tả</div>
 									<div class="tt-collapse-content" th:text="${product[2]}">
@@ -139,7 +202,7 @@
 	
 									</div>
 								</div>
-								
+								 -->
 							<div class="tt-wrapper">
 								<div class="tt-row-custom-01">
 									<!--<div class="col-item">
@@ -172,73 +235,73 @@
 								</div>
 							</div>
 							<div class="tt-collapse-block">
-								<div class="tt-collapse-title tt-poin-comments">BÌNH LUẬN</div>
-									<div class="tt-collapse-content">
-										<div class="tt-review-block">
-											<div class="tt-row-custom-02">
-												<div class="col-item">
-													<!-- <h2 class="tt-title" th:text="productReview.size()">
-														1 REVIEW FOR VARIABLE PRODUCT
-													</h2> -->
-												</div>
-												<div class="col-item">
-													<a href="/addReview">Viết đánh giá</a>
-												</div>
-											</div>
-											<div class="tt-review-comments" th:each="review: ${productReview}">
-												<div class="tt-item">
-													<div class="tt-content">
-														<div class="tt-rating">
-												            <i th:each="star : ${review.starRating}" th:classappend="${star} ? 'icon-star' : 'icon-star-empty'"></i>
-												        </div>
-														<div class="tt-comments-info">
-															<span class="username"><span  th:text="${review.user.name}" th:if="${user != null}">ADRIAN</span></span>
-															<span class="username"><span  th:text="${name}" th:if="${name != null}">ADRIAN</span></span>
-															<span class="time"> <span th:text="${review.createdAt}"> January 14, 2017</span></span>
-														</div>
-														<div class="tt-comments-title" th:text="${review.title}">Very Good!</div>
-														<p th:text="${review.content}">
-															Ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
-														</p>
-													</div>
-												</div>
-											</div>
-											<div class="tt-review-form">
-											    <div class="tt-message-info">
-											        TRỞ THÀNH NGƯỜI ĐẦU TIÊN ĐÁNH GIÁ<span>“<span th:text="${product[1]}"></span>”</span>
-											    </div>
-											    <div class="tt-rating-indicator">
-											        <div class="tt-title">
-											            ĐÁNH GIÁ CỦA BẠN 
-											            
-											        </div>
-											    </div>
-											    <form class="form-default" th:action="@{/addReview}" method="POST">
-											        <input type="hidden" name="productId" th:value="${product[0]}">
-											        <span class="rating">
-												        <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 stars"></label>
-												        <input type="radio" id="star4" name="rating" value="4" required><label for="star4" title="4 stars"></label>
-												        <input type="radio" id="star3" name="rating" value="3" required><label for="star3" title="3 stars"></label>
-												        <input type="radio" id="star2" name="rating" value="2" required><label for="star2" title="2 stars"></label>
-												        <input type="radio" id="star1" name="rating" value="1" required><label for="star1" title="1 star"></label>
-													</span>
-											        <div class="form-group">
-											            <label for="inputTitle" class="control-label">TIÊU ĐỀ</label>
-											            <input type="text" class="form-control" id="inputTitle" placeholder="Enter your title" name="title" required>
-											        </div>
-											        <div class="form-group">
-											            <label for="textarea" class="control-label">NHẬN XÉT</label>
-											            <textarea class="form-control" id="textarea" placeholder="Enter your review" rows="8" name="content" required></textarea>
-											        </div>
-											        <div class="form-group">
-											            <button type="submit" class="btn">GỬI</button>
-											        </div>
-											    </form>
-											</div>
-											
+							    <div class="tt-collapse-title tt-poin-comments">BÌNH LUẬN</div>
+							    <div class="tt-collapse-content">
+							        <div class="tt-review-block">
+							            <div class="tt-row-custom-02">
+							                <div class="col-item">
+							                    <!-- <h2 class="tt-title" th:text="productReview.size()">
+							                        1 REVIEW FOR VARIABLE PRODUCT
+							                    </h2> -->
+							                </div>
+							                <div class="col-item">
+							                    <a href="/addReview">Viết đánh giá</a>
+							                </div>
+							            </div>
+							            <div class="tt-review-comments-container">
+							                <div class="tt-review-comments" th:each="review: ${productReview}">
+							                    <div class="tt-item">
+							                        <div class="tt-content">
+							                            <div class="tt-rating">
+							                                <i th:each="star : ${review.starRating}" th:classappend="${star} ? 'icon-star' : 'icon-star-empty'"></i>
+							                            </div>
+							                            <div class="tt-comments-info">
+							                                <span class="username"><span th:text="${review.user.name}">ADRIAN</span></span>
+							                                <span class="username"><span th:text="${name}" th:if="${name != null}">ADRIAN</span></span>
+							                                <span class="time"> <span th:text="${review.createdAt}"> January 14, 2017</span></span>
+							                            </div>
+							                            <div class="tt-comments-title" th:text="${review.title}">Very Good!</div>
+							                            <p th:text="${review.content}">
+							                                Ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+							                            </p>
+							                        </div>
+							                    </div>
+							                </div>
+							            </div>
+							            <div class="tt-review-form">
+										    <div class="tt-message-info">
+										        TRỞ THÀNH NGƯỜI ĐẦU TIÊN ĐÁNH GIÁ<span>“<span th:text="${product[1]}"></span>”</span>
+										    </div>
+										    <div class="tt-rating-indicator">
+										        <div class="tt-title">
+										            ĐÁNH GIÁ CỦA BẠN 
+										        </div>
+										    </div>
+										    <form class="form-default" th:action="@{/addReview}" method="POST">
+										        <input type="hidden" name="productId" th:value="${product[0]}">
+										        <span class="rating">
+										            <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 sao"></label>
+										            <input type="radio" id="star4" name="rating" value="4" required><label for="star4" title="4 sao"></label>
+										            <input type="radio" id="star3" name="rating" value="3" required><label for="star3" title="3 sao"></label>
+										            <input type="radio" id="star2" name="rating" value="2" required><label for="star2" title="2 sao"></label>
+										            <input type="radio" id="star1" name="rating" value="1" required><label for="star1" title="1 sao"></label>
+										        </span>
+										        <div class="form-group">
+										            <label for="inputTitle" class="control-label">TIÊU ĐỀ</label>
+										            <input type="text" class="form-control" id="inputTitle" placeholder="Enter your title" name="title" required>
+										        </div>
+										        <div class="form-group">
+										            <label for="textarea" class="control-label">NHẬN XÉT</label>
+										            <textarea class="form-control" id="textarea" placeholder="Enter your review" rows="8" name="content" required></textarea>
+										        </div>
+										        <div class="form-group">
+										            <button type="submit" class="btn">GỬI</button>
+										        </div>
+										    </form>
 										</div>
-									</div>
-								</div>
+
+							        </div>
+							    </div>
 							</div>
 						</div>
 					</div>
@@ -256,205 +319,6 @@
 			</ul>
 		</div>
 	</div>
-	<!--<div class="container-indent">
-		<div class="container container-fluid-custom-mobile-padding">
-			<div class="tt-block-title text-left">
-				<h3 class="tt-title-small">Cùng thể loại</h3>
-			</div>
-				<div class="tt-carousel-products row arrow-location-right-top tt-alignment-img tt-layout-product-item slick-animated-show-js">
-				<div class="col-2 col-md-4 col-lg-3">
-					<div class="tt-product thumbprod-center">
-						<div class="tt-image-box">
-							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
-							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-							<a href="product.html">
-								<span class="tt-img"><img src="images/product/product-16.jpg" alt=""></span>
-								<span class="tt-img-roll-over"><img src="images/product/product-16-02.jpg" alt=""></span>
-							</a>
-						</div>
-						<div class="tt-description">
-							<div class="tt-row">
-								<ul class="tt-add-info">
-									<li><a href="#">T-SHIRTS</a></li>
-								</ul>
-							</div>
-							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
-							<div class="tt-price">
-								$24
-							</div>
-							<div class="tt-product-inside-hover">
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-								</div>
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-									<a href="#" class="tt-btn-wishlist"></a>
-									<a href="#" class="tt-btn-compare"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-2 col-md-4 col-lg-3">
-					<div class="tt-product thumbprod-center">
-						<div class="tt-image-box">
-							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
-							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-							<a href="product.html">
-								<span class="tt-img"><img src="images/product/product-17.jpg" alt=""></span>
-								<span class="tt-img-roll-over"><img src="images/product/product-17-01.jpg" alt=""></span>
-							</a>
-						</div>
-						<div class="tt-description">
-							<div class="tt-row">
-								<ul class="tt-add-info">
-									<li><a href="#">T-SHIRTS</a></li>
-								</ul>
-								<div class="tt-rating">
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star-half"></i>
-									<i class="icon-star-empty"></i>
-								</div>
-							</div>
-							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
-							<div class="tt-price">
-								$8
-							</div>
-							<div class="tt-product-inside-hover">
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-								</div>
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-									<a href="#" class="tt-btn-wishlist"></a>
-									<a href="#" class="tt-btn-compare"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-2 col-md-4 col-lg-3">
-					<div class="tt-product thumbprod-center">
-						<div class="tt-image-box">
-							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
-							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-							<a href="product.html">
-								<span class="tt-img"><img src="images/product/product-18.jpg" alt=""></span>
-								<span class="tt-img-roll-over"><img src="images/product/product-18-02.jpg" alt=""></span>
-							</a>
-						</div>
-						<div class="tt-description">
-							<div class="tt-row">
-								<ul class="tt-add-info">
-									<li><a href="#">T-SHIRTS</a></li>
-								</ul>
-							</div>
-							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
-							<div class="tt-price">
-								$46
-							</div>
-							<div class="tt-option-block">
-								<ul class="tt-options-swatch">
-									<li><a class="options-color tt-color-bg-01" href="#"></a></li>
-									<li><a class="options-color tt-color-bg-02" href="#"></a></li>
-								</ul>
-							</div>
-							<div class="tt-product-inside-hover">
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-								</div>
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-									<a href="#" class="tt-btn-wishlist"></a>
-									<a href="#" class="tt-btn-compare"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-2 col-md-4 col-lg-3">
-					<div class="tt-product thumbprod-center">
-						<div class="tt-image-box">
-							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
-							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-							<a href="product.html">
-								<span class="tt-img"><img src="images/product/product-19.jpg" alt=""></span>
-								<span class="tt-img-roll-over"><img src="images/product/product-19-02.jpg" alt=""></span>
-							</a>
-						</div>
-						<div class="tt-description">
-							<div class="tt-row">
-								<ul class="tt-add-info">
-									<li><a href="#">T-SHIRTS</a></li>
-								</ul>
-								<div class="tt-rating">
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-								</div>
-							</div>
-							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
-							<div class="tt-price">
-								$35
-							</div>
-							<div class="tt-product-inside-hover">
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-								</div>
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-									<a href="#" class="tt-btn-wishlist"></a>
-									<a href="#" class="tt-btn-compare"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-2 col-md-4 col-lg-3">
-					<div class="tt-product thumbprod-center">
-						<div class="tt-image-box">
-							<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Quick View" data-tposition="left"></a>
-							<a href="#" class="tt-btn-wishlist" data-tooltip="Add to Wishlist" data-tposition="left"></a>
-							<a href="#" class="tt-btn-compare" data-tooltip="Add to Compare" data-tposition="left"></a>
-							<a href="product.html">
-								<span class="tt-img"><img src="images/product/product-14.jpg" alt=""></span>
-								<span class="tt-img-roll-over"><img src="images/product/product-14-02.jpg" alt=""></span>
-							</a>
-						</div>
-						<div class="tt-description">
-							<div class="tt-row">
-								<ul class="tt-add-info">
-									<li><a href="#">T-SHIRTS</a></li>
-								</ul>
-							</div>
-							<h2 class="tt-title"><a href="product.html">Flared Shift Dress</a></h2>
-							<div class="tt-price">
-								$12
-							</div>
-							<div class="tt-product-inside-hover">
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a>
-								</div>
-								<div class="tt-row-btn">
-									<a href="#" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
-									<a href="#" class="tt-btn-wishlist"></a>
-									<a href="#" class="tt-btn-compare"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>-->
 	<div class="container-indent">
 	    <div class="container container-fluid-custom-mobile-padding">
 	        <div class="tt-block-title text-left">
@@ -487,14 +351,7 @@
 	                        <div class="tt-product-inside-hover">
 	                            <div class="tt-row-btn"> 
 									<p th:if="${message}" th:text="${message}"></p>
-									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
-
-									<style>
-										.disabled {
-									    pointer-events: none;
-									    cursor: default;
-									}
-									</style>
+									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' or user == null ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
  								</div>
 	                            <!--<div class="tt-row-btn">
 	                                <a th:href="@{'/product/' + ${product.id}}" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
@@ -543,6 +400,24 @@
     });
 });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dateStr = '${review.createdAt}';
+        console.log('Raw Date:', dateStr);
+
+        // Sử dụng moment.js để phân tích và định dạng ngày
+        var date = moment(dateStr, 'YYYY-MM-DD'); // Định dạng của ngày từ server
+        if (date.isValid()) {
+            var formattedDate = date.format('DD/MM/YYYY');
+            document.getElementById('formattedDate').textContent = formattedDate;
+        } else {
+            console.error('Ngày không hợp lệ:', dateStr);
+            document.getElementById('formattedDate').textContent = 'Ngày không hợp lệ';
+        }
+    });
+</script>
+
 <!-- form validation and sending to mail -->
 <script th:src="@{/shopper/js/cart.js}"></script>
 <script th:src="@{/shopper/js/header.js}" type="text/javascript"></script>

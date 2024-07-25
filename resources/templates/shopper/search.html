@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
-	<title>Search Results</title>
+	<title>Kết quả tìm kiếm</title>
 	<meta name="keywords" content="Library">
 	<meta name="description" content="Library - Search">
 	<meta name="author" content="wokiee">
@@ -10,6 +10,7 @@
 	<base th:replace="~{shopper/fragments/common :: base}">
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/toastr.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
@@ -21,7 +22,7 @@
 <div class="tt-breadcrumb">
 	<div class="container">
 		<ul>
-			<li><a href="/index">Home</a></li>
+			<li><a href="/index">Trang chủ</a></li>
 			<li>Kết quả tìm kiếm</li>
 		</ul>
 	</div>
@@ -64,7 +65,7 @@
 							<div class="tt-product-inside-hover">
  								<div class="tt-row-btn"> 
 									<p th:if="${message}" th:text="${message}"></p>
-									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
+									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' or user == null ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
 
 									<style>
 										.disabled {

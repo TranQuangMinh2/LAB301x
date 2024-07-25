@@ -13,6 +13,16 @@
 	<link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/toastr.min.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+    .icon-hover {
+        color: black; /* Default color */
+        transition: color 0.3s ease; /* Smooth transition for color change */
+    }
+
+    .icon-hover:hover {
+        color: blue; /* Color on hover */
+    }
+</style>
 </head>
 <body>
 
@@ -212,13 +222,13 @@
 						    <div class="row col-sm-10">
 						         <div class="w3-bar-item w3-button">
 						            <a th:if="${currentPage > 1 }"
-											th:href="@{'/product-listing/page/' + ${firstPage}}"><i class="fa fa-fast-backward" aria-hidden="true"></i></a> <span
-											th:unless="${currentPage > 1}"><i class="fa fa-fast-backward" aria-hidden="true"></i></span>
+											th:href="@{'/product-listing/page/' + ${firstPage}}"><i class="fa fa-fast-backward"></i></a> <span
+											th:unless="${currentPage > 1}"></span>
 						        </div>
 						        <div class="w3-bar-item w3-button">
 						           <a th:if="${currentPage > 1 }"
-											th:href="@{'/product-listing/page/' + ${currentPage - 1}}"><i class="fa fa-step-backward" aria-hidden="true"></i></a> <span
-											th:unless="${currentPage > 1}"><i class="fa fa-step-backward" aria-hidden="true"></i></span>
+											th:href="@{'/product-listing/page/' + ${currentPage - 1}}"><i class="fa fa-step-backward"></i></a> <span
+											th:unless="${currentPage > 1}"></span>
 						        </div>
 						        <div >
 						            <span class="w3-bar-item w3-button" th:each="i: ${#numbers.sequence(1, totalPages)}">
@@ -229,14 +239,14 @@
 						       
 						        <div class="w3-bar-item w3-button">
 						            <a th:if="${currentPage < totalPages}"
-											th:href="@{'/product-listing/page/' + ${currentPage + 1}}"><i class="fa fa-step-forward" aria-hidden="true"></i></a> <span
-											th:unless="${currentPage < totalPages}"><i class="fa fa-step-forward" aria-hidden="true"></i></span>
+											th:href="@{'/product-listing/page/' + ${currentPage + 1}}"><i class="fa fa-step-forward"></i></a> <span
+											th:unless="${currentPage < totalPages}"></span>
 						        </div>
 						
 						        <div class="w3-bar-item w3-button">
 						            <a th:if="${currentPage < totalPages}"
-											th:href="@{'/product-listing/page/' + ${totalPages}}"><i class="fa fa-fast-forward" aria-hidden="true"></i></a> <span
-											th:unless="${currentPage < totalPages}"><i class="fa fa-fast-forward" aria-hidden="true"></i></span>
+											th:href="@{'/product-listing/page/' + ${totalPages}}"><i class="fa fa-fast-forward"></i></a> <span
+											th:unless="${currentPage < totalPages}"></span>
 						        </div>
 						    </div>
 						</div>
