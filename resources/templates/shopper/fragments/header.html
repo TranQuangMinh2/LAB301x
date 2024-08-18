@@ -43,11 +43,13 @@
 			<li>
 				<a href="/contact">LIÊN HỆ</a> <!-- nav desktop -->
 			</li>
-			
+			<li>
+				<a href="/document2">EBOOK</a> <!-- nav desktop -->
+			</li>
 		</ul>
 		<div class="mm-navbtn-names">
-			<div class="mm-closebtn">Close</div>
-			<div class="mm-backbtn">Back</div>
+			<div class="mm-closebtn">Đóng</div>
+			<div class="mm-backbtn">Quay lại</div>
 		</div>
 	</nav>
 	<!--<nav class="panel-menu mobile-categorie-menu">
@@ -250,10 +252,6 @@
 				</a>
 			</li>
 		</ul>
-		<div class="mm-navbtn-names">
-			<div class="mm-closebtn">Close</div>
-			<div class="mm-backbtn">Back</div>
-		</div>
 	</nav>-->
 	<!-- tt-mobile-header -->
 	<div class="tt-mobile-header">
@@ -304,7 +302,7 @@
 			 			<!-- tt-search -->
 						<form action="/search" method="get" role="search">
 							<i class="icon-f-85"></i>
-							<input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
+							<input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu (nâng cao)..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
 							<button type="submit" class="tt-btn-search">TÌM KIẾM</button>
 							<div class="search-results" style="display: none;"></div>
 						</form>
@@ -586,6 +584,8 @@
 									</li>
 									<li class="dropdown megamenu">
 										<a href="/contact">LIÊN HỆ</a> <!-- nav desktop -->
+									</li><li class="dropdown megamenu">
+										<a href="/document2">EBOOK</a> <!-- nav desktop -->
 									</li>
 								</ul>
 							</nav>
@@ -597,14 +597,14 @@
 					<!-- tt-search -->
 					<div class="tt-desctop-parent-search tt-parent-box tt-obj-desktop-hidden">
 						<div class="tt-search tt-dropdown-obj">
-							<button class="tt-dropdown-toggle" data-tooltip="Search" data-tposition="bottom">
+							<button class="tt-dropdown-toggle" data-tooltip="Search" data-tposition="bottom" type="submit">
 								<i class="icon-f-85"></i>
 							</button>
 							<div class="tt-dropdown-menu">
 								<div class="container">
-									<form>
+									<form action="/search" method="get" role="search">
 										<div class="tt-col">
-											<input type="text" class="tt-search-input" placeholder="TÌM KIẾM TÀI LIỆU...">
+											<input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
 											<button class="tt-btn-search" type="submit"></button>
 										</div>
 										<div class="tt-col">
@@ -613,78 +613,6 @@
 										<div class="tt-info-text">
 											Bạn muốn tìm gì?
 										</div>
-										<!--<div class="search-results">
-											<ul>
-												<li>
-										            <a href="product.html">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-03.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Flared Shift Bag</div>
-										            		<div class="tt-price">
-																<span class="new-price">$14</span>
-																<span class="old-price">$24</span>
-															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="product.html">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-02.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Flared Shift Bag</div>
-										            		<div class="tt-price">
-																$24
-															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="product.html">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-01.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Flared Shift Bag</div>
-										            		<div class="tt-price">
-																$14
-															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="product.html">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-04.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Flared Shift Bag</div>
-										            		<div class="tt-price">
-																$24
-															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="product.html">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-05.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Flared Shift Bag</div>
-										            		<div class="tt-price">
-																$17
-															</div>
-										            	</div>
-										            </a>
-										        </li>
-										        <li>
-										           <a href="product.html">
-										            	<div class="thumbnail"><img src="images/loader.svg" data-src="images/product/product-06.jpg" alt=""></div>
-										            	<div class="tt-description">
-										            		<div class="tt-title">Flared Shift Bag</div>
-										            		<div class="tt-price">
-																$20
-															</div>
-										            	</div>
-										            </a>
-										        </li>
-											</ul>
-											<button type="button" class="tt-view-all">Xem tất cả sản phẩm</button>
-										</div>-->
 									</form>
 								</div>
 							</div>
@@ -693,15 +621,15 @@
 					<!-- /tt-search -->
 					<!-- tt-cart -->
 					<div class="tt-desctop-parent-cart tt-parent-box">
-						<div class="tt-cart tt-dropdown-obj" data-tooltip="Giỏ hàng" data-tposition="bottom">
+						<div class="tt-cart tt-dropdown-obj" data-tooltip="Túi" data-tposition="bottom">
 							<button class="tt-dropdown-toggle">
 								<i class="icon-f-39"></i>
 								<span id="cartTotalQuantity" class="tt-badge-cart" th:text="${cartTotalQuantity != null ? cartTotalQuantity : 0}">0</span>
 							</button>
 							<div id="cart-header-layout" class="tt-dropdown-menu">
 								<div class="tt-mobile-add">
-									<h6 class="tt-title">GIỎ HÀNG</h6>
-									<button class="tt-close">Close</button>
+									<h6 class="tt-title">TÚI</h6>
+									<button class="tt-close">Đóng</button>
 								</div>
 								<div class="tt-dropdown-inner">
 									<div class="tt-cart-layout">
@@ -755,7 +683,7 @@
 							<button class="tt-dropdown-toggle"  data-tooltip="Thông tin của tôi" data-tposition="bottom"><i class="icon-f-94"></i></button>
 							<div class="tt-dropdown-menu">
 								<div class="tt-mobile-add">
-									<button class="tt-close">Close</button>
+									<button class="tt-close">Đóng</button>
 								</div>
 								<div class="tt-dropdown-inner">
 									<ul>
@@ -764,8 +692,8 @@
 											<div th:unless="${user != null}" style="color: red; font-weight: bold;">Người dùng chưa đăng nhập</div>
 										</b></li>
 									    <li id="menu_myaccount" th:if="${user != null}"><a href="/my-account"><i class="icon-f-94"></i>Tài Khoản</a></li>
-									    <li id="menu_favor" th:if="${user != null }"><a href="/my-account/wishlist"><i class="icon-n-072"></i>Danh Sách Yêu Thích</a></li>
-									    <li id="menu_login" th:unless="${user != null}"><a href="/customer/login"><i class="icon-f-76"></i>Đăng Nhập</a></li>
+<!-- 									    <li id="menu_favor" th:if="${user != null }"><a href="/my-account/wishlist"><i class="icon-n-072"></i>Danh Sách Yêu Thích</a></li>
+ -->									    <li id="menu_login" th:unless="${user != null}"><a href="/customer/login"><i class="icon-f-76"></i>Đăng Nhập</a></li>
 									    <li id="menu_logout" th:if="${user != null}"><a href="/shopper/logout"><i class="icon-f-77"></i>Đăng Xuất</a></li>
 									    <li id="menu_reg" th:unless="${user != null }"><a href="/register-user"><i class="icon-f-94"></i>Đăng Ký</a></li>
 									</ul>
