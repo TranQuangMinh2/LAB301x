@@ -60,4 +60,8 @@ public class CartItemService {
 		return cartItemRepository.findByUserId(userId);
 	}
 
+	public void saveProductSize(ProductSize productSize) {
+		productSizeRepository.save(productSize);
+	}
+
 }

@@ -2,6 +2,7 @@ package com.trnqngmnh.library;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -52,8 +53,19 @@ public class ProductService {
 		return new ArrayList<>();
 	}
 
-	public List<Product> searchProducts(String text) {
-		return repository.findByNameContaining(text);
+	public List<Product> searchProducts(String text, Long brandId, Long categoryId) {
+		List<Product> products = repository.findByNameContaining(text);
+
+		if (brandId != null) {
+			products = products.stream().filter(p -> p.getBrand().getId().equals(brandId)).collect(Collectors.toList());
+		}
+
+		if (categoryId != null) {
+			products = products.stream().filter(p -> p.getCategory().getId().equals(categoryId))
+					.collect(Collectors.toList());
+		}
+
+		return products;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -61,7 +73,7 @@ public class ProductService {
 		String sql = "SELECT p.id, p.name, p.description, p.price, p.status, p.version_name, pc.color_id, pi.path AS image_path, ps.size, ps.quantity "
 				+ "FROM product p " + "LEFT JOIN product_color pc ON p.id = pc.product_id "
 				+ "LEFT JOIN product_image pi ON p.id = pi.product_id AND pi.is_primary = 1 "
-				+ "LEFT JOIN product_size ps ON p.id = ps.product_id " + "WHERE p.is_delete = 0";
+				+ "LEFT JOIN product_size ps ON p.id = ps.product_id ";
 
 		return entityManager.createNativeQuery(sql).getResultList();
 	}
@@ -71,7 +83,7 @@ public class ProductService {
 		String sql = "SELECT p.id, p.name, p.description, p.price, p.status, p.version_name, pc.color_id, pi.path AS image_path, ps.size, ps.quantity "
 				+ "FROM product p " + "LEFT JOIN product_color pc ON p.id = pc.product_id "
 				+ "LEFT JOIN product_image pi ON p.id = pi.product_id AND pi.is_primary = 1 "
-				+ "LEFT JOIN product_size ps ON p.id = ps.product_id " + "WHERE p.is_delete = 0 AND p.status = :status";
+				+ "LEFT JOIN product_size ps ON p.id = ps.product_id " + "WHERE p.status = :status";
 
 		return entityManager.createNativeQuery(sql).setParameter("status", status).getResultList();
 	}
@@ -81,7 +93,7 @@ public class ProductService {
 		String sql = "SELECT p.id, p.name, p.description, p.price, p.status, p.version_name, pc.color_id, pi.path AS image_path, ps.size, ps.quantity "
 				+ "FROM product p " + "LEFT JOIN product_color pc ON p.id = pc.product_id "
 				+ "LEFT JOIN product_image pi ON p.id = pi.product_id AND pi.is_primary = 1 "
-				+ "LEFT JOIN product_size ps ON p.id = ps.product_id " + "WHERE p.is_delete = 0 AND p.name LIKE :name";
+				+ "LEFT JOIN product_size ps ON p.id = ps.product_id " + "WHERE p.name LIKE :name";
 
 		return entityManager.createNativeQuery(sql).setParameter("name", "%" + name + "%").getResultList();
 	}
@@ -105,7 +117,6 @@ public class ProductService {
 		existingProduct.setName(product.getName());
 		existingProduct.setDescription(product.getDescription());
 		existingProduct.setPrice(product.getPrice());
-		existingProduct.setIsDelete(product.getIsDelete());
 		String status = product.getStatus();
 		String statusValue;
 		switch (status) {
@@ -165,7 +176,8 @@ public class ProductService {
 		}
 	}
 
-	public Page<Product> findPaginatedByName(int pageNo, int pageSize, String productName) {
+	public Page<Product> findPaginatedByName(int pageNo, int pageSize, String productName, Long brandId,
+			Long categoryId) {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		if (productName != null && !productName.isEmpty()) {
 			return repository.findAll(new Specification<Product>() {
@@ -175,6 +187,12 @@ public class ProductService {
 					List<Predicate> predicates = new ArrayList<>();
 					if (productName != null && !productName.isEmpty()) {
 						predicates.add(criteriaBuilder.like(root.get("name"), "%" + productName + "%"));
+					}
+					if (brandId != null) {
+						predicates.add(criteriaBuilder.equal(root.get("brand").get("id"), brandId));
+					}
+					if (categoryId != null) {
+						predicates.add(criteriaBuilder.equal(root.get("category").get("id"), categoryId));
 					}
 					return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 				}

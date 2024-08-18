@@ -81,9 +81,6 @@ public class Product {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "is_delete")
-	private Boolean isDelete;
-
 	@Column(name = "name")
 	private String name;
 
@@ -136,14 +133,6 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Boolean getIsDelete() {
-		return isDelete;
-	}
-
-	public void setIsDelete(boolean isDelete) {
-		this.isDelete = isDelete;
 	}
 
 	public String getName() {

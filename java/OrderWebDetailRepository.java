@@ -8,4 +8,6 @@ public interface OrderWebDetailRepository extends JpaRepository<OrderWebDetail, 
 
 	List<OrderWebDetail> findByOrderWebId(Long orderId);
 
+	List<OrderWebDetail> findByOrderWeb(OrderWeb existingOrder);
+
 }

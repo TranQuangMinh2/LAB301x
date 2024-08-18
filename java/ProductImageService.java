@@ -28,7 +28,7 @@ public class ProductImageService {
 		ProductImage existingProductImage = productImageRepository.findById(productImage.getId()).orElse(null);
 		existingProductImage.setIsPrimary(productImage.getIsPrimary());
 		existingProductImage.setPath(productImage.getPath());
-		existingProductImage.setSize(productImage.getSize());
+//		existingProductImage.setSize(productImage.getSize());
 		existingProductImage.setProductId(productImage.getProductId());
 		return productImageRepository.save(existingProductImage);
 	}

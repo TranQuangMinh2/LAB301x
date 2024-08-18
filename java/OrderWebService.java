@@ -1,10 +1,13 @@
 package com.trnqngmnh.library;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderWebService {
@@ -74,6 +77,15 @@ public class OrderWebService {
 
 	public OrderWeb save(OrderWeb orderWeb) {
 		return orderWebRepository.save(orderWeb);
+
+	}
+
+	@Transactional
+	public void deleteOldOrders() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		Date oneMonthAgo = calendar.getTime();
+		orderWebRepository.deleteByCreatedAtBefore(oneMonthAgo);
 
 	}
 

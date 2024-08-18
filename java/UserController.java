@@ -36,11 +36,17 @@ public class UserController {
 	@Autowired
 	private ProductService productService;
 	@Autowired
+	private BrandService brandService;
+	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private CaptchaService captchaService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private OrderWebDetailRepository orderWebDetailRepository;
+	@Autowired
+	ProductSizeRepository productSizeRepository;
 
 //---------Shopper--------------------
 	@GetMapping("/index")
@@ -68,31 +74,67 @@ public class UserController {
 		return "shopper/index";
 	}
 
+//	@GetMapping("/register-user")
+//	public String registerUserForm(Model model) {
+//		User user = new User();
+//		model.addAttribute("user", user);
+//
+//		return "shopper/register";
+//	}
+//
+//	@PostMapping("/register-user")
+//	public String addUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response") String recaptchaResponse,
+//			Model model) {
+//		User existingUser = userService.findUserByEmail(user.getEmail());
+//		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
+//		if (existingUser != null) {
+//			model.addAttribute("message", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+//			return "shopper/register";
+//		} else {
+//			if (!isCaptchaValid) {
+//				model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
+//				return "shopper/register";
+//			} else {
+//				// Mã hóa mật khẩu trước khi lưu
+//				String encodedPassword = passwordEncoder.encode(user.getPassword());
+//				user.setPassword(encodedPassword);
+//
+//				userService.saveUser(user);
+//				emailService.sendRegistrationConfirmationEmail(user);
+//				if (user != null) {
+//					model.addAttribute("user", user);
+//					List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//					model.addAttribute("cartItems", cartItems);
+//					model.addAttribute("cartTotalQuantity", cartItems.size());
+//				}
+//				List<Product> products = productService.getAllProducts();
+//				products.sort(Comparator.comparing(Product::getCreatedAt).reversed());
+//
+//				Product latestProduct = products.get(0);
+//				List<Product> latestProduct2 = productService.getAllProducts();
+//				latestProduct2.sort(Comparator.comparing(Product::getCreatedAt).reversed());
+//				List<Product> topLatestProducts = latestProduct2.stream().limit(8).collect(Collectors.toList());
+//
+//				List<Category> categories = categoryService.findAllCategorys();
+//				model.addAttribute("latest_products", latestProduct);
+//				model.addAttribute("newProducts", topLatestProducts);
+//				model.addAttribute("products", products);
+//				model.addAttribute("categories", categories);
+//				return "shopper/index";
+//			}
+//		}
+//	}
 	@GetMapping("/register-user")
-	public String registerUserForm(Model model) {
-		User user = new User();
-		model.addAttribute("user", user);
+	public String registerUser(Model model) {
+		List<Product> products = productService.getAllProducts();
+		model.addAttribute("products", products);
 
 		return "shopper/register";
 	}
 
-	/*
-	 * @PostMapping("/register-user") public String addUser(@ModelAttribute User
-	 * user, @RequestParam("g-recaptcha-response") String recaptchaResponse, Model
-	 * model) { User existingUser = userService.findUserByEmail(user.getEmail());
-	 * boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
-	 * if (existingUser != null) { model.addAttribute("message",
-	 * "Email đã tồn tại. Vui lòng sử dụng email khác."); return "shopper/register";
-	 * } else { if (!isCaptchaValid) { userService.saveUser(user);
-	 * emailService.sendRegistrationConfirmationEmail(user); return "shopper/index";
-	 * } else { model.addAttribute("message",
-	 * "CAPTCHA không đúng, vui lòng thử lại."); return "shopper/register"; }
-	 * 
-	 * } }
-	 */
 	@PostMapping("/register-user")
 	public String addUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response") String recaptchaResponse,
-			Model model) {
+			Model model, HttpSession session) {
 		User existingUser = userService.findUserByEmail(user.getEmail());
 		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
 		if (existingUser != null) {
@@ -109,41 +151,111 @@ public class UserController {
 
 				userService.saveUser(user);
 				emailService.sendRegistrationConfirmationEmail(user);
+				if (user != null) {
+					model.addAttribute("user", user);
+					List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+					model.addAttribute("cartItems", cartItems);
+					model.addAttribute("cartTotalQuantity", cartItems.size());
+				}
+				List<Product> products = productService.getAllProducts();
+				products.sort(Comparator.comparing(Product::getCreatedAt).reversed());
+
+				Product latestProduct = products.get(0);
+				List<Product> latestProduct2 = productService.getAllProducts();
+				latestProduct2.sort(Comparator.comparing(Product::getCreatedAt).reversed());
+				List<Product> topLatestProducts = latestProduct2.stream().limit(8).collect(Collectors.toList());
+
+				List<Category> categories = categoryService.findAllCategorys();
+				model.addAttribute("latest_products", latestProduct);
+				model.addAttribute("newProducts", topLatestProducts);
+				model.addAttribute("products", products);
+				model.addAttribute("categories", categories);
 				return "shopper/index";
 			}
 		}
 	}
+//	@PostMapping("/register-user")
+//	public String addUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response") String recaptchaResponse,
+//			Model model, HttpSession session) {
+//		User existingUser = userService.findUserByEmail(user.getEmail());
+//		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
+//		if (existingUser != null) {
+//			model.addAttribute("message", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+//			return "shopper/register";
+//		} else {
+//			if (!isCaptchaValid) {
+//				model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
+//				return "shopper/register";
+//			} else {
+//				// Mã hóa mật khẩu trước khi lưu
+//				String encodedPassword = passwordEncoder.encode(user.getPassword());
+//				user.setPassword(encodedPassword);
+//
+//				userService.saveUser(user);
+//				emailService.sendRegistrationConfirmationEmail(user);
+//				// Đăng nhập tự động sau khi đăng ký thành công
+//				session.setAttribute("user", user);
+//
+//				List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//				model.addAttribute("cartItems", cartItems);
+//				model.addAttribute("cartTotalQuantity", cartItems.size());
+//				List<Product> products = productService.getAllProducts();
+//				products.sort(Comparator.comparing(Product::getCreatedAt).reversed());
+//				Product latestProduct = products.get(0);
+//				List<Product> topLatestProducts = products.stream().limit(8).collect(Collectors.toList());
+//				List<Category> categories = categoryService.findAllCategorys();
+//				model.addAttribute("latest_products", latestProduct);
+//				model.addAttribute("newProducts", topLatestProducts);
+//				model.addAttribute("products", products);
+//				model.addAttribute("categories", categories);
+//				return "shopper/index";
+//			}
+//		}
+//	}
 
+//	@GetMapping("/customer/login")
+//	public String login(Model model) {
+//		model.addAttribute("isLoggedIn", false);
+//		return "shopper/login";
+//	}
+//
+//	@PostMapping("/customer/login")
+//	public String login(@RequestParam String email, @RequestParam String password,
+//			@RequestParam("g-recaptcha-response") String recaptchaResponse, Model model, HttpSession session) {
+//		User user = userService.findUserByEmail(email);
+//		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
+//
+//		if (isCaptchaValid) {
+//			if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+//				System.out.println("Đăng nhập thành công");
+//				session.setAttribute("user", user);
+//				List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//				model.addAttribute("cartItems", cartItems);
+//				model.addAttribute("cartTotalQuantity", cartItems.size());
+//				model.addAttribute("isLoggedIn", true);
+//				return "redirect:/index";
+//			} else {
+//				model.addAttribute("message", "Email hoặc mật khẩu không đúng.");
+//				System.out.println("Đăng nhập thất bại");
+//				return "shopper/login";
+//			}
+//		} else {
+//			model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
+//			return "shopper/login";
+//		}
+//
+//	}
 	@GetMapping("/customer/login")
-	public String login(Model model) {
-		model.addAttribute("isLoggedIn", false);
+	public String loginUser(Model model) {
+		List<Product> products = productService.getAllProducts();
+		model.addAttribute("products", products);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
+		List<Category> categories = categoryService.findAllCategorys();
+		model.addAttribute("categories", categories);
 		return "shopper/login";
 	}
 
-//    @PostMapping("/customer/login")
-//    public String login(@RequestParam String email, @RequestParam String password, @RequestParam("g-recaptcha-response") String recaptchaResponse, Model model, HttpSession session) {
-//        User user = userService.findUserByEmail(email);
-//        boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
-//        if (!isCaptchaValid) {
-//        	if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-//        		System.out.println("Đăng nhập thành công");
-//                session.setAttribute("user", user);
-//    	        List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
-//                model.addAttribute("cartItems", cartItems);
-//                model.addAttribute("cartTotalQuantity", cartItems.size());
-//                model.addAttribute("isLoggedIn", true);
-//                return "redirect:/index";
-//            } else {
-//                model.addAttribute("message", "Email hoặc mật khẩu không đúng.");
-//                System.out.println("Đăng nhập thất bại");
-//                return "shopper/login";
-//            }
-//        } else {
-//            model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
-//            return "shopper/login";
-//        }
-//        
-//    }
 	@PostMapping("/customer/login")
 	public String login(@RequestParam String email, @RequestParam String password,
 			@RequestParam("g-recaptcha-response") String recaptchaResponse, Model model, HttpSession session) {
@@ -161,7 +273,7 @@ public class UserController {
 				List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
 				model.addAttribute("cartItems", cartItems);
 				model.addAttribute("cartTotalQuantity", cartItems.size());
-				model.addAttribute("isLoggedIn", true);
+				model.addAttribute("isSignedIn", true);
 				return "redirect:/index";
 			} else {
 				model.addAttribute("message", "Email hoặc mật khẩu không đúng.");
@@ -174,6 +286,59 @@ public class UserController {
 			return "shopper/login";
 		}
 	}
+//	@PostMapping("/customer/login")
+//	public String login(@RequestParam String email, @RequestParam String password,
+//			@RequestParam("g-recaptcha-response") String recaptchaResponse, Model model, HttpSession session) {
+//		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
+//		if (isCaptchaValid) {
+//			User user = userService.findUserByEmail(email);
+//			if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+//				session.setAttribute("user", user);
+//				List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//				model.addAttribute("cartItems", cartItems);
+//				model.addAttribute("cartTotalQuantity", cartItems.size());
+//				model.addAttribute("isSignedIn", true);
+//				return "redirect:/index";
+//			} else {
+//				model.addAttribute("message", "Email hoặc mật khẩu không đúng.");
+//				return "shopper/login";
+//			}
+//		} else {
+//			model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
+//			return "shopper/login";
+//		}
+//	}
+
+//	@PostMapping("/customer/login")
+//	public String login(@RequestParam String email, @RequestParam String password,
+//			@RequestParam("g-recaptcha-response") String recaptchaResponse, Model model, HttpSession session) {
+//		System.out.println("recaptchaResponse: " + recaptchaResponse);
+//		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
+//		System.out.println("isCaptchaValid: " + isCaptchaValid);
+//
+//		if (isCaptchaValid) {
+//			User user = userService.findUserByEmail(email);
+//			System.out.println("User: " + user);
+//
+//			if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+//				System.out.println("Đăng nhập thành công");
+//				session.setAttribute("user", user);
+//				List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//				model.addAttribute("cartItems", cartItems);
+//				model.addAttribute("cartTotalQuantity", cartItems.size());
+//				model.addAttribute("isLoggedIn", true);
+//				return "redirect:/index";
+//			} else {
+//				model.addAttribute("message", "Email hoặc mật khẩu không đúng.");
+//				System.out.println("Đăng nhập thất bại");
+//				return "shopper/login";
+//			}
+//		} else {
+//			model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
+//			System.out.println("CAPTCHA không đúng");
+//			return "shopper/login";
+//		}
+//	}
 
 	@GetMapping("/my-account")
 	public String myAccount(HttpSession session, Model model) {
@@ -206,6 +371,23 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("address", user.getAddress());
 		return "redirect:/index";
+	}
+
+	@GetMapping("/my-account/order/{id}")
+	public String orderDetails(@PathVariable("id") Long id, HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		OrderWeb orderWeb = orderWebService.findById(id);
+		if (user != null) {
+			// List<OrderWeb> orderWebs = orderWebService.findByUserId(user.getId());
+			model.addAttribute("user", user);
+			List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+			model.addAttribute("cartTotalQuantity", cartItems.size()); // Thêm dòng này
+			// model.addAttribute("Product", product);
+		} else {
+			return "shopper/login";
+		}
+		model.addAttribute("orderWeb", orderWeb);
+		return "shopper/order-detail";
 	}
 
 	@GetMapping("/shopper/logout")
@@ -242,16 +424,24 @@ public class UserController {
 	@PostMapping("/customer/checkLogin")
 	public String checkLogin(@RequestParam("email") String email, @RequestParam("password") String password,
 			Model model, @RequestParam(value = "remember", defaultValue = "false") boolean remember,
-			HttpServletRequest request, HttpServletResponse response) {
-		User user = userService.checkLogin(email, password);
-		if (user != null && "admin".equals(user.getRole())) {
-			request.getSession().setAttribute("loggedInUser", user);
-			if (remember) {
-				addRememberMeCookie(response, email);
+			HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("g-recaptcha-response") String recaptchaResponse) {
+		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
+		if (isCaptchaValid) {
+			User user = userService.checkLogin(email, password);
+			if (user != null && "admin".equals(user.getRole())) {
+				request.getSession().setAttribute("loggedInUser", user);
+				if (remember) {
+					addRememberMeCookie(response, email);
+				}
+				return "redirect:/admin";
+			} else {
+				model.addAttribute("error", "Đăng nhập không thành công. Vui lòng kiểm tra lại email và mật khẩu.");
+				return "admin/login";
 			}
-			return "redirect:/admin";
 		} else {
-			model.addAttribute("error", "Đăng nhập không thành công. Vui lòng kiểm tra lại email và mật khẩu.");
+			model.addAttribute("message", "CAPTCHA không đúng, vui lòng thử lại.");
+			System.out.println("CAPTCHA không đúng");
 			return "admin/login";
 		}
 	}
@@ -317,16 +507,20 @@ public class UserController {
 	@GetMapping("/order/{orderId}")
 	public String viewOrderDetails(@PathVariable("orderId") Long orderId, Model model) {
 		OrderWeb order = orderWebService.findById(orderId);
-		model.addAttribute("orderWeb", order);
-		Date updatedAtDate = order.getUpdatedAt(); // Replace with your method to get the date
-		LocalDateTime updatedAt = LocalDateTime.ofInstant(updatedAtDate.toInstant(), ZoneId.systemDefault());
-		LocalDateTime oneMonthLater = updatedAt.plusMonths(1);
-		if ("Đã thanh toán".equals(order.getPaymentStatus())) {
-			String consigneeEmail = order.getConsigneeEmail(); // Get consignee email
-			String subject = "Bạn đã trả tiền thành công.";
-			String text = "Bạn có 1 tháng để mượn sách. Bạn sẽ phải trả sách lúc: " + oneMonthLater + ".";
-			emailService.sendSimpleMessage(consigneeEmail, subject, text);
+		if (order.getSentMail() == null || !order.getSentMail()) {
+			Date updatedAtDate = order.getUpdatedAt();
+			LocalDateTime updatedAt = LocalDateTime.ofInstant(updatedAtDate.toInstant(), ZoneId.systemDefault());
+			LocalDateTime oneMonthLater = updatedAt.plusMonths(1);
+			if ("Đã thanh toán".equals(order.getPaymentStatus())) {
+				String consigneeEmail = order.getConsigneeEmail(); // Get consignee email
+				String subject = "Bạn đã trả tiền thành công.";
+				String text = "Bạn có 1 tháng để mượn sách. Bạn sẽ phải trả sách lúc: " + oneMonthLater
+						+ ". Lưu ý là bạn phải đến thư viện để trả sách.";
+				emailService.sendSimpleMessage(consigneeEmail, subject, text);
+				order.setSentMail(true);
+			}
 		}
+		model.addAttribute("orderWeb", order);
 		return "admin/order-detail";
 	}
 
@@ -348,18 +542,50 @@ public class UserController {
 			Model model) {
 		OrderWeb existingOrder = orderWebService.findById(orderId);
 		if (existingOrder != null) {
+			String newStatus = updatedOrder.getDeliveryStatus();
+			String oldStatus = existingOrder.getDeliveryStatus();
 
-			existingOrder.setDeliveryStatus(updatedOrder.getDeliveryStatus());
+			// Cập nhật trạng thái và thông tin khác
+			existingOrder.setDeliveryStatus(newStatus);
 			existingOrder.setPaymentStatus(updatedOrder.getPaymentStatus());
-
 			orderWebService.save(existingOrder);
+
+			// Kiểm tra nếu trạng thái mới là "Đã trả" và trạng thái cũ không phải là "Đã
+			// trả"
+			if ("Đã trả".equals(newStatus) && !"Đã trả".equals(oldStatus)) {
+				List<OrderWebDetail> orderDetails = orderWebDetailRepository.findByOrderWeb(existingOrder);
+				for (OrderWebDetail orderDetail : orderDetails) {
+					ProductSize productSize = orderDetail.getProductSize();
+					int newQuantity = productSize.getQuantity() + 1;
+					productSize.setQuantity(newQuantity);
+					productSizeRepository.save(productSize); // Lưu thay đổi vào cơ sở dữ liệu
+				}
+			}
+
 			model.addAttribute("orderWeb", existingOrder);
 			model.addAttribute("message", "Order details updated successfully");
-
 		} else {
 			model.addAttribute("message", "Order not found");
 		}
 
 		return "redirect:/order/" + orderId;
 	}
+
+	/*
+	 * @PostMapping("/order/{orderId}/update") public String
+	 * updateOrderDetails(@PathVariable("orderId") Long orderId, @ModelAttribute
+	 * OrderWeb updatedOrder, Model model) { OrderWeb existingOrder =
+	 * orderWebService.findById(orderId); if (existingOrder != null) {
+	 * 
+	 * existingOrder.setDeliveryStatus(updatedOrder.getDeliveryStatus());
+	 * existingOrder.setPaymentStatus(updatedOrder.getPaymentStatus());
+	 * 
+	 * orderWebService.save(existingOrder); model.addAttribute("orderWeb",
+	 * existingOrder); model.addAttribute("message",
+	 * "Order details updated successfully");
+	 * 
+	 * } else { model.addAttribute("message", "Order not found"); }
+	 * 
+	 * return "redirect:/order/" + orderId; }
+	 */
 }

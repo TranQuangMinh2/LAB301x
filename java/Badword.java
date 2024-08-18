@@ -1,30 +1,19 @@
 package com.trnqngmnh.library;
 
 import java.util.Date;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "product_size")
-public class ProductSize {
-
-	@ManyToOne
-	@JoinColumn(name = "product_id", insertable = false, updatable = false)
-	private Product product;
-
-	@OneToMany(mappedBy = "productSize")
-	private List<CartItem> cartItems;
+@Table(name = "badword")
+public class Badword {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,16 +37,10 @@ public class ProductSize {
 		updatedAt = new Date();
 	}
 
-	@Column(name = "quantity")
-	private Integer quantity;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "size")
-	private Integer size;
-
-	@Column(name = "product_id")
-	private Long productId;
-
-	// Getters and Setters
+	// Các phương thức getter và setter
 
 	public Long getId() {
 		return id;
@@ -83,36 +66,11 @@ public class ProductSize {
 		this.updatedAt = updatedAt;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public String getName() {
+		return name;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public Integer getSize() {
-		return size;
-	}
-
-	public void setSize(Integer size) {
-		this.size = size;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
 }

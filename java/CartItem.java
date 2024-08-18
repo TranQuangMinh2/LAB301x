@@ -1,6 +1,7 @@
 package com.trnqngmnh.library;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,7 +33,10 @@ public class CartItem {
 	@PrePersist
 	public void prePersist() {
 		createdAt = new Date();
-		updatedAt = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(createdAt);
+		cal.add(Calendar.DAY_OF_MONTH, 1);
+		updatedAt = cal.getTime();
 	}
 
 	@PreUpdate

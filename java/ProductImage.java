@@ -1,124 +1,135 @@
 package com.trnqngmnh.library;
 
-import jakarta.persistence.*;
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "product_image")
 public class ProductImage {
 
 	@ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    private Product product;
+	@JoinColumn(name = "product_id", insertable = false, updatable = false)
+	private Product product;
 	// Các phương thức getter và setter khác...
 
-    public Product getProduct() {
-        return product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    @Column(name = "created_at")
-    private Date createdAt;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "updated_at")
-    private Date updatedAt;
+	@Column(name = "created_at")
+	private Date createdAt;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = new Date();
-        updatedAt = new Date();
-    }
+	@Column(name = "updated_at")
+	private Date updatedAt;
 
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = new Date();
-    }
-    
-    @Lob
-    @Column(name = "data", columnDefinition="LONGBLOB")
-    private byte[] data;
+	@PrePersist
+	public void prePersist() {
+		createdAt = new Date();
+		updatedAt = new Date();
+	}
 
-    @Column(name = "is_primary")
-    private Boolean isPrimary;
+	@PreUpdate
+	public void preUpdate() {
+		updatedAt = new Date();
+	}
 
-    @Column(name = "path")
-    private String path;
+	@Lob
+	@Column(name = "data", columnDefinition = "LONGBLOB")
+	private byte[] data;
 
-    @Column(name = "size")
-    private Integer size;
+	@Column(name = "is_primary")
+	private Boolean isPrimary;
 
-    @Column(name = "product_id")
-    private Long productId;
+	@Column(name = "path")
+	private String path;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+//	@Column(name = "size")
+//	private Integer size;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column(name = "product_id")
+	private Long productId;
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+	// Getters and Setters
+	public Long getId() {
+		return id;
+	}
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public byte[] getData() {
-        return data;
-    }
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setData(byte[] data) {
-        this.data = data;
-    }
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public Boolean getIsPrimary() {
-        return isPrimary;
-    }
+	public byte[] getData() {
+		return data;
+	}
 
-    public void setIsPrimary(Boolean isPrimary) {
-        this.isPrimary = isPrimary;
-    }
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 
-    public String getPath() {
-        return path;
-    }
+	public Boolean getIsPrimary() {
+		return isPrimary;
+	}
 
-    public void setPath(String path) {
-        this.path = path;
-    }
+	public void setIsPrimary(Boolean isPrimary) {
+		this.isPrimary = isPrimary;
+	}
 
-    public Integer getSize() {
-        return size;
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public void setSize(Integer size) {
-        this.size = size;
-    }
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-    public Long getProductId() {
-        return productId;
-    }
+//    public Integer getSize() {
+//        return size;
+//    }
+//
+//    public void setSize(Integer size) {
+//        this.size = size;
+//    }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
 }

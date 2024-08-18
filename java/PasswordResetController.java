@@ -87,18 +87,18 @@ public class PasswordResetController {
 	public String processForgotPasswordForm(@RequestParam("email") String userEmail, Model model) {
 		User user = userService.findUserByEmail(userEmail);
 		if (user == null) {
-			model.addAttribute("errorMessage", "Không có người dùng nào được tìm thấy có email đó.");
+			model.addAttribute("fgerrorMessage", "Không có người dùng nào được tìm thấy có email đó.");
 			return "shopper/forgot-password";
+		} else {
+			PasswordResetToken token = tokenService.createToken(user);
+
+			String resetUrl = "http://localhost:8080/reset-password?token=" + token.getToken();
+			emailService.sendSimpleMessage(userEmail, "Yêu cầu đặt lại mật khẩu",
+					"Click vào đường link để đặt lại mật khẩu của bạn: " + resetUrl);
+
+			model.addAttribute("fgmessage", "Đường link đặt lại mật khẩu đã được gửi tới " + userEmail);
+			return "redirect:/forgot-password";
 		}
-
-		PasswordResetToken token = tokenService.createToken(user);
-
-		String resetUrl = "http://localhost:8080/reset-password?token=" + token.getToken();
-		emailService.sendSimpleMessage(userEmail, "Yêu cầu đặt lại mật khẩu",
-				"Click vào đường link để đặt lại mật khẩu của bạn: " + resetUrl);
-
-		model.addAttribute("message", "Đường link đặt lại mật khẩu đã được gửi tới " + userEmail);
-		return "redirect:/forgot-password";
 	}
 
 	@GetMapping("/reset-password")

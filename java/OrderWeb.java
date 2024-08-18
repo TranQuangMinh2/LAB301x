@@ -1,9 +1,7 @@
 package com.trnqngmnh.library;
 
-import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,7 +56,7 @@ public class OrderWeb {
 	private String deliveryAddress;
 
 	@Column(name = "delivery_status")
-	private String deliveryStatus;
+	public String deliveryStatus;
 
 	@Column(name = "payment_method")
 	private String paymentMethod;
@@ -76,11 +74,6 @@ public class OrderWeb {
 	private Long userId;
 
 	// các trường và phương thức khác của bạn ở đây
-
-	public String formatPrice(double amount) {
-		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-		return format.format(amount);
-	}
 
 //    @OneToMany(mappedBy = "orderWeb", cascade = CascadeType.ALL)
 //    private List<OrderWebDetail> orderWebDetails;
