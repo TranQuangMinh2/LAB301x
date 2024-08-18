@@ -12,6 +12,7 @@
 	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/spinkit.min.css}" rel="stylesheet" type="text/css" />
 	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -54,56 +55,78 @@
         .search-form .kt-input-icon__icon--left span {
             color: #888;
         }
-        .pagination-controls {
+        /* Pagination Controls */
+		.pagination-controls {
 		    text-align: center;
 		    margin-top: 20px;
 		}
 		
-		.pagination-control {
+		.pagination-controls button {
 		    margin: 0 5px;
-		    padding: 10px;
+		    padding: 8px 12px;
 		    border: 1px solid #ddd;
 		    border-radius: 4px;
-		    background-color: #f9f9f9;
+		    background-color: #ffffff;
+		    color: #333;
 		    cursor: pointer;
 		    font-size: 16px;
 		}
 		
-		.pagination-control:hover {
-		    background-color: #ddd;
+		.pagination-controls button:hover {
+		    background-color: #f0f0f0;
+		    color: #333;
 		}
 		
-		.pagination-control:focus {
+		.pagination-controls button:focus {
 		    outline: none;
+		}
+		
+		/* Pagination Icons */
+		.pagination-control i {
+		    font-size: 16px;
+		}
+		
+		/* Active Page Button */
+		.page-button.current {
+		    font-weight: bold;
+		    background-color: #5d78ff;
+		    color: #ffffff;
+		    border: 1px solid #5d78ff;
 		}
 		
 		.page-button {
-		    margin: 0 5px;
-		    padding: 5px 10px;
 		    border: 1px solid #ddd;
-		    border-radius: 4px;
-		    background-color: #f9f9f9;
-		    cursor: pointer;
+		    background-color: #ffffff;
+		    color: #333;
+		    font-size: 16px;
 		}
-		
-		.page-button:hover {
-		    background-color: #ddd;
-		}
-		
-		.page-button:focus {
-		    outline: none;
-		}
-		
-		.page-button.current {
-		    font-weight: bold;
-		}
+		#loading-overlay {
+	      position: fixed;
+	      top: 0;
+	      left: 0;
+	      width: 100%;
+	      height: 100%;
+	      background: rgba(255, 255, 255, 0.8);
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      z-index: 1000;
+	    }
 	</style>
 </head>
 <body>
+	<div id="loading-overlay">
+	    <div class="sk-wander">
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+    </div>
+	</div>
+<div id="content" style="display: none">
 <header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
+	    
 			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-
 				<!-- begin:: Aside -->
 				<div th:replace="admin/fragments/sidebar"></div>
 				<!-- end:: Aside -->
@@ -158,7 +181,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <!-- <div class="col-md-2 form-group">
                                         <label for="kt_form_type">Phương thức</label>
                                         <select class="form-control bootstrap-select kt_form_method" id="kt_form_type" name="paymentMethod">
                                             <option value="">Tất cả</option>
@@ -176,24 +199,19 @@
                                             <option value="Đã hoàn tiền">Đã hoàn tiền</option>
                                             <option value="Đã hủy bỏ">Đã hủy bỏ</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-3 form-group">
-                                        <label for="kt_form_status">Vận chuyển</label>
+                                        <label for="kt_form_status">Mượn sách</label>
                                         <select class="form-control bootstrap-select kt_form_delivery" id="kt_form_status" name="deliveryStatus">
                                             <option value="">Tất cả</option>
-                                            <option value="Chưa xét duyệt">Chưa xét duyệt</option>
-                                            <option value="Chờ giao hàng">Chờ giao hàng</option>
-                                            <option value="Chờ giao hàng lần 2">Chờ giao hàng lần 2</option>
-                                            <option value="Đang giao hàng">Đang giao hàng</option>
-                                            <option value="Đang giao hàng lần 2">Đang giao hàng lần 2</option>
-                                            <option value="Giao hàng thành công">Giao hàng thành công</option>
-                                            <option value="Đã hủy">Đã hủy</option>
+                                            <option value="Đã mượn">Đã mượn</option>
+                                            <option value="Đã trả">Đã trả</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 form-group">
+                                    <!-- <div class="col-md-3 form-group">
                                         <label for="totalAmount">Tổng số tiền</label>
                                         <input type="number" class="form-control" id="totalAmount" placeholder="Tổng số tiền" name="totalAmount" min="0">
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-12 text-right">
                                         <button type="submit" class="btn btn-default">
                                             <i class="la la-search"></i> Tìm kiếm
@@ -209,17 +227,17 @@
 									<table class="w3-table-all">
 									    <thead>
 									        <tr class="w3-blue">
-									            <th>Mã đơn hàng</th>
+									            <th>Mã mượn sách</th>
 									            <th>Ngày tạo</th>
 									            <th>Ngày cập nhật</th>
-									            <th>Người nhận</th>
+									            <th>Người mượn</th>
 									            <th>Số điện thoại người nhận</th>
-									            <th>Địa chỉ giao hàng</th>
-									            <th>Trạng thái giao hàng</th>
-									            <th>Phương thức thanh toán</th>
-									            <th>Trạng thái thanh toán</th>
+									            <!-- <th>Địa chỉ giao hàng</th> -->
+									            <th>Trạng thái mượn sách</th>
+									            <!-- <th>Phương thức thanh toán</th>
+									            <th>Trạng thái thanh toán</th> -->
 									            <!-- <th>Email</th> -->
-									            <th>Tổng số tiền</th>
+									            <!-- <th>Tổng số tiền</th> -->
 									            <!-- <th>ID người dùng</th> -->
 									            <th>Xem chi tiết</th>
 									        </tr>
@@ -231,12 +249,12 @@
 									            <td th:text="${orderWeb.updatedAt}"></td>
 									            <td th:text="${orderWeb.consignee}"></td>
 									            <td th:text="${orderWeb.consigneePhone}"></td>
-									            <td th:text="${orderWeb.deliveryAddress}"></td>
+									           <!--  <td th:text="${orderWeb.deliveryAddress}"></td> -->
 									            <td th:text="${orderWeb.deliveryStatus}"></td>
-									            <td th:text="${orderWeb.paymentMethod}"></td>
-									            <td th:text="${orderWeb.paymentStatus}"></td>
+									            <!-- <td th:text="${orderWeb.paymentMethod}"></td>
+									            <td th:text="${orderWeb.paymentStatus}"></td> -->
 									            <!-- <td th:text="${orderWeb.consigneeEmail}"></td> -->
-									            <td th:text="${orderWeb.totalAmount}"></td>
+									            <!-- <td th:text="${orderWeb.totalAmount}"></td> -->
 									            <!-- <td th:text="${orderWeb.userId}"></td> -->
 						                		<td>
 													<a th:href="@{/order/{id}(id=${orderWeb.id})}" class="btn btn-primary">
@@ -264,6 +282,7 @@
 			</div>
 		</div>
 	<footer th:replace="admin/fragments/footer"></footer>
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const rowsPerPage = 5; // Số hàng trên mỗi trang
@@ -385,6 +404,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchButton').addEventListener('click', updateTable);
     document.getElementById('kt_form_status').addEventListener('change', updateTable);
 });
+</script>
+<script>
+	 // Simulate a loading delay
+	 document.addEventListener("DOMContentLoaded", function() {
+	   setTimeout(function() {
+	     // Hide the loading overlay and show the content
+	     document.getElementById('loading-overlay').style.display = 'none';
+	     document.getElementById('content').style.display = 'block';
+	   }, 2000); // Adjust the timeout as needed
+	 });
 </script>
 </body>
 </html>

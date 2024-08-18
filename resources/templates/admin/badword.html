@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Category</title>
+	<title>Brand</title>
 	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
 	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
 	<link th:href="@{/admin/assets/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
@@ -156,7 +156,7 @@
     </div>
 	</div>
 <div id="content" style="display: none">
-	    <!-- header -->
+	<!-- header -->
 	<header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
 			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
@@ -181,7 +181,7 @@
 						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 							<div class="kt-portlet kt-portlet--mobile">
 								<h3 class="kt-portlet__head-title text-center">
-									Danh mục
+									Từ ngữ tiêu cực, nhạy cảm
 								</h3>
 								<div class="kt-portlet__head kt-portlet__head--lg">
 									<div class="kt-portlet__head-toolbar">
@@ -192,7 +192,7 @@
 											</a>
 											<br>
 											<div class="dropdown dropdown-inline">
-											    <a href="/addCategory" class="btn btn-brand btn-icon-sm">
+											    <a href="/addBadword" class="btn btn-badword btn-icon-sm">
 											        <i class="flaticon2-plus"></i> Thêm Mới
 											    </a>
 											</div>
@@ -200,25 +200,25 @@
 									</div>
 								</div>
 									<table class="w3-table-all">
-									    <thead>
-									        <tr>
-									            <th>ID</th>
-									            <th>Tên</th>
-									            <th>Hành động</th>
-									        </tr>
-									    </thead>
-									    <tbody id="categoryTableBody">
-									        <tr th:each="category : ${category}">
-									            <td th:text="${category.id}"></td>
-									            <td th:text="${category.name}"></td>
-									            <td>
-									                <a th:href="@{/category/{id}(id=${category.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
-									                <a th:href="@{/category/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure you want to delete this item?');">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </a>
-									            </td>
-									        </tr>
-									    </tbody>
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Từ</th>
+												<th>Hành động</th>
+											</tr>
+										</thead>
+										<tbody id="badwordTableBody">
+											<tr th:each="badword : ${badword}">
+												<td th:text="${badword.id}"></td>
+												<td th:text="${badword.name}"></td>
+												<td>
+													<a th:href="@{/badword/{id}(id=${badword.id})}" ><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+													<a th:href="@{/badword/delete/{id}(id=${badword.id})}" onclick="return confirm('Are you sure you want to delete this item?');">
+	                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+	                                                </a>
+												</td>
+											</tr>
+										</tbody>
 									</table>
 									<!-- Pagination Controls -->
 									<div id="paginationControls" class="pagination-controls">
@@ -238,22 +238,12 @@
 	<footer th:replace="admin/fragments/footer"></footer>
 </div>
 <script>
-	 // Simulate a loading delay
-	 document.addEventListener("DOMContentLoaded", function() {
-	   setTimeout(function() {
-	     // Hide the loading overlay and show the content
-	     document.getElementById('loading-overlay').style.display = 'none';
-	     document.getElementById('content').style.display = 'block';
-	   }, 2000); // Adjust the timeout as needed
-	 });
-</script>
-<script>
 document.addEventListener('DOMContentLoaded', function() {
     const rowsPerPage = 5; // Số hàng trên mỗi trang
     let currentPage = 1; // Trang hiện tại
 
     function paginateTable() {
-        const rows = Array.from(document.querySelectorAll('#categoryTableBody tr'));
+        const rows = Array.from(document.querySelectorAll('#badwordTableBody tr'));
         const totalRows = rows.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
 
@@ -351,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var name = document.getElementById('generalSearch').value.toLowerCase();
         var status = document.getElementById('kt_form_status').value.toLowerCase();
 
-        var rows = Array.from(document.querySelectorAll('#categoryTableBody tr'));
+        var rows = Array.from(document.querySelectorAll('#badwordTableBody tr'));
         rows.forEach(function(row) {
             var cellName = row.cells[1].textContent.toLowerCase();
             var cellStatus = row.cells[3].textContent.toLowerCase();
@@ -369,5 +359,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('kt_form_status').addEventListener('change', updateTable);
 });
 </script>
+<script>
+	    // Simulate a loading delay
+	    document.addEventListener("DOMContentLoaded", function() {
+	      setTimeout(function() {
+	        // Hide the loading overlay and show the content
+	        document.getElementById('loading-overlay').style.display = 'none';
+	        document.getElementById('content').style.display = 'block';
+	      }, 2000); // Adjust the timeout as needed
+	    });
+	  	</script>
 </body>
 </html>
+

@@ -11,13 +11,35 @@
 	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/spinkit.min.css}" rel="stylesheet" type="text/css" />
 	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />   
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block> 
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+	#loading-overlay {
+	      position: fixed;
+	      top: 0;
+	      left: 0;
+	      width: 100%;
+	      height: 100%;
+	      background: rgba(255, 255, 255, 0.8);
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      z-index: 1000;
+	    }
+	</style>
 </head>
 <body>
-    
+<div id="loading-overlay">
+	    <div class="sk-wander">
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+    </div>
+	</div>
+<div id="content" style="display: none">    
 	    <!-- header -->
 	<header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
@@ -48,7 +70,7 @@
 						   <form action="#" th:action="@{/order/{orderId}/update(orderId=${orderWeb.id})}" th:object="${orderWeb}" method="post">
 							    <input type="hidden" th:field="*{id}"/>
 							    <div class="form-group">
-							        <label for="consignee">Người đặt</label>
+							        <label for="consignee">Người mượn</label>
 							        <input type="text" class="form-control" id="consignee" th:field="*{consignee}">
 							    </div>
 							    <div class="form-group">
@@ -60,42 +82,37 @@
 							        <input type="text" class="form-control" id="deliveryAddress" th:field="*{deliveryAddress}">
 							    </div>-->
 							    <div class="form-group">
-							        <label for="deliveryStatus">Tình trạng vận chuyển</label>
+							        <label for="deliveryStatus">Tình trạng mượn sách</label>
 							        <!--<input type="text" class="form-control" id="deliveryStatus" th:field="*{deliveryStatus}">-->
-							        <select class="form-control bootstrap-select kt_form_delivery" id="kt_form_status" th:field="*{deliveryStatus}">
+							        <select class="w3-blue form-control bootstrap-select kt_form_delivery" id="kt_form_status" th:field="*{deliveryStatus}">
 										<option value="">Tất cả</option>
-										<option value="Chưa xét duyệt">Chưa xét duyệt</option>
-										<option value="Chờ giao hàng">Chờ giao sách</option>
-										<option value="Chờ giao hàng lần 2">Chờ giao sách lần 2</option>
-										<option value="Đang giao hàng">Đang giao sách</option>
-										<option value="Đang giao hàng lần 2">Đang giao sách lần 2</option>
-										<option value="Giao hàng thành công">Giao hàng thành công</option>
-										<option value="Đã hủy">Đã hủy</option>
+                                           <option value="Đã mượn">Đã mượn</option>
+                                           <option value="Đã trả">Đã trả</option>
 									</select>
 							    </div>
-							    <div class="form-group">
+							    <div class="form-group" style="display:none">
 							        <label for="paymentMethod">Phương thức thanh toán</label>
 							        <input type="text" class="form-control" id="paymentMethod" th:field="*{paymentMethod}">
 							    </div>
-							    <div class="form-group">
-							        <label for="paymentStatus">Tình trạng thanh toán</label>
+							    <div class="form-group" style="display:none">
+							        <label for="paymentStatus" style="display:none">Tình trạng thanh toán</label>
 							        <!--<input type="text" class="form-control" id="paymentStatus" th:field="*{paymentStatus}">-->
-									<select class="form-control bootstrap-select kt_form_payment" id="kt_form_status" th:field="*{paymentStatus}">
+									<select class="form-control bootstrap-select kt_form_payment" id="kt_form_status" th:field="*{paymentStatus}" style="display:none">
 										<option value="">Tất cả</option>
 										<!--<option value="Chờ thanh toán ATM">Chờ thanh toán ATM</option>-->
-										<option value="Chưa thanh toán">Chưa thanh toán</option>
-										<option value="Đã thanh toán">Đã thanh toán</option>
-										<option value="Đã hoàn tiền">Đã hoàn tiền</option>
-										<option value="Đã hủy bỏ">Đã hủy bỏ</option>
+										<option value="Chưa thanh toán" style="display:none">Chưa thanh toán</option>
+										<option value="Đã thanh toán" style="display:none">Đã thanh toán</option>
+										<option value="Đã hoàn tiền" style="display:none">Đã hoàn tiền</option>
+										<option value="Đã hủy bỏ" style="display:none">Đã hủy bỏ</option>
 									</select>	        
 							    </div>
 							    <!--<div class="form-group">
 							        <label for="sentMail">Sent Mail</label>
 							        <input type="checkbox" id="sentMail" th:field="*{sentMail}">
 							    </div>-->
-							    <div class="form-group">
-							        <label for="totalAmount">Tổng tiền</label>
-							        <input type="number" class="form-control" id="totalAmount" th:field="*{totalAmount}">
+							    <div class="form-group" style="display:none">
+							        <label for="totalAmount" style="display:none">Tổng tiền</label>
+							        <input type="number" class="form-control" id="totalAmount" th:field="*{totalAmount}" style="display:none">
 							    </div>
 							    <button type="submit" class="btn btn-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i>Cập nhật</button>
 							</form>
@@ -107,5 +124,16 @@
 		</div>
 	</div>
 	<footer th:replace="admin/fragments/footer"></footer>
+</div>
+<script>
+	    // Simulate a loading delay
+	    document.addEventListener("DOMContentLoaded", function() {
+	      setTimeout(function() {
+	        // Hide the loading overlay and show the content
+	        document.getElementById('loading-overlay').style.display = 'none';
+	        document.getElementById('content').style.display = 'block';
+	      }, 2000); // Adjust the timeout as needed
+	    });
+  	</script>
 </body>
 </html>

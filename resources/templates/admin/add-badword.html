@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Product Size</title>
+    <title>Add Brand</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
 	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
@@ -15,7 +15,7 @@
 	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 	#loading-overlay {
 	      position: fixed;
@@ -39,8 +39,8 @@
       <div class="sk-wander-cube"></div>
     </div>
 	</div>
-<div id="content" style="display: none"> 
-    <!-- header -->
+<div id="content" style="display: none">    
+	<!-- header -->
 	<header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
 			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
@@ -63,38 +63,21 @@
 						
 						<!-- begin:: Content -->
 						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-							<div class="kt-portlet kt-portlet--mobile">
-							<h1>Add Product Size</h1>
-						    <form action="#" th:action="@{/addProductSize}" th:object="${productSize}" method="post">
-						        <table>
-						            <!-- <tr>
-						                <td>Quantity:</td>
-						                <td><input type="text" th:field="*{quantity}" /></td>
-						            </tr> -->
+							<h1>Thêm từ ngữ tiêu cực, nhạy cảm</h1>
+						    <form action="#" th:action="@{/addBadword}" th:object="${badword}" method="post">
+						        <table class="w3-all-table">
 						            <tr>
-						                <td>Kích cỡ:</td>
-						                <td>
-						                <select th:field="*{size}" id="size" class="form-control">
-										    <option value="0">0</option>
-										    <option value="1">1</option>
-										</select>
-										</td>
+						                <td>Từ:</td>
+						                <td><input type="text" th:field="*{name}" /></td>
 						            </tr>
+						            <br>
 						            <tr>
-						                <td>Tài liệu:</td>
-						                <td>
-						                    <select th:field="*{productId}">
-						                        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.id} + ' : ' + ${product.name}"></option>
-						                    </select>
-						                </td>
-						            </tr>
-						            <tr>
-						                <td colspan="2">
+						            	<td colspan="2">
 											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
 												<i class="la la-long-arrow-left"></i>Quay Lại
 											</a>
 										</td>
-						                <td colspan="2"><button type="submit" class="btn btn-brand btn-icon-sm">Thêm kích cỡ tài liệu</button></td>
+						                <td colspan="2"><button type="submit" class="btn btn-brand btn-icon-sm">Thêm từ ngữ tiêu cực, nhạy cảm</button></td>
 						            </tr>
 						        </table>
 						    </form>
@@ -104,7 +87,20 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		<!-- begin::Quick Panel -->
+		<!--<div th:replace="admin/fragments/header :: quick_panel"></div>-->
+		<!-- end::Quick Panel -->
+
+		<!-- begin::Scrolltop -->
+		<!--<div id="kt_scrolltop" class="kt-scrolltop">
+			<i class="fa fa-arrow-up"></i>
+		</div>-->
+
+		<!-- end::Scrolltop -->
+
+		<!--<th:block th:insert="admin/fragments/common :: global_script" type="text/javascript"></th:block>
+		<script src="assets/js/template/layout.js" type="text/javascript"></script>-->
+    <!-- footer -->
 	<footer th:replace="admin/fragments/footer"></footer>
 </div>
 <script>

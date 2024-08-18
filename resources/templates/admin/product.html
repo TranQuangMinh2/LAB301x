@@ -10,6 +10,7 @@
 	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/spinkit.min.css}" rel="stylesheet" type="text/css" />
 	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -87,52 +88,74 @@
         .search-form .col-md-6, .search-form .col-xl-4 {
             padding: 0 15px;
         }
-        .pagination-controls {
+        /* Pagination Controls */
+		.pagination-controls {
 		    text-align: center;
 		    margin-top: 20px;
 		}
 		
-		.pagination-control {
+		.pagination-controls button {
 		    margin: 0 5px;
-		    padding: 10px;
+		    padding: 8px 12px;
 		    border: 1px solid #ddd;
 		    border-radius: 4px;
-		    background-color: #f9f9f9;
+		    background-color: #ffffff;
+		    color: #333;
 		    cursor: pointer;
 		    font-size: 16px;
 		}
 		
-		.pagination-control:hover {
-		    background-color: #ddd;
+		.pagination-controls button:hover {
+		    background-color: #f0f0f0;
+		    color: #333;
 		}
 		
-		.pagination-control:focus {
+		.pagination-controls button:focus {
 		    outline: none;
+		}
+		
+		/* Pagination Icons */
+		.pagination-control i {
+		    font-size: 16px;
+		}
+		
+		/* Active Page Button */
+		.page-button.current {
+		    font-weight: bold;
+		    background-color: #5d78ff;
+		    color: #ffffff;
+		    border: 1px solid #5d78ff;
 		}
 		
 		.page-button {
-		    margin: 0 5px;
-		    padding: 5px 10px;
 		    border: 1px solid #ddd;
-		    border-radius: 4px;
-		    background-color: #f9f9f9;
-		    cursor: pointer;
+		    background-color: #ffffff;
+		    color: #333;
+		    font-size: 16px;
 		}
-		
-		.page-button:hover {
-		    background-color: #ddd;
-		}
-		
-		.page-button:focus {
-		    outline: none;
-		}
-		
-		.page-button.current {
-		    font-weight: bold;
-		}
+		#loading-overlay {
+	      position: fixed;
+	      top: 0;
+	      left: 0;
+	      width: 100%;
+	      height: 100%;
+	      background: rgba(255, 255, 255, 0.8);
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      z-index: 1000;
+	    }
     </style>
 </head>
 <body>
+	<div id="loading-overlay">
+	    <div class="sk-wander">
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+    </div>
+	</div>
+<div id="content" style="display: none">
 	<!-- header -->
 	<header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
@@ -229,6 +252,17 @@
 			</div>
 		</div>
 	<footer th:replace="admin/fragments/footer"></footer>
+</div>
+<script>
+	 // Simulate a loading delay
+	 document.addEventListener("DOMContentLoaded", function() {
+	   setTimeout(function() {
+	     // Hide the loading overlay and show the content
+	     document.getElementById('loading-overlay').style.display = 'none';
+	     document.getElementById('content').style.display = 'block';
+	   }, 2000); // Adjust the timeout as needed
+	 });
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const rowsPerPage = 5; // Số hàng trên mỗi trang

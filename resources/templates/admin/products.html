@@ -10,6 +10,7 @@
 	<link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/admin/assets/css/spinkit.min.css}" rel="stylesheet" type="text/css" />
 	<link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
 	<th:block th:insert="admin/fragments/common :: global_css"></th:block>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -87,9 +88,44 @@
         .search-form .col-md-6, .search-form .col-xl-4 {
             padding: 0 15px;
         }
+        #loading-overlay {
+	      position: fixed;
+	      top: 0;
+	      left: 0;
+	      width: 100%;
+	      height: 100%;
+	      background: rgba(255, 255, 255, 0.8);
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      z-index: 1000;
+	    }
+        .truncate {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 3; /* Số dòng tối đa để hiển thị */
+            max-height: 60px; /* Chiều cao tối đa của phần tử */
+            cursor: pointer;
+        }
+        .full-text {
+            display: none;
+        }
+        .truncate.active + .full-text {
+            display: block;
+        }
     </style>
 </head>
 <body>
+<div id="loading-overlay">
+	    <div class="sk-wander">
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+    </div>
+	</div>
+<div id="content" style="display: none">
 	<!-- header -->
 	<header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
@@ -177,20 +213,31 @@
 										        <!--<th>Version Name</th>
 										        <th>Color ID</th>-->
 										        <th>Ảnh</th>
-										        <!--<th>Size</th>
-										        <th>Số lượng</th>-->
+										        <!--<th>Size</th>-->
+										        <th>Số lượng</th>
 										    </tr>
 										    <tr th:each="product : ${products}">
 										        <td th:text="${product[0]}"></td>
 										        <td th:text="${product[1]}"></td>
-										        <td th:text="${product[2]}"></td>
+										        <!-- <td th:text="${product[2]}"></td> -->
+										        <!-- <td th:text="${#strings.length(product[2]) > 100 ? #strings.substring(product[2], 0, 100) + '...' : product[2]}"></td> -->
+										        <td>
+												    <span class="truncate" onclick="toggleText(this)">
+												        <!-- Nội dung ngắn gọn với dấu ba chấm -->
+												        <span th:text="${#strings.length(product[2]) > 100 ? #strings.substring(product[2], 0, 100) + '...' : product[2]}"></span>
+												    </span>
+												    <span class="full-text">
+												        <!-- Nội dung đầy đủ -->
+												        <span th:text="${product[2]}"></span>
+												    </span>
+												</td>
 										        <!--<td th:text="${#numbers.formatCurrency(product[3])}"></td>-->
 										        <td th:text="${product[4]}"></td>
 										       <!-- <td th:text="${product[5]}"></td>
 										        <td th:text="${product[6]}"></td>-->
 										        <td><img th:src="${product[7]}" alt="Product image" style="width: 60px; height: 60px;"/></td>
-										        <!--<td th:text="${product[8]}"></td>
-										        <td th:text="${product[9]}"></td>-->
+										        <!--<td th:text="${product[8]}"></td>-->
+										        <td th:text="${product[9]}"></td>
 										    </tr>
 										</table>
 								<div class="kt-portlet__body kt-portlet__body--fit">
@@ -208,6 +255,17 @@
 			</div>
 		</div>
 	<footer th:replace="admin/fragments/footer"></footer>
+</div>
+<script>
+	    // Simulate a loading delay
+	    document.addEventListener("DOMContentLoaded", function() {
+	      setTimeout(function() {
+	        // Hide the loading overlay and show the content
+	        document.getElementById('loading-overlay').style.display = 'none';
+	        document.getElementById('content').style.display = 'block';
+	      }, 2000); // Adjust the timeout as needed
+	    });
+  	</script>
 <script>
 	document.getElementById('kt_form_status').addEventListener('change', function() {
 	  var status = this.value;
@@ -228,6 +286,11 @@
 	  var url = '/products?name=' + encodeURIComponent(name);
 	  window.location.href = url;
 	});
+</script>
+<script>
+    function toggleText(element) {
+        element.classList.toggle('active');
+    }
 </script>
 </body>
 </html>

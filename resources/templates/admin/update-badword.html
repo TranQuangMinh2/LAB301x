@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Product Size</title>
+    <title>Update Brand</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" th:href="@{/admin/assets/css/style.bundle.css}"/>
 	<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
@@ -39,7 +39,7 @@
       <div class="sk-wander-cube"></div>
     </div>
 	</div>
-<div id="content" style="display: none"> 
+<div id="content" style="display: none">    
     <!-- header -->
 	<header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
@@ -64,39 +64,22 @@
 						<!-- begin:: Content -->
 						<div id="router-outlet" class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 							<div class="kt-portlet kt-portlet--mobile">
-							<h1>Add Product Size</h1>
-						    <form action="#" th:action="@{/addProductSize}" th:object="${productSize}" method="post">
-						        <table>
-						            <!-- <tr>
-						                <td>Quantity:</td>
-						                <td><input type="text" th:field="*{quantity}" /></td>
-						            </tr> -->
-						            <tr>
-						                <td>Kích cỡ:</td>
-						                <td>
-						                <select th:field="*{size}" id="size" class="form-control">
-										    <option value="0">0</option>
-										    <option value="1">1</option>
-										</select>
-										</td>
-						            </tr>
-						            <tr>
-						                <td>Tài liệu:</td>
-						                <td>
-						                    <select th:field="*{productId}">
-						                        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.id} + ' : ' + ${product.name}"></option>
-						                    </select>
-						                </td>
-						            </tr>
-						            <tr>
+							<h1>Cập nhật từ ngữ nhạy cảm, tiêu cực</h1>
+						    <form action="#" th:action="@{/badword/{id}(id=${badword.id})}" th:object="${badword}" method="post">
+								<table class="w3-table-all">
+								    <tr>
+								        <td>Từ:</td>
+								        <td><input type="text" th:field="*{name}" class="form-control"/></td>
+								    </tr>
+								    <tr>
 						                <td colspan="2">
 											<a onclick="history.back()" class="btn btn-clean btn-icon-sm">
 												<i class="la la-long-arrow-left"></i>Quay Lại
 											</a>
 										</td>
-						                <td colspan="2"><button type="submit" class="btn btn-brand btn-icon-sm">Thêm kích cỡ tài liệu</button></td>
-						            </tr>
-						        </table>
+								        <td colspan="2"><button type="submit" class="btn btn-primary">Cập nhật</button></td>
+								    </tr>
+								</table>
 						    </form>
 						</div>
 						<!-- end:: Content -->
@@ -104,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		</div>
 	<footer th:replace="admin/fragments/footer"></footer>
 </div>
 <script>

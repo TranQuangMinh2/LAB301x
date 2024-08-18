@@ -11,6 +11,7 @@
     <link th:href="@{/admin/assets/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/admin/assets/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/admin/assets/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/admin/assets/css/spinkit.min.css}" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" th:href="@{/admin/assets/media/logos/favicon.ico}" />
     <th:block th:insert="admin/fragments/common :: global_css"></th:block>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -77,6 +78,18 @@
             text-align: center;
             color: #d9534f;
         }
+        #loading-overlay {
+	      position: fixed;
+	      top: 0;
+	      left: 0;
+	      width: 100%;
+	      height: 100%;
+	      background: rgba(255, 255, 255, 0.8);
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      z-index: 1000;
+	    }
     </style>
     <script>
         function setBackupFilePath() {
@@ -94,9 +107,19 @@
 
             document.getElementById('backupFilePath').value = backupFilePath;
         }
+       
     </script>
+    
 </head>
 <body>
+<div id="loading-overlay">
+	    <div class="sk-wander">
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+      <div class="sk-wander-cube"></div>
+    </div>
+	</div>
+<div id="content" style="display: none">
     <!-- header -->
     <header th:replace="admin/fragments/header"></header>
     <div class="kt-grid kt-grid--hor kt-grid--root">
@@ -139,7 +162,7 @@
 					                    <option value="category">Category</option>
 					                    <option value="brand">Brand</option>
 					                </select><br><br>
-                                    <label for="backupFilePath">Đường dẫn cho file sao lưu:</label>
+                                   <!--  <label for="backupFilePath">Đường dẫn cho file sao lưu:</label> -->
                                     <!-- <input type="text" id="backupFilePath" name="backupFilePath" required> -->
                                     <input type="hidden" id="backupFilePath" name="backupFilePath" required readonly><br><br>
                                     <button type="submit">Sao lưu</button>
@@ -162,7 +185,7 @@
 					                    <option value="category">Category</option>
 					                    <option value="brand">Brand</option>
 					                </select><br><br>
-                                    <label for="restore-filePath">Đường dẫn cho file sao lưu:</label>
+                                    <label for="restore-filePath">Đường dẫn cho file sao lưu (chỉ điền tên file):</label>
                                     <input type="text" id="restore-filePath" name="backupFilePath" required>
                                     <button type="submit">Khôi phục</button>
                                 </form>
@@ -176,6 +199,16 @@
         </div>
     </div>
     <footer th:replace="admin/fragments/footer"></footer>
-
+</div>
+<script>
+	    // Simulate a loading delay
+	    document.addEventListener("DOMContentLoaded", function() {
+	      setTimeout(function() {
+	        // Hide the loading overlay and show the content
+	        document.getElementById('loading-overlay').style.display = 'none';
+	        document.getElementById('content').style.display = 'block';
+	      }, 2000); // Adjust the timeout as needed
+	    });
+	  	</script>
 </body>
 </html>
