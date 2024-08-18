@@ -17,103 +17,7 @@
 
 <!-- header -->
 <header th:replace="~{shopper/fragments/header}"></header>
-
 <div id="tt-pageContent">
-	<div class="container-indent nomargin">
-		<div class="container-fluid">
-			<div class="tt-slick-slider arrow-slick-main">
-				<div class="tt-slick-main-item">
-					<img src="images/slides/slick-slider/banner_01.jpg" alt="">
-					<div class="tt-description tt-point-h-c">
-						<div class="tt-description-wrapper">
-							<!-- <div class="tt-title-small"><span class="tt-base-color">Multipurpose</span></div>
-							<div class="tt-title-large"><span class="tt-white-color">Premium<br>Html Template</span></div> -->
-							<div class="tt-title-small"><span class="tt-base-color"></span></div>
-							<div class="tt-title-large"><span class="tt-white-color">Truy cập thư viện<br></span></div>
-
-							<a href="/product-listing" class="btn btn-xl">XEM NGAY!</a>
-						</div>
-					</div>
-				</div>
-				<div class="tt-slick-main-item">
-					<img src="images/slides/slick-slider/banner_04.jpg" alt="">
-					<div class="tt-description tt-point-h-r">
-						<div class="tt-description-wrapper">
-							<div class="tt-title-small"><span class="tt-base-color"></span></div>
-							<div class="tt-title-large"><span class="tt-white-color">Truy cập thư viện<br></span></div>
-
-							<a href="/product-listing" class="btn btn-xl">XEM NGAY!</a>
-						</div>
-					</div>
-				</div>
-				<div class="tt-slick-main-item">
-					<img src="images/slides/slick-slider/banner_05.jpg" alt="">
-					<div class="tt-description tt-point-h-r">
-						<div class="tt-description-wrapper">
-							<div class="tt-title-large"><span class="tt-base-color">Truy cập thư viện</span></div>
-							<a href="/product-listing" class="btn btn-xl">XEM NGAY!</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--<div class="container-indent0" style="display: none;">
-		<div class="container">
-			<div class="row flex-sm-row-reverse tt-layout-promo-box">
-				<div class="col-sm-12 col-md-6">
-					<div class="row">
-						<div class="col-sm-6">
-							<a href="/product-listing" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index04-promo-img-02.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">WOMEN</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-sm-6">
-							<a href="/product-listing" class="tt-promo-box tt-one-child hover-type-2">
-								<img src="images/loader.svg" data-src="images/promo/index04-promo-img-03.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">MEN</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-sm-12">
-							<a href="/product-listing" class="tt-promo-box tt-one-child">
-								<img src="images/loader.svg" data-src="images/promo/index04-promo-img-04.jpg" alt="">
-								<div class="tt-description">
-									<div class="tt-description-wrapper">
-										<div class="tt-background"></div>
-										<div class="tt-title-small">READY TO</div>
-										<div class="tt-title-large">Library</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-12 col-md-6">
-					<a href="/product-listing" class="tt-promo-box">
-						<img src="images/loader.svg" data-src="images/promo/index04-promo-img-01.jpg" alt="">
-						<div class="tt-description">
-							<div class="tt-description-wrapper">
-								<div class="tt-background"></div>
-								<div class="tt-title-small">MULTI-PURPOSE</div>
-								<div class="tt-title-large">Library</div>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>-->
 	<div class="container-indent">
 		<div class="container container-fluid-custom-mobile-padding">
 			<div class="tt-block-title">
@@ -223,65 +127,18 @@
 			                <h2 class="tt-title">
 			                    <a th:href="@{/product/} + ${product.id}" th:text="${product.brand.name + ' ' + product.name}">Name</a>
 			                </h2>
-			                <div class="tt-price" th:text="${product.formatPrice()}">
+			                <!-- <div class="tt-price" th:text="${product.formatPrice()}">
 			                    price
-			                </div>
+			                </div> -->
 			            </div>
 			        </div>
 			    </div>
 			</div>
 			<div class="text-center tt_product_showmore">
 				<a th:href="@{/product-listing}" class="btn btn-border" >XEM THÊM</a>
-			</div>
-			<!--<div class="col-sm-6 col-md-4" th:each="product : ${newProducts}">
-                <div class="tt-layout-vertical-listing">
-                    <div class="tt-item">
-                        <div class="tt-layout-vertical">
-                            <div class="tt-img">
-                                <a th:href="@{/product/} + ${product.id}">
-                                    <img th:src="${product.primaryImage()}" alt="Product Image">
-                                </a>
-                            </div>
-                            <div class="tt-description">
-                                <h6 class="tt-title"><a th:href="@{/product/} + ${product.id}" th:text="${product.name()}"></a></h6>
-                                <div class="tt-price" th:text="${product.formatPrice()}"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
+			</div> 
 		</div>
 	</div>
-	<!--<div class="container-indent">
-		<div class="container">
-			<div class="row tt-layout-promo-box">
-				<div class="col-md-6">
-					<a href="/product-listing" class="tt-promo-box tt-one-child">
-						<img src="images/loader.svg" data-src="images/promo/promo_1.jpg" alt="">
-						<div class="tt-description">
-							<div class="tt-description-wrapper">
-								<div class="tt-background"></div>
-								<div class="tt-title-small">SÁCH MỚI:</div>
-								<div class="tt-title-large">Library</div>
-							</div>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-6">
-					<a href="/product-listing" class="tt-promo-box tt-one-child">
-						<img src="images/loader.svg" data-src="images/promo/promo_3.jpg" alt="">
-						<div class="tt-description">
-							<div class="tt-description-wrapper">
-								<div class="tt-background"></div>
-								<div class="tt-title-small">KHUYẾN MÃI MÙA HÈ CỰC ĐÃ</div>
-								<div class="tt-title-large">GIẢM GIÁ TỚI <span class="tt-base-color">20%</span></div>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>-->
 	<div class="container-indent">
 		<div class="container">
 			<div class="row">

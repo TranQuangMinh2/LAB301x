@@ -69,10 +69,10 @@
 								</ul>
 							</div>
 							<h1 class="tt-title" th:text="${product.brand.name + ' ' + product.name + ' - ' + product.versionName}">Product name</h1>
-							<div class="tt-price">
+							<!-- <div class="tt-price">
 								<span class="new-price" th:text="${product.formatPrice()}">$price</span>
 								<span class="old-price"></span>
-							</div>
+							</div> -->
 							<div class="tt-review d-none">
 								<div class="tt-rating">
 									<i class="icon-star"></i>
@@ -326,9 +326,9 @@
 								</ul>
 							</div>
 							<h2 class="tt-title"><a th:href="@{/product/} + ${product.id}" th:text="${product.name + ' - ' + product.versionName}">name</a></h2>
-							<div class="tt-price" th:text="${product.formatPrice()}">
+							<!-- <div class="tt-price" th:text="${product.formatPrice()}">
 								price
-							</div>
+							</div> -->
 							<div class="tt-product-inside-hover">
 <!-- 								<div class="tt-row-btn"> -->
 <!-- 									<a href="#" class="tt-btn-addtocart thumbprod-button-bg" data-toggle="modal" data-target="#modalAddToCartProduct">ADD TO CART</a> -->

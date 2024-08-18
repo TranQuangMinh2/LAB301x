@@ -43,14 +43,28 @@
 	        color: #FFD700; /* Màu vàng cho ngôi sao đầy */
 	    }
 	
+		.icon-star {
+		    color: gold;
+		}
+		
+		.icon-star-half-empty {
+		    color: gold;
+		    /* Dùng CSS để thể hiện một nửa ngôi sao */
+		}
+		
+		.icon-star-empty {
+		    color: lightgray;
+		}
+			
+	
 	    .tt-review-comments-container {
 	        max-height: 400px; /* Chiều cao tối đa của khối bình luận */
 	        overflow-y: auto; /* Hiển thị thanh cuộn dọc nếu nội dung vượt quá chiều cao */
 	        margin-bottom: 20px; /* Khoảng cách dưới để tách khỏi form đánh giá */
 	        padding: 10px; /* Thêm khoảng cách nội bộ để làm cho nội dung dễ đọc hơn */
-	        border: 1px solid #ddd; /* Thêm viền để tách biệt khối bình luận */
+	        border: 1px solid #ffffff; /* Thêm viền để tách biệt khối bình luận */
 	        border-radius: 5px; /* Bo tròn góc viền */
-	        background-color: #f9f9f9; /* Màu nền cho khối bình luận */
+	        background-color: #ffffff; /* Màu nền cho khối bình luận */
 	    }
 	
 	    /* Style cho thanh cuộn */
@@ -75,9 +89,9 @@
 	        max-width: 100%; /* Đảm bảo rằng form không vượt quá chiều rộng của container */
 	        box-sizing: border-box; /* Đảm bảo padding và border được tính vào tổng chiều rộng */
 	        padding: 15px; /* Thêm padding để nội dung không bị dính vào viền */
-	        border: 1px solid #ddd; /* Thêm viền để phân biệt form */
+	        border: 1px solid #ffffff; /* Thêm viền để phân biệt form */
 	        border-radius: 5px; /* Bo tròn góc viền */
-	        background-color: #f9f9f9; /* Màu nền của form */
+	        background-color: #ffffff; /* Màu nền của form */
 	        overflow: hidden; /* Ẩn các phần tử bị tràn */
 	    }
 	
@@ -103,6 +117,51 @@
 	    .tt-review-form .btn:hover {
 	        background-color: #0056b3; /* Màu nền khi hover vào nút gửi */
 	    }
+	    .short-description {
+		    display: block;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		}
+		
+		.more-description {
+		    display: none;
+		}
+		
+		.link-btn {
+		    color: #007bff !important; /* Màu chính của liên kết */
+		    text-decoration: none; /* Xóa gạch chân của liên kết */
+		    cursor: pointer !important; /* Hiển thị con trỏ như liên kết */
+		}
+		
+		/* Thay đổi màu khi di chuột qua */
+		.link-btn:hover {
+		    color: #0056b3 !important;
+		}
+		
+		/* Thay đổi màu khi liên kết được nhấp */
+		.link-btn:active {
+		    color: #004085 !important;
+		}
+		.link-btn2 {
+		    display: inline-block;
+		    padding: 10px 20px;
+		    color: #fff;
+		    background-color: #007bff;
+		    text-align: center;
+		    text-decoration: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    margin-top: 10px;
+		}
+		
+		.link-btn2:hover {
+		    background-color: #0056b3;
+		}
+		
+		.link-btn2:active {
+		    background-color: #004085;
+		}
 	</style>
 </head>
 <body class="tt-page-product-single">
@@ -125,6 +184,9 @@
 		<div class="tt-mobile-product-layout visible-xs">
 			<div class="tt-mobile-product-slider arrow-location-center slick-animated-show-js">
 				<div><img th:src="${product[7]}" alt="Product image" /></div>
+				<!-- <div class="tt-image-box">
+				    <a th:href="@{/some-link}" class="link-btn2">Đọc ebook</a>
+				</div> -->
 				<!-- <div><img src="images/product/product-32-01.jpg" alt=""></div>
 				<div><img src="images/product/product-32-02.jpg" alt=""></div>
 				<div><img src="images/product/product-32-03.jpg" alt=""></div> -->
@@ -163,6 +225,9 @@
 								</div>
 							</li> -->
 						</ul>
+						<div class="tt-image-box">
+						    <a th:href="@{/some-link}" class="link-btn2">Nhấn vào đây</a>
+						</div>
 					</div>
 				</div>
 				<div class="col-6">
@@ -170,39 +235,44 @@
 						<div class="tt-product-single-info">
 							<div class="tt-add-info">
 								<ul>
-									<li><span>Tình trạng: </span><span th:text="${product[4]}">Tình trạng</span> </li> <!-- Status -->
+									<li><span>Tình trạng: </span><span class="w3-green" th:text="${product[4]}">Tình trạng</span> </li> <!-- Status -->
 <!--									<li><span>Version: </span><span th:text="${product[5]}">Version Name</span> </li>
--->									<!--<li><span>Availability:</span> <span th:text="${product[9]}">Số lượng</span> in Stock</li>-->
+-->									<li><span>Còn:</span> <span th:text="${product[9]}">Số lượng</span> trong thư viện</li>
 								</ul>
 							</div>
 							<h1 class="tt-title" th:text="${product[1]}">Tên</h1>
-							<div class="tt-price">
+							
+							<div class="tt-average-rating">
+							    <span>Tỷ lệ đánh giá trung bình:</span>
+							    <div class="tt-rating">
+							        <!-- Kiểm tra nếu có rating -->
+							        <i th:if="${averageRating != null}" th:each="i : ${#numbers.sequence(1, fullStars)}" class="icon-star"></i>
+							        
+							        <!-- Ngôi sao nửa (nếu có) -->
+							        <i th:if="${averageRating != null && hasHalfStar && fullStars + 1 <= totalStars}" class="icon-star-half-empty"></i>
+							        
+							        <!-- Ngôi sao trống (chỉ hiển thị nếu rating không đạt tối đa) -->
+							        <i th:if="${averageRating != null && fullStars < totalStars}" th:each="i : ${#numbers.sequence(fullStars + (hasHalfStar ? 1 : 0) + 1, totalStars)}" class="icon-star-empty"></i>
+							
+							        <!-- Hiển thị thông báo nếu không có rating -->
+							        <span th:if="${averageRating == null}">Chưa có đánh giá</span>
+							        <span th:text="${averageRating}">4.5</span>
+							    </div>
+							</div>
+							        
+
+							<!-- <div class="tt-price">
 								<span class="new-price" th:text="${#numbers.formatCurrency(product[3])}">Giá</span>
 								<span class="old-price"></span>
-							</div>
-							<!--<p><span>Kích cỡ: </span><span th:text="${product[8]}">Size</span></p>  Size 
-							<p><span>Mã màu sắc: </span><span th:text="${product[6]}">Color ID</span></p>  Size 
-							<div class="tt-review">
-								<div class="tt-rating">
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star"></i>
-									<i class="icon-star-half"></i>
-									<i class="icon-star-empty"></i>
-								</div>
-								<a href="#">(1 Customer Review)</a>
-							</div>-->
+							</div> -->
 							<div>Mô tả: </div>
-							<div class="tt-wrapper" th:text="${product[2]}">Mô tả</div>
-							<!-- <div class="tt-collapse-block">
-								<div class="tt-item">
-									<div class="tt-collapse-title">Mô tả</div>
-									<div class="tt-collapse-content" th:text="${product[2]}">
-										Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.
-	
-									</div>
-								</div>
-								 -->
+							<div class="tt-wrapper">
+							    <div class="tt-description" id="productDescription">
+							        <span class="short-description" th:text="${product[2]}">Mô tả</span>
+							        <span class="more-description" th:text="${product[2]}" style="display:none;"></span>
+							    </div>
+							    <a id="toggleButton" class="link-btn">Xem thêm ▾</a>
+							</div>
 							<div class="tt-wrapper">
 								<div class="tt-row-custom-01">
 									<!--<div class="col-item">
@@ -236,6 +306,9 @@
 							</div>
 							<div class="tt-collapse-block">
 							    <div class="tt-collapse-title tt-poin-comments">BÌNH LUẬN</div>
+							    
+
+    
 							    <div class="tt-collapse-content">
 							        <div class="tt-review-block">
 							            <div class="tt-row-custom-02">
@@ -244,11 +317,8 @@
 							                        1 REVIEW FOR VARIABLE PRODUCT
 							                    </h2> -->
 							                </div>
-							                <div class="col-item">
-							                    <a href="/addReview">Viết đánh giá</a>
-							                </div>
 							            </div>
-							            <div class="tt-review-comments-container">
+							            <div class="tt-review-comments-container w3-light-gray">
 							                <div class="tt-review-comments" th:each="review: ${productReview}">
 							                    <div class="tt-item">
 							                        <div class="tt-content">
@@ -269,9 +339,6 @@
 							                </div>
 							            </div>
 							            <div class="tt-review-form">
-										    <div class="tt-message-info">
-										        TRỞ THÀNH NGƯỜI ĐẦU TIÊN ĐÁNH GIÁ<span>“<span th:text="${product[1]}"></span>”</span>
-										    </div>
 										    <div class="tt-rating-indicator">
 										        <div class="tt-title">
 										            ĐÁNH GIÁ CỦA BẠN 
@@ -346,7 +413,50 @@
 	                        <h2 class="tt-title"><a th:href="@{/product/} + ${product.id}">
 								<td th:text="${product.name}"></td></a> <!-- + <' - ' + product.versionName-->
 							</h2>
-	                        <div class="tt-price" th:text="${product.formatPrice()}">price</div>
+	                        <!-- <div class="tt-price" th:text="${product.formatPrice()}">price</div> -->
+	                        <div th:text="${product.status}">status</div>
+	                        <div class="tt-product-inside-hover">
+	                            <div class="tt-row-btn"> 
+									<p th:if="${message}" th:text="${message}"></p>
+									<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' or user == null ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
+ 								</div>
+	                            <!--<div class="tt-row-btn">
+	                                <a th:href="@{'/product/' + ${product.id}}" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"></a>
+	                                <a href="#" class="tt-btn-wishlist"></a>
+	                                <a href="#" class="tt-btn-compare"></a>
+	                            </div>-->
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="container-indent">
+	    <div class="container container-fluid-custom-mobile-padding">
+	        <div class="tt-block-title text-left">
+	            <h3 class="tt-title-small">Cùng tác giả</h3>
+	        </div>
+	        <div class="tt-carousel-products row arrow-location-right-top tt-alignment-img tt-layout-product-item slick-animated-show-js">
+	            <div th:each="product : ${relatedProducts2}" class="col-2 col-md-4 col-lg-3">
+	                <div class="tt-product thumbprod-center">
+	                    <div class="tt-image-box">
+	                        <a href="#" class="tt-btn-wishlist" th:if="${isSignedIn}" data-tooltip="Yêu thích" th:classappend="${product.isWishList} ? 'active' : ''" data-tposition="left"></a>
+							<input class="productBoxId" type="hidden" th:value="${product.id}">
+							<a th:href="@{/product/} + ${product.id}">
+								<span class="tt-img"><img th:src="${product.primaryImage()}" alt="image"></span>
+							</a>
+	                    </div>
+	                    <div class="tt-description">
+	                        <div class="tt-row">
+	                            <ul class="tt-add-info">
+	                                <li><a href="#" th:text="${product.brand.name}"></a></li>
+	                            </ul>
+	                        </div>
+	                        <h2 class="tt-title"><a th:href="@{/product/} + ${product.id}">
+								<td th:text="${product.name}"></td></a> <!-- + <' - ' + product.versionName-->
+							</h2>
+	                        <!-- <div class="tt-price" th:text="${product.formatPrice()}">price</div> -->
 	                        <div th:text="${product.status}">status</div>
 	                        <div class="tt-product-inside-hover">
 	                            <div class="tt-row-btn"> 
@@ -415,6 +525,23 @@
             console.error('Ngày không hợp lệ:', dateStr);
             document.getElementById('formattedDate').textContent = 'Ngày không hợp lệ';
         }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        const btn = document.getElementById('toggleButton');
+        const shortDesc = document.querySelector('.short-description');
+        const moreDesc = document.querySelector('.more-description');
+        
+        btn.addEventListener('click', function() {
+            if (moreDesc.style.display === "none") {
+                moreDesc.style.display = "block";
+                shortDesc.style.display = "none";
+                btn.textContent = "Xem ít ▲";
+            } else {
+                moreDesc.style.display = "none";
+                shortDesc.style.display = "block";
+                btn.textContent = "Xem thêm ▾";
+            }
+        });
     });
 </script>
 

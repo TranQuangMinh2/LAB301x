@@ -21,8 +21,8 @@
 <div class="tt-breadcrumb">
 	<div class="container">
 		<ul>
-			<li><a href="/index">Home</a></li>
-			<li>Account</li>
+			<li><a href="/index">Trang chủ</a></li>
+			<li>Tài khoản</li>
 		</ul>
 	</div>
 </div>
@@ -33,25 +33,22 @@
 			<div class="tt-shopping-layout">
 <!-- 				<h2 class="tt-title-border">Tài khoản của tôi</h2> -->
 				<div class="tt-wrapper">
-					<h3 class="tt-title">Quản lý đơn hàng</h3>
+					<h3 class="tt-title">Quản lý đơn mượn</h3>
 					<div class="tt-table-responsive">
 						<table class="tt-table-shop-01">
 							<thead>
 								<tr>
-									<th>Mã đơn hàng</th>
-									<th>Ngày mua</th>
-									<th>Trạng thái thanh toán</th>
-									<th>Trạng thái vận chuyển</th>
-									<th class="min-w-105">Tổng tiền</th>
+									<th>Mã đơn mượn</th>
+									<th>Trạng thái mượn sách</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="orderWeb : ${orderWebs}">
 									<td><a th:href="${'/my-account/order/' + orderWeb.id}"><span th:text="${'#' + orderWeb.getFormatId()}"></span></a></td>
-									<td th:text="${orderWeb.createdAt}"></td>
-									<td th:text="${orderWeb.paymentStatus}">Processing</td>
+									<!-- <td th:text="${orderWeb.createdAt}"></td> -->
+									<!-- <td th:text="${orderWeb.paymentStatus}">Processing</td> -->
 									<td th:text="${orderWeb.deliveryStatus}">Processing</td>
-									<td th:text="${orderWeb.formatPrice(orderWeb.totalAmount)}" class="font-weight-400"></td>
+									<!-- <td th:text="${orderWeb.formatPrice(orderWeb.totalAmount)}" class="font-weight-400"></td> -->
 								</tr>
 							</tbody>
 						</table>

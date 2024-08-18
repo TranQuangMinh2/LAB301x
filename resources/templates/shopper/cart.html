@@ -19,109 +19,110 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-.checkout-form {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-}
-
-.checkout-button {
-	background-color: #008CBA; /* Blue background */
-	color: white; /* White text */
-	padding: 10px 20px; /* Some padding */
-	border: none; /* Remove borders */
-	border-radius: 5px; /* Rounded corners */
-	cursor: pointer; /* Pointer/hand icon on hover */
-	font-size: 16px; /* Increase font size */
-	display: flex;
-	align-items: center;
-}
-
-.checkout-button i {
-	margin-right: 10px; /* Add space between icon and text */
-}
-
-.checkout-button:hover {
-	background-color: #007bb5; /* Darker blue on hover */
-}
-
-.checkout-button:focus {
-	outline: none; /* Remove outline on focus */
-}
-
-.checkout-button:active {
-	background-color: #005f73; /* Even darker blue when button is pressed */
-	box-shadow: 0 5px #666; /* Add a shadow */
-	transform: translateY(4px); /* Move button 4px down */
-}
-
-.remove-cart-form {
-	display: inline-block;
-	margin: 5px; /* Adjust margin as needed */
-}
-
-.delete-button {
-	background-color: #f44336; /* Red background */
-	color: white; /* White text */
-	padding: 8px 12px; /* Some padding */
-	border: none; /* Remove borders */
-	border-radius: 5px; /* Rounded corners */
-	cursor: pointer; /* Pointer/hand icon on hover */
-	font-size: 14px; /* Font size */
-	display: flex;
-	align-items: center;
-}
-
-.delete-button i {
-	margin-right: 5px;
-	/* Add space between icon and text if you plan to add text */
-}
-
-.delete-button:hover {
-	background-color: #d32f2f; /* Darker red on hover */
-}
-
-.delete-button:focus {
-	outline: none; /* Remove outline on focus */
-}
-
-.delete-button:active {
-	background-color: #b71c1c; /* Even darker red when button is pressed */
-	box-shadow: 0 4px #666; /* Add a shadow */
-	transform: translateY(2px); /* Move button down slightly */
-}
-
-.delete-cart-form {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
-}
-
-.delete-all-button {
-	background-color: #e53935; /* Red background */
-	color: white; /* White text */
-	padding: 10px 20px; /* Some padding */
-	border: none; /* Remove borders */
-	border-radius: 5px; /* Rounded corners */
-	cursor: pointer; /* Pointer/hand icon on hover */
-	font-size: 16px; /* Increase font size */
-}
-
-.delete-all-button:hover {
-	background-color: #d32f2f; /* Darker red on hover */
-}
-
-.delete-all-button:focus {
-	outline: none; /* Remove outline on focus */
-}
-
-.delete-all-button:active {
-	background-color: #b71c1c; /* Even darker red when button is pressed */
-	box-shadow: 0 5px #666; /* Add a shadow */
-	transform: translateY(4px); /* Move button 4px down */
-}
-</style>
+	
+	<style>
+		.checkout-form {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+		
+		.checkout-button {
+			background-color: #008CBA; /* Blue background */
+			color: white; /* White text */
+			padding: 10px 20px; /* Some padding */
+			border: none; /* Remove borders */
+			border-radius: 5px; /* Rounded corners */
+			cursor: pointer; /* Pointer/hand icon on hover */
+			font-size: 16px; /* Increase font size */
+			display: flex;
+			align-items: center;
+		}
+		
+		.checkout-button i {
+			margin-right: 10px; /* Add space between icon and text */
+		}
+		
+		.checkout-button:hover {
+			background-color: #007bb5; /* Darker blue on hover */
+		}
+		
+		.checkout-button:focus {
+			outline: none; /* Remove outline on focus */
+		}
+		
+		.checkout-button:active {
+			background-color: #005f73; /* Even darker blue when button is pressed */
+			box-shadow: 0 5px #666; /* Add a shadow */
+			transform: translateY(4px); /* Move button 4px down */
+		}
+		
+		.remove-cart-form {
+			display: inline-block;
+			margin: 5px; /* Adjust margin as needed */
+		}
+		
+		.delete-button {
+			background-color: #f44336; /* Red background */
+			color: white; /* White text */
+			padding: 8px 12px; /* Some padding */
+			border: none; /* Remove borders */
+			border-radius: 5px; /* Rounded corners */
+			cursor: pointer; /* Pointer/hand icon on hover */
+			font-size: 14px; /* Font size */
+			display: flex;
+			align-items: center;
+		}
+		
+		.delete-button i {
+			margin-right: 5px;
+			/* Add space between icon and text if you plan to add text */
+		}
+		
+		.delete-button:hover {
+			background-color: #d32f2f; /* Darker red on hover */
+		}
+		
+		.delete-button:focus {
+			outline: none; /* Remove outline on focus */
+		}
+		
+		.delete-button:active {
+			background-color: #b71c1c; /* Even darker red when button is pressed */
+			box-shadow: 0 4px #666; /* Add a shadow */
+			transform: translateY(2px); /* Move button down slightly */
+		}
+		
+		.delete-cart-form {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+		
+		.delete-all-button {
+			background-color: #e53935; /* Red background */
+			color: white; /* White text */
+			padding: 10px 20px; /* Some padding */
+			border: none; /* Remove borders */
+			border-radius: 5px; /* Rounded corners */
+			cursor: pointer; /* Pointer/hand icon on hover */
+			font-size: 16px; /* Increase font size */
+		}
+		
+		.delete-all-button:hover {
+			background-color: #d32f2f; /* Darker red on hover */
+		}
+		
+		.delete-all-button:focus {
+			outline: none; /* Remove outline on focus */
+		}
+		
+		.delete-all-button:active {
+			background-color: #b71c1c; /* Even darker red when button is pressed */
+			box-shadow: 0 5px #666; /* Add a shadow */
+			transform: translateY(4px); /* Move button 4px down */
+		}
+	</style>
 </head>
 <body>
 
@@ -139,7 +140,7 @@
 	<div id="tt-pageContent">
 		<div class="container-indent">
 			<div class="container">
-				<h1 class="tt-title-subpages noborder">GIỎ HÀNG</h1>
+				<h1 class="tt-title-subpages noborder">TÚI</h1>
 				<div class="tt-shopcart-table-02">
 					<table>
 						<tbody>
@@ -151,14 +152,15 @@
 									</div>
 								</td>
 								<td>
-									<h2 class="tt-title" th:text="${product.name}">
-										<a href="#">name</a>
-									</h2>
+									<span>Tên sách: </span><span class="w3-text-red tt-title" th:text="${product.name}"></span><br>
+									<span>Số lượng sách trong thư viện: </span><span class="tt-title" th:text="${cartItem.productSize.quantity}"></span><br>
+									<span>Ngày mượn: </span><span class="tt-title" th:text="${cartItem.createdAt}"></span><br>
+									<span>Ngày trả: </span><span class="tt-title" th:text="${cartItem.updatedAt}"></span>
 									<ul class="tt-list-parameters">
-										<li>
+										<!-- <li>
 											<div class="tt-price" th:text="${product.formatPrice()}">
 												price mobile</div>
-										</li>
+										</li> -->
 										<li>
 											<div class="detach-quantity-mobile"></div>
 										</li>
@@ -172,10 +174,10 @@
 										</li>
 									</ul>
 								</td>
-								<td>
+								<!-- <td>
 									<div class="tt-price" th:text="${product.formatPrice()}">
 										price</div>
-								</td>
+								</td> -->
 								<td>
 									<div class="detach-quantity-desctope">
 										<div class="tt-input-counter style-01"
@@ -206,8 +208,7 @@
 					</table>
 					<div class="tt-shopcart-btn">
 						<div class="col-left">
-							<a class="btn-link" href="/index"><i class="icon-e-19"></i>Tiếp
-								tục mua sắm</a>
+							<a class="btn-link" href="/index"><i class="icon-e-19"></i>Tiếp tục đặt sách</a>
 						</div>
 						<div class="col-right">
 							<form action="/delete-cart" method="post"
@@ -221,11 +222,11 @@
 					<div class="row">
 						<div class="col-md-6 col-lg-4">
 							<div class="tt-shopcart-box">
-								<h4 class="tt-title">Thông tin giao hàng</h4>
+								<h4 class="tt-title">Thông tin giao sách</h4>
 								<form id="checkout_info" method="post" action="/checkout"
 									class="form-default">
 									<div class="form-group">
-										<label for="name">Người nhận hàng <sup>*</sup></label> <input
+										<label for="name">Người nhận sách <sup>*</sup></label> <input
 											minlength="2" type="text" th:value="${user?.name}" id="name"
 											name="name" placeholder="Nhập họ tên" class="form-control"
 											required>
@@ -241,7 +242,7 @@
 										<div class="help-block"></div>
 									</div>
 									<div class="form-group">
-										<label minlength="2" for="address">Địa chỉ <sup>*</sup></label>
+										<label minlength="2" for="address">Địa chỉ nhận sách<sup>*</sup></label>
 										<textarea minlength="5" class="form-control"
 											th:text="${user?.address}" id="address" name="address"
 											rows="3" placeholder="Nhập địa chỉ giao hàng" required></textarea>
@@ -252,7 +253,7 @@
 									</div>
 									<ul class="tt-list-dot list-dot-large">
 										<li><span class="check_info">Kiểm tra lại thông
-												tin của bạn trước khi đặt mua</span></li>
+												tin của bạn trước khi đặt sách</span></li>
 									</ul>
 								</form>
 							</div>
@@ -295,7 +296,7 @@
 				            </div>
 				        </div>
 					</div> -->
-						<div class="col-md-6 col-lg-4">
+						<!-- <div class="col-md-6 col-lg-4">
 							<div class="tt-shopcart-box">
 								<form>
 									<h4 class="tt-title">Phương thức thanh toán</h4>
@@ -315,30 +316,30 @@
 										<div>Người thụ hưởng: <span class="w3-text-blue"><b>Nguyễn Văn A</b></span></div>
 										<div>Tài khoản người thụ hưởng: <span class="w3-text-blue"><b>XXXXXXXXXX</b></span></div>
 										<div>Ngân hàng người thụ hưởng: <span class="w3-text-blue"><b>BIDV</b></span></div>
-										<!-- <img
+										<img
 											src="images/lg/qrcode_119103765_c74700b95be257d51159f80378c01750.png" width=100;
-											height=100; /> -->											
+											height=100; />											
 											<img src="images/lg/qr.png" alt="" width=100 height=100>
 										<br><br>
 									</div>
 								</form>
 							</div>
-						</div>
+						</div> -->
 						<div class="col-md-6 col-lg-4">
 							<div class="tt-shopcart-box tt-boredr-large">
-								<table class="tt-shopcart-table01">
+								<!-- <table class="tt-shopcart-table01">
 									<tfoot>
 										<tr>
 											<th>THÀNH TIỀN</th>
 											<td id="totalAmount" th:text="${totalAmount}">total</td>
 										</tr>
 									</tfoot>
-								</table>
+								</table> -->
 								<form action="/checkout" method="post"
 									th:if="${not #lists.isEmpty(cartItems)}" class="checkout-form">
 									<button id="thanhToanButton" type="submit"
 										class="checkout-button">
-										<i class="fa fa-money" aria-hidden="true"></i>Thanh toán
+										<i class="fa fa-book" aria-hidden="true"></i>Đặt sách
 									</button>
 								</form>
 								<form action="/checkoutCK" method="post" th:if="${not #lists.isEmpty(cartItems)}" class="checkout-form">

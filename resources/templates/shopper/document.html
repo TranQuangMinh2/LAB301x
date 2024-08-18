@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Trang chủ</title>
+	<meta name="keywords" content="Library Store">
+	<meta name="description" content="Library Store">
+	<meta name="author" content="Library">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<base th:replace="~{shopper/fragments/common :: base}">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/toastr.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	 <style>
+		/*  .styled-button {
+	        background-color: #4CAF50;
+	        border: none; 
+	        color: white; 
+	        padding: 15px 32px; 
+	        text-align: center; 
+	        text-decoration: none;
+	        display: inline-block;
+	        font-size: 16px; 
+	        margin: 4px 2px; 
+	        cursor: pointer; 
+	        border-radius: 12px; 
+	        transition: background-color 0.3s ease; 
+	    }
+	
+	    .styled-button:hover {
+	        background-color: #45a049; 
+	    }
+	
+	    .styled-button:active {
+	        background-color: #3e8e41; 
+	    } */
+	    /* Định dạng container chứa tài liệu */
+		#document-container {
+		    display: flex;
+		    flex-wrap: wrap;
+		    gap: 20px;
+		    justify-content: center;
+		}
+		
+		/* Định dạng từng mục tài liệu */
+		.document-item {
+		    width: 100%;
+		    max-width: 300px;
+		    padding: 20px;
+		    background-color: #f9f9f9;
+		    border-radius: 10px;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		    transition: transform 0.3s ease;
+		}
+		
+		.document-item:hover {
+		    transform: translateY(-10px);
+		}
+		
+		.document-link {
+		    text-decoration: none;
+		    color: #007bff;
+		    font-size: 18px;
+		    font-weight: bold;
+		    text-align: center;
+		    display: block;
+		    margin-top: 10px;
+		}
+		
+		.document-link:hover {
+		    color: #0056b3;
+		}
+		
+		/* Định dạng thanh phân trang */
+		.pagination {
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    margin-top: 20px;
+		}
+		
+		.pagination-button {
+		    background-color: #007bff;
+		    color: #fff;
+		    border: none;
+		    padding: 10px 20px;
+		    margin: 0 5px;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    transition: background-color 0.3s ease;
+		}
+		
+		.pagination-button:hover {
+		    background-color: #0056b3;
+		}
+		
+		.page-info {
+		    margin: 0 10px;
+		    font-size: 16px;
+		    color: #333;
+		}
+		
+		/* Thiết kế responsive */
+		@media (max-width: 768px) {
+		    .document-item {
+		        width: 100%;
+		        max-width: none;
+		    }
+		    
+		    .pagination {
+		        flex-direction: column;
+		    }
+		    
+		    .pagination-button {
+		        margin-top: 10px;
+		    }
+		}
+	</style>
+</head>
+<body>
+<!-- header -->
+<header th:replace="shopper/fragments/header"></header>
+
+<div id="tt-pageContent">
+	<div class="container-indent">
+		<div class="container container-fluid-custom-mobile-padding">
+			<div class="tt-block-title">
+				<h1 class="tt-title">TÀI LIỆU THAM KHẢO</h1>
+				<div class="w3-center">Sách là cánh cửa mở ra những thế giới mới, nơi chúng ta có thể khám phá, học hỏi và trưởng thành.</div>
+			</div>
+				<ul class="w3-ul w3-card-4"  id="document-container">
+					<li class="w3-bar" th:each="document : ${documents}">
+						<!-- Thẻ div hiển thị tiêu đề --> 
+						<a class="document-link" th:attr="onclick=|toggleContent(this); document.getElementById('modal-${document.id}').style.display='block'|">
+						    <table class="w3-table">
+						    	<tr>
+						    		<td style="width: 20%"><!-- Thumbnail Image -->
+									    <img th:src="'https://drive.google.com/thumbnail?id=' + ${document.path.split('/d/')[1].split('/')[0]}" 
+									         alt="Thumbnail"
+									         width="auto"
+									         height="80" />
+							         </td>
+						    		<td style="width: 80%">
+									    <span class="w3-large" th:text="${document.title}"></span><span class="w3-right w3-small">Vào xem...</span><br>
+									    <span class="w3-tiny">Đăng ngày: </span><span class="w3-tiny" th:text="${#temporals.format(document.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+						    		</td>
+						    	</tr>
+						    </table>
+						</a>
+						<div th:id="'modal-' + ${document.id}" class="w3-modal w3-animate-zoom">
+							<div class="w3-modal-content">
+								<header class="w3-container">
+									<h4 th:text="${document.title}"></h4>
+      							</header>
+								<div class="w3-container">
+									<span onclick="this.closest('.w3-modal').style.display='none'"
+										class="w3-button w3-display-topright"><i class="fa fa-window-close" aria-hidden="true"></i></span>
+									<!-- <div th:text="${document.content}" style="height: 100%"></div> -->
+									<!-- <h4>Xem tài liệu: <span th:text="${document.title}"></span></h4> -->
+								    <iframe th:src="'https://drive.google.com/file/d/' + ${document.path.split('/d/')[1].split('/')[0]} + '/preview'" 
+								            width="100%" 
+								            height="400px">
+								    </iframe>
+								</div>
+
+						        <footer class="w3-container">
+							       <p class="w3-padding"> 
+									    <a th:href="@{${document.path}}" download>
+									        <button class="w3-btn w3-red w3-round" type="button"><i class="fa fa-download" aria-hidden="true"></i></button>
+									    </a>
+										<a th:href="|https://www.facebook.com/sharer/sharer.php?u=${request.requestURL}|"
+										   target="_blank">
+										    <button class="w3-btn w3-blue w3-round" type="button"><i class="fa fa-facebook" aria-hidden="true"></i></button>
+										</a>
+										<a th:href="|https://twitter.com/intent/tweet?url=${request.requestURL}&text=${document.title}|"
+										   target="_blank">
+										    <button class="w3-btn w3-black w3-round" type="button"><i class="fa fa-twitter" aria-hidden="true"></i></button>
+										</a>
+
+									</p>
+							    </footer>
+							</div>
+						</div>
+					</li>
+					<div id="pagination-controls" class="pagination">
+					    <button onclick="prevPage()" class="pagination-button">Trước</button>
+					    <span id="page-info" class="page-info"></span>
+					    <button onclick="nextPage()" class="pagination-button">Sau</button>
+					</div>
+				</ul>
+				<div id="search-container">
+			        <h4>Các hệ thống thư viện khác:</h4>
+			        <input type="text" id="search-query" placeholder="Nhập tên sách cần tìm kiếm...">
+			        <div id="search-buttons">
+			            <button class="w3-button w3-round w3-yellow" onclick="searchGacSach()">Tìm Kiếm trên Gác Sách Online</button>
+			            <button class="w3-button w3-round w3-pink" onclick="searchTramDoc()">Tìm Kiếm trên Trạm Đọc</button>
+			            <button class="w3-button w3-round w3-purple" onclick="searchWaka()">Tìm Kiếm trên Waka</button>
+			        </div>
+			    </div>
+			</div>
+		</div>
+</div>
+<!-- footer -->
+<footer th:replace="~{shopper/fragments/footer}"></footer>
+<!-- modal -->
+<div th:replace="~{shopper/fragments/modal :: addToCart}"></div>
+<!-- <div id="quickViewContainer"></div> -->
+<div th:replace="~{shopper/fragments/modal :: quickView}"></div>
+
+<script>
+    function toggleContent(element) {
+        // Tìm phần tử chứa nội dung kế tiếp sau thẻ tiêu đề
+        var contentDiv = element.nextElementSibling;
+        
+        // Kiểm tra xem nội dung đang được hiển thị hay không
+        if (contentDiv.style.display === "none") {
+            // Hiển thị nội dung
+            contentDiv.style.display = "block";
+        } else {
+            // Ẩn nội dung
+            contentDiv.style.display = "none";
+        }
+    }
+</script>
+<script>
+    const itemsPerPage = 5; 
+    let currentPage = 1;
+    const documentContainer = document.getElementById('document-container');
+    const documents = Array.from(documentContainer.getElementsByClassName('w3-bar'));
+    const totalItems = documents.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    function showPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        documents.forEach((doc, index) => {
+            doc.style.display = (index >= start && index < end) ? 'block' : 'none';
+        });
+
+        document.getElementById('page-info').textContent = `Trang ${page} / ${totalPages}`;
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    }
+
+    showPage(currentPage);
+</script>
+
+<script>
+function searchGacSach() {
+    const query = document.getElementById('search-query').value.trim();
+    if (query === '') {
+        alert('Vui lòng nhập từ cần tìm kiếm!');
+        return;
+    }
+    const searchUrl = "https://gacsach.online/search/google/" + encodeURIComponent(query);
+    window.open(searchUrl, '_blank');
+}
+
+function searchTramDoc() {
+    const query = document.getElementById('search-query').value.trim();
+    if (query === '') {
+        alert('Vui lòng nhập từ cần tìm kiếm!');
+        return;
+    }
+    const searchUrl = "https://tramdoc.vn/search?q=" + encodeURIComponent(query);
+    window.open(searchUrl, '_blank');
+}
+
+function searchWaka() {
+    const query = document.getElementById('search-query').value.trim();
+    if (query === '') {
+        alert('Vui lòng nhập từ cần tìm kiếm!');
+        return;
+    }
+    const searchUrl = "https://waka.vn/search?keyword=" + encodeURIComponent(query);
+    window.open(searchUrl, '_blank');
+}
+</script>
+
+</body>
+</html>

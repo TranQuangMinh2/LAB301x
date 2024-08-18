@@ -96,10 +96,10 @@
 									</div>
 									<div class="tt-content">
 										<h6 class="tt-title" th:text="${product.name()}">Flared Shift Dress</h6>
-										<div class="tt-price">
+										<!-- <div class="tt-price">
 											<span class="sale-price" th:text="${product.formatPrice()}">$14</span>
-<!-- 											<span class="old-price">$24</span> -->
-										</div>
+											<span class="old-price">$24</span>
+										</div> -->
 									</div>
 								</a>
 							</div>
@@ -133,19 +133,6 @@
 								DANH SÁCH TÀI LIỆU
 <!-- 								<span class="tt-title-total">(12)</span> -->
 							</h1>
-							<div class="tt-btn-toggle">
-								<a href="#">LỌC</a>
-							</div>
-							<div class="tt-sort">
-								<form action="/product-listing" method="get">
-								    <select id="sortSelect" name="sortBy">
-								        <option value="newest">Sản phẩm mới</option>
-								        <option value="priceAsc">Giá tăng dần</option>
-								        <option value="priceDesc">Giá giảm dần</option>
-								    </select>
-								    <input type="submit" value="Lọc" class="btn btn-brand btn-icon-sm">
-								</form>
-							</div>
 							<div class="tt-quantity">
 								<a href="#" class="tt-col-one" data-value="tt-col-one"></a>
 								<a href="#" class="tt-col-two" data-value="tt-col-two"></a>
@@ -177,24 +164,22 @@
 											<ul class="tt-add-info">
 												<li><a th:href="${'/product-listing?brandId=' + product.brand.id}" th:text="${product.brand.name}">VENDER</a></li>
 											</ul>
-											<!--<div class="tt-rating ">
-												<i class="icon-star"></i>
-												<i class="icon-star"></i>
-												<i class="icon-star"></i>
-												<i class="icon-star-half"></i>
-												<i class="icon-star-empty"></i>
-											</div>-->
 										</div>
 										<h2 class="tt-title"><a th:href="@{/product/} + ${product.id}">
 											<td th:text="${product.name}"></td></a> <!-- + <' - ' + product.versionName-->
 										</h2>
-										<div class="tt-price" th:text="${product.formatPrice()}">price</div>
 										<div  th:text="${product.status}">status</div>
 										<div class="tt-product-inside-hover">
 			 								<div class="tt-row-btn"> 
 												<p th:if="${message}" th:text="${message}"></p>
-												<a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' or user == null ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a>
+												<!-- <a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' or user == null ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a> -->
+												<!-- <a th:href="@{/addToCart/}+${product.id}" th:class="${product.status == 'Hết sách' or user == null or cartItems.contains(product.id) ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">Thêm vào túi</a> -->
 
+
+<a th:href="@{/addToCart/}+${product.id}"th:class="${product.status == 'Hết sách' or user == null or session.productIdInCart == product.id ? 'disabled' : 'tt-btn-addtocart thumbprod-button-bg'}">
+   Thêm vào túi
+</a>
+												
 												<style>
 													.disabled {
 												    pointer-events: none;
@@ -223,12 +208,12 @@
 						         <div class="w3-bar-item w3-button">
 						            <a th:if="${currentPage > 1 }"
 											th:href="@{'/product-listing/page/' + ${firstPage}}"><i class="fa fa-fast-backward"></i></a> <span
-											th:unless="${currentPage > 1}"></span>
+											th:unless="${currentPage > 1}"><i class="fa fa-fast-backward"></i></span>
 						        </div>
 						        <div class="w3-bar-item w3-button">
 						           <a th:if="${currentPage > 1 }"
 											th:href="@{'/product-listing/page/' + ${currentPage - 1}}"><i class="fa fa-step-backward"></i></a> <span
-											th:unless="${currentPage > 1}"></span>
+											th:unless="${currentPage > 1}"><i class="fa fa-step-backward"></i></span>
 						        </div>
 						        <div >
 						            <span class="w3-bar-item w3-button" th:each="i: ${#numbers.sequence(1, totalPages)}">
@@ -240,13 +225,13 @@
 						        <div class="w3-bar-item w3-button">
 						            <a th:if="${currentPage < totalPages}"
 											th:href="@{'/product-listing/page/' + ${currentPage + 1}}"><i class="fa fa-step-forward"></i></a> <span
-											th:unless="${currentPage < totalPages}"></span>
+											th:unless="${currentPage < totalPages}"><i class="fa fa-step-forward"></i></span>
 						        </div>
 						
 						        <div class="w3-bar-item w3-button">
 						            <a th:if="${currentPage < totalPages}"
 											th:href="@{'/product-listing/page/' + ${totalPages}}"><i class="fa fa-fast-forward"></i></a> <span
-											th:unless="${currentPage < totalPages}"></span>
+											th:unless="${currentPage < totalPages}"><i class="fa fa-fast-forward"></i></span>
 						        </div>
 						    </div>
 						</div>

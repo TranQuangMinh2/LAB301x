@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    
+    <div th:if="${books != null}">
+        <ul>
+            <li th:each="book : ${books}">
+                <h2 th:text="${book.title_suggest}"></h2>
+                <p><strong>Author:</strong> <span th:text="${book.author_name[0]}"></span></p>
+                <p><strong>Publish Date:</strong> <span th:text="${book.publish_date[0]}"></span></p>
+                <p><strong>Number of Pages:</strong> <span th:text="${book.number_of_pages[0]}"></span></p>
+                <p><strong>Cover Image:</strong> <img th:src="'https://covers.openlibrary.org/b/id/' + ${book.cover_i} + '-L.jpg'" alt="Cover Image" /></p>
+            </li>
+        </ul>
+    </div>
+    
+    <div th:if="${books == null}">
+        <p>No books found.</p>
+    </div>
+
+    <h2>Search for Another Book</h2>
+    <form action="/searchBook" method="get">
+        <input type="text" name="title" placeholder="Enter Book Title" />
+        <input type="number" name="page" placeholder="Page Number" />
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>
