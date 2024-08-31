@@ -1,6 +1,7 @@
 package com.trnqngmnh.library;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,12 @@ public class PasswordResetController {
 
 	@Autowired
 	private TokenService tokenService;
+
+	@Autowired
+	private BrandService brandService;
+
+	@Autowired
+	private CategoryService categoryService;
 
 	// Quản lí
 	@GetMapping("/admin/forgot-password")
@@ -85,6 +92,10 @@ public class PasswordResetController {
 
 	@PostMapping("/forgot-password")
 	public String processForgotPasswordForm(@RequestParam("email") String userEmail, Model model) {
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		User user = userService.findUserByEmail(userEmail);
 		if (user == null) {
 			model.addAttribute("fgerrorMessage", "Không có người dùng nào được tìm thấy có email đó.");
@@ -103,6 +114,10 @@ public class PasswordResetController {
 
 	@GetMapping("/reset-password")
 	public String showResetPasswordForm(@RequestParam("token") String token, Model model) {
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		PasswordResetToken resetToken = tokenRepository.findByToken(token);
 		if (resetToken == null || resetToken.getExpiryDate().before(new Date())) {
 			model.addAttribute("errorMessage", "Token không hợp lệ hoặc đã hết hạn.");
@@ -116,6 +131,10 @@ public class PasswordResetController {
 	@PostMapping("/reset-password")
 	public String processResetPasswordForm(@RequestParam("token") String token,
 			@RequestParam("password") String password, Model model) {
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		PasswordResetToken resetToken = tokenRepository.findByToken(token);
 		if (resetToken == null || resetToken.getExpiryDate().before(new Date())) {
 			model.addAttribute("errorMessage", "Token không hợp lệ hoặc đã hết hạn.");

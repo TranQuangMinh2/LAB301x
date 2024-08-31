@@ -2,6 +2,7 @@ package com.trnqngmnh.library;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,7 +67,10 @@ public class UserController {
 		List<Product> latestProduct2 = productService.getAllProducts();
 		latestProduct2.sort(Comparator.comparing(Product::getCreatedAt).reversed());
 		List<Product> topLatestProducts = latestProduct2.stream().limit(8).collect(Collectors.toList());
-
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		List<Category> categories = categoryService.findAllCategorys();
 		model.addAttribute("latest_products", latestProduct);
 		model.addAttribute("newProducts", topLatestProducts);
@@ -126,6 +131,10 @@ public class UserController {
 //	}
 	@GetMapping("/register-user")
 	public String registerUser(Model model) {
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
 
@@ -135,6 +144,10 @@ public class UserController {
 	@PostMapping("/register-user")
 	public String addUser(@ModelAttribute User user, @RequestParam("g-recaptcha-response") String recaptchaResponse,
 			Model model, HttpSession session) {
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		User existingUser = userService.findUserByEmail(user.getEmail());
 		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
 		if (existingUser != null) {
@@ -251,8 +264,8 @@ public class UserController {
 		model.addAttribute("products", products);
 		List<Brand> brands = brandService.findAllBrands();
 		model.addAttribute("brands", brands);
-		List<Category> categories = categoryService.findAllCategorys();
-		model.addAttribute("categories", categories);
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
 		return "shopper/login";
 	}
 
@@ -262,7 +275,10 @@ public class UserController {
 		System.out.println("recaptchaResponse: " + recaptchaResponse);
 		boolean isCaptchaValid = captchaService.verifyRecaptcha(recaptchaResponse);
 		System.out.println("isCaptchaValid: " + isCaptchaValid);
-
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		if (isCaptchaValid) {
 			User user = userService.findUserByEmail(email);
 			System.out.println("User: " + user);
@@ -355,13 +371,47 @@ public class UserController {
 		} else {
 			return "shopper/login";
 		}
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "shopper/account";
+	}
+
+	@GetMapping("/my-order")
+	public String myOrder(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+
+			model.addAttribute("user", user);
+			model.addAttribute("address", user.getAddress());
+			List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+			model.addAttribute("cartItems", cartItems);
+			model.addAttribute("cartTotalQuantity", cartItems.size());
+			// Lấy danh sách các đơn hàng của người dùng
+			List<OrderWeb> orderWebs = orderWebService.getOrdersByUserId(user.getId());
+			model.addAttribute("orderWebs", orderWebs);
+		} else {
+			return "shopper/login";
+		}
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
+		return "shopper/account2";
 	}
 
 	@GetMapping("/my-account/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		User user = userService.findUserById(id);
 		model.addAttribute("user", user);
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
+		model.addAttribute("user", user);
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "shopper/account_address_fields";
 	}
 
@@ -370,6 +420,10 @@ public class UserController {
 		userService.updateUser(user);
 		model.addAttribute("user", user);
 		model.addAttribute("address", user.getAddress());
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "redirect:/index";
 	}
 
@@ -377,6 +431,10 @@ public class UserController {
 	public String orderDetails(@PathVariable("id") Long id, HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 		OrderWeb orderWeb = orderWebService.findById(id);
+
+//		Date updatedAtDate = orderWeb.getCreatedAt();
+//		LocalDateTime updatedAt = LocalDateTime.ofInstant(updatedAtDate.toInstant(), ZoneId.systemDefault());
+//		LocalDateTime oneMonthLater = updatedAt.plusMonths(1);
 		if (user != null) {
 			// List<OrderWeb> orderWebs = orderWebService.findByUserId(user.getId());
 			model.addAttribute("user", user);
@@ -386,12 +444,21 @@ public class UserController {
 		} else {
 			return "shopper/login";
 		}
+//		model.addAttribute("oneMonthLater", oneMonthLater); // Thêm dòng này
 		model.addAttribute("orderWeb", orderWeb);
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "shopper/order-detail";
 	}
 
 	@GetMapping("/shopper/logout")
-	public String shopperLogout(HttpServletRequest request) {
+	public String shopperLogout(HttpServletRequest request, Model model) {
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		request.getSession().invalidate();
 		return "redirect:/index";
 	}
@@ -508,12 +575,12 @@ public class UserController {
 	public String viewOrderDetails(@PathVariable("orderId") Long orderId, Model model) {
 		OrderWeb order = orderWebService.findById(orderId);
 		if (order.getSentMail() == null || !order.getSentMail()) {
-			Date updatedAtDate = order.getUpdatedAt();
+			Date updatedAtDate = order.getCreatedAt();
 			LocalDateTime updatedAt = LocalDateTime.ofInstant(updatedAtDate.toInstant(), ZoneId.systemDefault());
 			LocalDateTime oneMonthLater = updatedAt.plusMonths(1);
-			if ("Đã thanh toán".equals(order.getPaymentStatus())) {
+			if ("Đã mượn".equals(order.getDeliveryStatus())) {
 				String consigneeEmail = order.getConsigneeEmail(); // Get consignee email
-				String subject = "Bạn đã trả tiền thành công.";
+				String subject = "Bạn đã mượn sách thành công.";
 				String text = "Bạn có 1 tháng để mượn sách. Bạn sẽ phải trả sách lúc: " + oneMonthLater
 						+ ". Lưu ý là bạn phải đến thư viện để trả sách.";
 				emailService.sendSimpleMessage(consigneeEmail, subject, text);
@@ -547,7 +614,7 @@ public class UserController {
 
 			// Cập nhật trạng thái và thông tin khác
 			existingOrder.setDeliveryStatus(newStatus);
-			existingOrder.setPaymentStatus(updatedOrder.getPaymentStatus());
+			/* existingOrder.setPaymentStatus(updatedOrder.getPaymentStatus()); */
 			orderWebService.save(existingOrder);
 
 			// Kiểm tra nếu trạng thái mới là "Đã trả" và trạng thái cũ không phải là "Đã
@@ -557,6 +624,9 @@ public class UserController {
 				for (OrderWebDetail orderDetail : orderDetails) {
 					ProductSize productSize = orderDetail.getProductSize();
 					int newQuantity = productSize.getQuantity() + 1;
+
+					existingOrder.setPaymentStatus("Trong hạn");
+
 					productSize.setQuantity(newQuantity);
 					productSizeRepository.save(productSize); // Lưu thay đổi vào cơ sở dữ liệu
 				}
@@ -569,6 +639,50 @@ public class UserController {
 		}
 
 		return "redirect:/order/" + orderId;
+	}
+
+	@PostMapping("/send-reminder-email/{id}")
+	public String sendReminderEmail(@PathVariable("id") Long orderId, RedirectAttributes redirectAttributes) {
+		OrderWeb order = orderWebService.findById(orderId);
+		if (order != null && "Quá hạn".equals(order.getPaymentStatus())) {
+			String subject = "Nhắc nhở: Trạng thái mượn sách Quá hạn";
+			String body = "Xin chào " + order.getConsignee() + ",\n\n" + "Đơn mượn của bạn có mã số " + order.getId()
+					+ " hiện đang trong trạng thái 'Quá hạn'. "
+					+ "Vui lòng trả sách hoặc gia hạn để tránh bất kỳ sự bất tiện nào.\n\n"
+					+ "Cảm ơn bạn đã sử dụng dịch vụ thư viện của chúng tôi.";
+
+			emailService.sendReminderEmail(order.getConsigneeEmail(), subject, body);
+
+			redirectAttributes.addFlashAttribute("message", "Email nhắc nhở đã được gửi thành công!");
+		} else {
+			redirectAttributes.addFlashAttribute("error",
+					"Không thể gửi email nhắc nhở. Đơn hàng không tồn tại hoặc không ở trạng thái 'Quá hạn'.");
+		}
+
+		return "redirect:/orders"; // Điều hướng trở lại trang đơn hàng
+	}
+
+	@PostMapping("/extend-order/{orderId}")
+	public String extendOrder(@PathVariable("orderId") Long orderId, Model model) {
+		OrderWeb order = orderWebService.findById(orderId);
+		if (order != null) {
+			// Cộng thêm 1 ngày vào updatedAt
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(order.getUpdatedAt());
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			order.setUpdatedAt(cal.getTime());
+			// Cập nhật paymentStatus thành "Trong hạn"
+			order.setPaymentStatus("Trong hạn");
+			// Lưu lại order vào cơ sở dữ liệu
+			orderWebService.save(order);
+		}
+		model.addAttribute("orderWeb", order);
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
+		// Điều hướng trở lại trang đơn hàng sau khi gia hạn
+		return "redirect:/my-order";
 	}
 
 	/*

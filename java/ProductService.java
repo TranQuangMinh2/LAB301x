@@ -133,6 +133,7 @@ public class ProductService {
 			statusValue = "Tất cả"; // Giả sử mặc định là "Tất cả"
 		}
 		existingProduct.setStatus(statusValue);
+
 		existingProduct.setVersionName(product.getVersionName());
 		existingProduct.setBrandId(product.getBrandId());
 		existingProduct.setCategoryId(product.getCategoryId());

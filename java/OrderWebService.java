@@ -1,5 +1,7 @@
 package com.trnqngmnh.library;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -87,6 +89,26 @@ public class OrderWebService {
 		Date oneMonthAgo = calendar.getTime();
 		orderWebRepository.deleteByCreatedAtBefore(oneMonthAgo);
 
+	}
+
+	public void saveOrderWeb(OrderWeb orderWeb, CartItem cartItem) {
+		// Gán giá trị từ CartItem
+		orderWeb.setCreatedAt(cartItem.getCreatedAt());
+		orderWeb.setUpdatedAt(cartItem.getUpdatedAt());
+
+		// Lưu OrderWeb vào cơ sở dữ liệu
+		orderWebRepository.save(orderWeb);
+	}
+
+	public boolean hasReachedOrderLimit(Long userId) {
+		LocalDate now = LocalDate.now();
+		LocalDate firstDayOfMonth = now.withDayOfMonth(1);
+		LocalDateTime startOfMonth = firstDayOfMonth.atStartOfDay();
+		LocalDateTime endOfMonth = now.atTime(23, 59, 59);
+
+		int orderCount = orderWebRepository.countByUserIdAndCreatedAtBetween(userId, startOfMonth, endOfMonth);
+
+		return orderCount >= 3; // so lan muon trong thang
 	}
 
 }

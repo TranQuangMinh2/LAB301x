@@ -1,5 +1,6 @@
 package com.trnqngmnh.library;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface OrderWebRepository extends JpaRepository<OrderWeb, Long>, JpaSp
 
 	@Transactional
 	void deleteByCreatedAtBefore(Date date);
+
+	int countByUserIdAndCreatedAtBetween(Long userId, LocalDateTime startOfMonth, LocalDateTime endOfMonth);
 
 }

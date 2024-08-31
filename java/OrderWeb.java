@@ -34,13 +34,16 @@ public class OrderWeb {
 
 	@PrePersist
 	public void prePersist() {
-		createdAt = new Date();
-		updatedAt = new Date();
+
+		/*
+		 * createdAt = new Date(); updatedAt = new Date();
+		 */
+
 	}
 
 	@PreUpdate
 	public void preUpdate() {
-		updatedAt = new Date();
+		/* updatedAt = new Date(); */
 	}
 
 	@Column(name = "consignee")

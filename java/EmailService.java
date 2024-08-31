@@ -46,4 +46,13 @@ public class EmailService {
 		emailSender.send(message);
 	}
 
+	public void sendReminderEmail(String toEmail, String subject, String body) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("your_email@gmail.com");
+		message.setTo(toEmail);
+		message.setSubject(subject);
+		message.setText(body);
+		emailSender.send(message);
+	}
+
 }

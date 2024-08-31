@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,6 +165,49 @@ public class ProductController {
 		return "shopper/product-listing";
 	}
 
+//	@GetMapping("/search")
+//	public String productListing(Model model, @RequestParam(defaultValue = "", name = "q") String text,
+//			@RequestParam(defaultValue = "1", name = "pageNo") int pageNo, HttpSession session,
+//			@RequestParam(value = "brandId", required = false) Long brandId,
+//			@RequestParam(value = "categoryId", required = false) Long categoryId,
+//			@RequestParam(defaultValue = "priceDesc") String sortBy) {
+//		User user = (User) session.getAttribute("user");
+//		boolean isLoggedIn = (user != null);
+//		model.addAttribute("isLoggedIn", isLoggedIn);
+//		List<Category> categorys = categoryService.findAllCategorys();
+//		model.addAttribute("categorys", categorys);
+//		List<Brand> brands = brandService.findAllBrands();
+//		model.addAttribute("brands", brands);
+//		if (user != null) {
+//			model.addAttribute("user", user);
+//			List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//			model.addAttribute("cartItems", cartItems);
+//			model.addAttribute("cartTotalQuantity", cartItems.size());
+//		}
+//		List<Product> products = service.searchProducts(text, brandId, categoryId);
+//		if (brandId != null) {
+//			Brand brand = brandService.findBrandById(brandId);
+//			if (brand != null) {
+//				products = service.getProductsByBrand(brand);
+//				model.addAttribute("brand", brand);
+//			} else {
+//				products = service.findProducts(sortBy);
+//			}
+//		} else {
+//			products = service.findProducts(sortBy);
+//		}
+//		if (categoryId != null) {
+//			Category category = categoryService.findCategoryById(categoryId);
+//			if (category != null) {
+//				products = products.stream().filter(p -> p.getCategory().getId().equals(category.getId()))
+//						.collect(Collectors.toList());
+//				model.addAttribute("category", category);
+//			}
+//		}
+//		model.addAttribute("products", products);
+//		model.addAttribute("text", text);
+//		return searchPaginated(1, model, session, text, brandId, categoryId, sortBy);
+//	}
 	@GetMapping("/search")
 	public String productListing(Model model, @RequestParam(defaultValue = "", name = "q") String text,
 			@RequestParam(defaultValue = "1", name = "pageNo") int pageNo, HttpSession session,
@@ -272,6 +315,10 @@ public class ProductController {
 			model.addAttribute("cartItems", cartItems);
 			model.addAttribute("cartTotalQuantity", cartItems.size());
 		}
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "shopper/about";
 	}
 
@@ -332,6 +379,16 @@ public class ProductController {
 //        model.addAttribute("orderWebs", orderWebs);
 //        return "admin/orders";
 //    }
+//	@GetMapping("/orders")
+//	public String orders(@RequestParam(required = false) String generalSearch,
+//			@RequestParam(required = false) String paymentMethod, @RequestParam(required = false) String paymentStatus,
+//			@RequestParam(required = false) String deliveryStatus, @RequestParam(required = false) Integer totalAmount,
+//			Model model) {
+//		List<OrderWeb> orderWebs = orderWebService.getOrders(generalSearch, paymentMethod, paymentStatus,
+//				deliveryStatus, totalAmount);
+//		model.addAttribute("orderWebs", orderWebs);
+//		return "admin/orders";
+//	}
 	@GetMapping("/orders")
 	public String orders(@RequestParam(required = false) String generalSearch,
 			@RequestParam(required = false) String paymentMethod, @RequestParam(required = false) String paymentStatus,
@@ -339,6 +396,20 @@ public class ProductController {
 			Model model) {
 		List<OrderWeb> orderWebs = orderWebService.getOrders(generalSearch, paymentMethod, paymentStatus,
 				deliveryStatus, totalAmount);
+
+		// Lấy ngày hiện tại
+		Date currentDate = new Date();
+
+		// Kiểm tra và cập nhật trạng thái thanh toán
+		for (OrderWeb order : orderWebs) {
+			if (order.getUpdatedAt() != null && currentDate.after(order.getUpdatedAt())
+					&& !"Đã trả".equals(order.getDeliveryStatus())) {
+				order.setPaymentStatus("Quá hạn");
+				// Cập nhật đơn hàng trong cơ sở dữ liệu nếu cần thiết
+				orderWebService.save(order);
+			}
+		}
+
 		model.addAttribute("orderWebs", orderWebs);
 		return "admin/orders";
 	}
@@ -442,6 +513,10 @@ public class ProductController {
 			model.addAttribute("user", user);
 			model.addAttribute("cartTotalQuantity", cartItems.size());
 		}
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "redirect:/product-listing";
 	}
 
@@ -452,6 +527,10 @@ public class ProductController {
 			model.addAttribute("user", user);
 		}
 		cartItemService.removeCartItem(id);
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "redirect:/cart";
 	}
 
@@ -462,6 +541,10 @@ public class ProductController {
 			model.addAttribute("user", user);
 		}
 		cartItemService.deleteAllCartItems();
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "redirect:/cart";
 	}
 
@@ -506,6 +589,65 @@ public class ProductController {
 //
 //		return "redirect:/product/" + productId;
 //	}
+//	@PostMapping("/addReview")
+//	public String addReview(@RequestParam("title") String title, @RequestParam("content") String content,
+//			@RequestParam(value = "rating") short rating, @RequestParam("productId") long productId, Model model,
+//			HttpSession session) {
+//
+//		Product product = service.getProductById(productId);
+//		if (product == null) {
+//			System.out.println("Product not found for ID: " + productId);
+//			return "redirect:/product/" + productId; // hoặc xử lý lỗi theo cách khác
+//		}
+//
+//		User user = (User) session.getAttribute("user");
+//		boolean isLoggedIn = (user != null);
+//		model.addAttribute("isLoggedIn", isLoggedIn);
+//		if (user != null) {
+//			model.addAttribute("user", user);
+//			List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//			model.addAttribute("cartItems", cartItems);
+//			model.addAttribute("cartTotalQuantity", cartItems.size());
+//		}
+//		if (user == null) {
+//			System.out.println("User not found in session. Redirecting to login.");
+//			return "shopper/login";
+//		}
+//
+//		// Danh sách từ nhạy cảm
+////		List<String> sensitiveWords = badwordService.findAllBadwords();
+//		List<String> sensitiveWords = badwordService.getSensitiveWords();
+//
+//		model.addAttribute("sensitiveWords", sensitiveWords);
+//
+//		// Phương thức lọc từ nhạy cảm
+//		title = filterSensitiveWords(title, sensitiveWords);
+//		content = filterSensitiveWords(content, sensitiveWords);
+//
+//		System.out.println("Product ID: " + product.getId());
+//		System.out.println("User ID: " + user.getId());
+//
+//		ProductReview review = new ProductReview();
+//		review.setTitle(title);
+//		review.setContent(content);
+//		review.setRating(rating);
+//		review.setCreatedAt(LocalDateTime.now());
+//		review.setUpdatedAt(LocalDateTime.now());
+//
+//		review.setProduct(product);
+//		review.setUser(user);
+//		reviewService.saveReview(review);
+//
+//		return "redirect:/product/" + productId;
+//	}
+//
+//	private String filterSensitiveWords(String text, List<String> sensitiveWords) {
+//		for (String word : sensitiveWords) {
+//			text = text.replaceAll("(?i)\\b" + Pattern.quote(word) + "\\b", "[censored]");
+//		}
+//		return text;
+//	}
+
 	@PostMapping("/addReview")
 	public String addReview(@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam(value = "rating") short rating, @RequestParam("productId") long productId, Model model,
@@ -532,14 +674,16 @@ public class ProductController {
 		}
 
 		// Danh sách từ nhạy cảm
-//		List<String> sensitiveWords = badwordService.findAllBadwords();
 		List<String> sensitiveWords = badwordService.getSensitiveWords();
 
-		model.addAttribute("sensitiveWords", sensitiveWords);
-
-		// Phương thức lọc từ nhạy cảm
-		title = filterSensitiveWords(title, sensitiveWords);
-		content = filterSensitiveWords(content, sensitiveWords);
+		// Kiểm tra từ nhạy cảm trong tiêu đề và nội dung
+		if (containsSensitiveWords(title, sensitiveWords) || containsSensitiveWords(content, sensitiveWords)) {
+			// Nếu phát hiện từ nhạy cảm, trả về trang hiện tại với thông báo lỗi
+			model.addAttribute("errorMessage9",
+					"Your review contains inappropriate words. Please modify your content.");
+			model.addAttribute("product", product);
+			return "redirect:/product/" + productId; // hoặc xử lý lỗi theo cách khác
+		}
 
 		System.out.println("Product ID: " + product.getId());
 		System.out.println("User ID: " + user.getId());
@@ -554,15 +698,21 @@ public class ProductController {
 		review.setProduct(product);
 		review.setUser(user);
 		reviewService.saveReview(review);
-
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "redirect:/product/" + productId;
 	}
 
-	private String filterSensitiveWords(String text, List<String> sensitiveWords) {
+	// Phương thức kiểm tra từ nhạy cảm
+	private boolean containsSensitiveWords(String text, List<String> sensitiveWords) {
 		for (String word : sensitiveWords) {
-			text = text.replaceAll("(?i)\\b" + Pattern.quote(word) + "\\b", "[censored]");
+			if (text.toLowerCase().contains(word.toLowerCase())) {
+				return true;
+			}
 		}
-		return text;
+		return false;
 	}
 
 	@GetMapping("/product/{id}")
@@ -609,6 +759,10 @@ public class ProductController {
 		model.addAttribute("relatedProducts2", relatedProducts2);
 		model.addAttribute("product", productDetails.get(0));
 		model.addAttribute("productReview", product.getProductReviews());
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "shopper/product-03";
 	}
 
@@ -630,10 +784,76 @@ public class ProductController {
 		return "redirect:/admin";
 	}
 
+//	@PostMapping("/checkout")
+//	public String checkout(HttpSession session) {
+//		User user = (User) session.getAttribute("user");
+//		if (user != null) {
+//			List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
+//			double totalAmount = 0;
+//			for (CartItem cartItem : cartItems) {
+//				ProductSize productSize = cartItem.getProductSize();
+//				double itemPrice = productSize.getProduct().getPrice();
+//				totalAmount += itemPrice * cartItem.getQuantity();
+//
+//				// Giảm số lượng sản phẩm đi 1 đơn vị
+//				int newQuantity = productSize.getQuantity() - cartItem.getQuantity();
+//				if (newQuantity >= 0) {
+//					productSize.setQuantity(newQuantity);
+//					productSizeRepository.save(productSize); // Lưu thay đổi vào cơ sở dữ liệu
+//				} else {
+//					// Xử lý khi số lượng không đủ (nếu cần)
+//					// Có thể ném lỗi hoặc thông báo cho người dùng
+//					throw new RuntimeException("Số lượng sản phẩm không đủ để đặt hàng");
+//				}
+//			}
+//
+//			// Tạo đơn hàng mới
+//			OrderWeb order = new OrderWeb();
+//			order.setUserId(user.getId());
+//			order.setTotalAmount((long) totalAmount);
+//			// Set các trường khác của order tại đây
+//			order.setConsignee(user.getName());
+//			order.setConsigneePhone(user.getPhone());
+//			order.setConsigneeEmail(user.getEmail());
+//			order.setDeliveryAddress(user.getAddress());
+//			order.setPaymentMethod("COD");
+//			order.setDeliveryStatus("Đã mượn");
+//			order.setPaymentStatus("Chưa thanh toán");
+//			orderWebRepository.save(order);
+//
+//			// Tạo chi tiết đơn hàng
+//			for (CartItem cartItem : cartItems) {
+//				OrderWebDetail orderDetail = new OrderWebDetail();
+//				orderDetail.setOrderWeb(order);
+//				orderDetail.setProductSize(cartItem.getProductSize());
+//				orderDetail.setPrice(cartItem.getProductSize().getProduct().getPrice());
+//				orderDetail.setQuantity(cartItem.getQuantity());
+//				orderDetail.setTotalAmount(
+//						(long) (cartItem.getProductSize().getProduct().getPrice() * cartItem.getQuantity()));
+//				orderWebDetailRepository.save(orderDetail);
+//			}
+//
+//			// Xóa tất cả các cart items
+//			cartItemService.deleteAllCartItems();
+//		}
+//		return "admin/order-success";
+//	}
+
 	@PostMapping("/checkout")
-	public String checkout(HttpSession session) {
+	public String checkout(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
+			// Kiểm tra số lần đặt sách trong tháng
+			boolean hasReachedOrderLimit = orderWebService.hasReachedOrderLimit(user.getId());
+			model.addAttribute("hasReachedOrderLimit", hasReachedOrderLimit);
+
+			if (hasReachedOrderLimit) {
+				// Nếu đã đạt giới hạn, không cho phép tiếp tục đặt sách
+				model.addAttribute("errorMessage", "Bạn đã đạt đến giới hạn 3 lần đặt sách trong tháng này.");
+				return "redirect:/cart"; // Trả về trang giỏ hàng hoặc trang thích hợp khác
+			}
+
+			// Tiếp tục xử lý logic checkout hiện tại
 			List<CartItem> cartItems = cartItemService.getCartItemsByUserId(user.getId());
 			double totalAmount = 0;
 			for (CartItem cartItem : cartItems) {
@@ -648,7 +868,6 @@ public class ProductController {
 					productSizeRepository.save(productSize); // Lưu thay đổi vào cơ sở dữ liệu
 				} else {
 					// Xử lý khi số lượng không đủ (nếu cần)
-					// Có thể ném lỗi hoặc thông báo cho người dùng
 					throw new RuntimeException("Số lượng sản phẩm không đủ để đặt hàng");
 				}
 			}
@@ -664,7 +883,15 @@ public class ProductController {
 			order.setDeliveryAddress(user.getAddress());
 			order.setPaymentMethod("COD");
 			order.setDeliveryStatus("Đã mượn");
-			order.setPaymentStatus("Chưa thanh toán");
+			order.setPaymentStatus("Trong hạn");
+
+			// Lấy createdAt và updatedAt từ CartItem đầu tiên
+			if (!cartItems.isEmpty()) {
+				CartItem firstCartItem = cartItems.get(0);
+				order.setCreatedAt(firstCartItem.getCreatedAt());
+				order.setUpdatedAt(firstCartItem.getUpdatedAt());
+			}
+
 			orderWebRepository.save(order);
 
 			// Tạo chi tiết đơn hàng
@@ -861,7 +1088,10 @@ public class ProductController {
 			List<OrderWeb> orderWebs = orderWebService.getOrdersByUserId(user.getId());
 			model.addAttribute("orderWebs", orderWebs);
 		}
-
+		List<Category> categorys = categoryService.findAllCategorys();
+		model.addAttribute("categorys", categorys);
+		List<Brand> brands = brandService.findAllBrands();
+		model.addAttribute("brands", brands);
 		return "redirect:/my-account";
 	}
 }
