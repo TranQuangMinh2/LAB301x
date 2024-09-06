@@ -84,7 +84,7 @@
 					
 
 					<div class="tt-collapse open" th:if="${isSignedIn}">
-						<h3 class="tt-collapse-title">SẢN PHẨM ĐÃ XEM</h3>
+						<h3 class="tt-collapse-title">TÀI LIỆU ĐÃ XEM</h3>
 						<div class="tt-collapse-content">
 							<div class="tt-aside">
 								<a class="tt-item" href="product.html" th:each="product : ${productWatched}">
@@ -141,14 +141,14 @@
 						<div class="tt-product-listing row">
 							<h5 th:if="${#lists.isEmpty(pagedProducts)}">Hiện không có tài liệu</h5>
 								<div th:each ="product : ${pagedProducts}" class="col-6 col-md-4 col-lg-3">
-									<div class="tt-product thumbprod-center">
+									<div class="tt-product thumbprod-center w3-border w3-border-blue w3-round">
 										<div class="tt-image-box">
 											<!--<a th:href="@{/product/} + ${product.id}" class="tt-btn-quickview" data-toggle="modal" data-target="#ModalquickView"	data-tooltip="Xem trước" data-tposition="left"></a>-->
 											<!-- <a href="#" class="tt-btn-wishlist" th:if="${isSignedIn}" data-tooltip="Yêu thích" th:classappend="${product.isWishList} ? 'active' : ''" data-tposition="left"></a> -->
 											<input class="productBoxId" type="hidden" th:value="${product.id}">
 	
 											<a th:href="@{/product/} + ${product.id}">
-												<span class="tt-img"><img th:src="${product.primaryImage()}" alt=""></span>
+												<span class="tt-img"><img th:src="${product.primaryImage()}" alt="" style="height:450px;width:100%;object-fit: contain;"></span>
 	<!--											<span class="tt-img-roll-over" th:each="image,iter : ${product.otherImages()}">
 													<img th:if="${iter.index==0}" th:src="${image}" alt="">
 												</span>
@@ -238,7 +238,7 @@
 	<div class="container-indent nomargin">
 		<div class="tt-empty-search" th:if="${#lists.isEmpty(products)}" style="padding-top: 10px;">
 			<span class="tt-icon icon-f-85"></span>
-			<h1 class="tt-title">KHÔNG CÓ SẢN PHẨM.</h1>
+			<h1 class="tt-title">KHÔNG CÓ TÀI LIỆU.</h1>
 			<p>Kết quả tìm kiếm cho "<span class="tt-base-dark-color" th:text="${text}">'dddddd'</span>"</p>
 		</div>
 	</div>

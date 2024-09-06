@@ -108,11 +108,11 @@
 			</div>-->
 			<div class="row tt-layout-product-item">
 			    <div th:each="product : ${newProducts}" class="col-6 col-md-4 col-lg-3">
-			        <div class="tt-product thumbprod-center">
+			        <div class="tt-product thumbprod-center w3-border w3-border-blue w3-round">
 			            <div class="tt-image-box">
-			                <input class="productBoxId" type="hidden" th:value="${product.id}">
+			                <input class="productBoxId" type="hidden" th:value="${product.id}" >
 			                <a th:href="@{/product/} + ${product.id}">
-			                    <span class="tt-img"><img src="images/loader.svg" th:data-src="${product.primaryImage}" alt=""></span>
+			                    <span class="tt-img"><img src="images/loader.svg" th:data-src="${product.primaryImage}" alt="" style="height:450px;width:100%;object-fit: contain;"></span>
 			                    <span class="tt-label-location">
 			                        <span class="tt-label-new" th:text="${product.status}">Mới</span>
 			                    </span>

@@ -335,13 +335,26 @@
 										</tr>
 									</tfoot>
 								</table> -->
-								<form action="/checkout" method="post"
+								<!-- <form action="/checkout" method="post"
 									th:if="${not #lists.isEmpty(cartItems)}" class="checkout-form">
 									<button id="thanhToanButton" type="submit"
 										class="checkout-button">
 										<i class="fa fa-book" aria-hidden="true"></i>Đặt sách
 									</button>
-								</form>
+								</form> -->
+<form action="/checkout" method="post"
+      th:if="${not #lists.isEmpty(cartItems)}" class="checkout-form">
+    <button id="thanhToanButton" type="submit"
+            class="checkout-button"
+            th:disabled="${hasReachedOrderLimit}">
+        <i class="fa fa-book" aria-hidden="true"></i> Đặt sách
+    </button>
+    <div th:if="${hasReachedOrderLimit}" class="error-message">
+        Bạn đã đạt đến giới hạn 3 lần đặt sách trong tháng này.
+    </div>
+</form>
+
+																
 								<form action="/checkoutCK" method="post" th:if="${not #lists.isEmpty(cartItems)}" class="checkout-form">
 									<button class="w3-button w3-red" id="btnCK" style="display:none"
 									onclick="document.getElementById('thanhToanButton').style.display='block'">Xác

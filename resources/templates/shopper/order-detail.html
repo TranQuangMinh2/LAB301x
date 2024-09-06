@@ -34,8 +34,12 @@
 			<div class="tt-shopping-layout">
 				<h2 class="tt-title-border">
 					Đơn mượn #<span th:text="${orderWeb.id}" id="order_id"></span> - <span th:text="${orderWeb.deliveryStatus}" id="delivery_status"></span>
-					<span class="ordered_date">Ngày mượn: <span th:text="${orderWeb.createdAt}" class="date">18:31 20/04/2020</span></span>
 				</h2>
+				<span class="ordered_date">Ngày mượn: <span th:text="${orderWeb.createdAt}" class="date">18:31 20/04/2020</span></span>
+				<br>
+				<br>
+				<!-- <span class="ordered_date">Ngày trả: <span th:text="${#dates.format(oneMonthLater, 'hh:mm dd/mm/yyyy')}" class="date">18:31 20/04/2020</span></span> -->
+				<span class="ordered_date">Ngày trả: <span th:text="${orderWeb.updatedAt}" class="date">18:31 20/04/2020</span></span>
 				<div class="tt-wrapper">
 					<h3 class="tt-title">Chi tiết</h3>
 					<div class="tt-table-responsive">
@@ -43,19 +47,16 @@
 							<thead>
 								<tr>
 									<th class="min-w-320">Tài liệu</th>
-									<th>Size</th>
-									<th class="min-w-100">Giá</th>
 									<th>Số lượng</th>
-									<th class="text-right min-w-120">Tạm tính</th>
 								</tr>
 							</thead>
 							<tbody>
 							    <tr th:each="item : ${orderWeb.orderWebDetails}" th:with="product=${item.productSize.product}">
 							        <td><a th:href="${'/product/' + product.id}" th:text="${product.name}"></a></td>
-							        <td th:text="${item.productSize.size}"></td>
+							        <!-- <td th:text="${item.productSize.size}"></td> -->
 							        <!-- <td th:text="${orderWeb.formatPrice(item.price)}"></td> -->
-							        <!-- <td th:text="${item.quantity}"></td>
-							        <td align="right" th:text="${orderWeb.formatPrice(item.totalAmount)}"></td> -->
+							        <td th:text="${item.quantity}"></td>
+							        <!-- <td align="right" th:text="${orderWeb.formatPrice(item.totalAmount)}"></td> -->
 							    </tr>
 							    <!-- <tr>
 									<td colspan="4" class="lbl_total_amount text-right">Tổng cộng</td>

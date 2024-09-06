@@ -225,9 +225,6 @@
 								</div>
 							</li> -->
 						</ul>
-						<div class="tt-image-box">
-						    <a th:href="@{/some-link}" class="link-btn2">Nhấn vào đây</a>
-						</div>
 					</div>
 				</div>
 				<div class="col-6">
@@ -318,7 +315,7 @@
 							                    </h2> -->
 							                </div>
 							            </div>
-							            <div class="tt-review-comments-container w3-light-gray">
+							            <div class="tt-review-comments-container">
 							                <div class="tt-review-comments" th:each="review: ${productReview}">
 							                    <div class="tt-item">
 							                        <div class="tt-content">
@@ -339,6 +336,9 @@
 							                </div>
 							            </div>
 							            <div class="tt-review-form">
+								            <div th:if="${errorMessage9 != null}" class="alert alert-danger" role="alert">
+							                    <span th:text="${errorMessage9}">Your review contains inappropriate words. Please modify your content.</span>
+							                </div>
 										    <div class="tt-rating-indicator">
 										        <div class="tt-title">
 										            ĐÁNH GIÁ CỦA BẠN 

@@ -22,43 +22,56 @@
 	<div class="container">
 		<ul>
 			<li><a href="/index">Trang chủ</a></li>
-			<li>Tài khoản</li>
+			<li>Đơn mượn</li>
 		</ul>
 	</div>
 </div>
 <div id="tt-pageContent">
 	<div class="container-indent">
 		<div class="container container-fluid-custom-mobile-padding">
-			<h1 class="tt-title-subpages noborder padding-0">Tài khoản của tôi</h1>
+			<h1 class="tt-title-subpages noborder padding-0">Đơn mượn của tôi</h1>
 			<div class="tt-shopping-layout">
 <!-- 				<h2 class="tt-title-border">Tài khoản của tôi</h2> -->
-				
 				<div class="tt-wrapper">
-					<h3 class="tt-title">Thông tin tài khoản</h3>
+					<h3 class="tt-title">Quản lý đơn mượn</h3>
 					<div class="tt-table-responsive">
-						<table class="tt-table-shop-02">
+						<table class="tt-table-shop-01">
+							<thead>
+								<tr>
+									<th>Mã đơn mượn</th>
+									<th>Ngày mượn</th>
+									<th>Ngày trả</th>
+									<th>Trong hạn / Quá hạn</th>
+									<th>Trạng thái mượn sách</th>
+								</tr>
+							</thead>
 							<tbody>
-								<tr>
-									<td>Họ tên:</td>
-									<td th:text="${user.name}"></td>
-								</tr>
-								<tr>
-									<td>Địa chỉ</td>
-									<td th:text="${user.address}"></td>
-								</tr>
-								<tr>
-									<td>Số điện thoại</td>
-									<td th:text="${user.phone}"></td>
-								</tr>
-								<tr>
-									<td>Email</td>
-									<td th:text="${user.email}"></td>
+								<tr th:each="orderWeb : ${orderWebs}">
+									<td><a th:href="${'/my-account/order/' + orderWeb.id}"><span th:text="${'#' + orderWeb.getFormatId()}"></span></a></td>
+									<td th:text="${orderWeb.createdAt}"></td>
+									<td th:text="${orderWeb.updatedAt}"></td>
+									<td th:text="${orderWeb.paymentStatus}">Processing</td>
+									<td th:text="${orderWeb.deliveryStatus}">Processing</td>
+									<td>
+									    <!-- <form th:action="@{/extend-order/{orderId}(orderId=${orderWeb.id})}" method="post" style="display:inline;">
+									        <button type="submit" class="btn btn-success btn-sm" title="Gia hạn thêm 1 ngày">
+									            <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Gia hạn
+									        </button>
+									    </form> -->
+									    <form th:if="${orderWeb.deliveryStatus != 'Đã trả'}"
+									          th:action="@{/extend-order/{orderId}(orderId=${orderWeb.id})}" 
+									          method="post" 
+									          style="display:inline;">
+									        <button type="submit" class="btn btn-success btn-sm" title="Gia hạn thêm 1 ngày">
+									            <i class="fa fa-calendar-plus-o" aria-hidden="true" style="margin-right: 5px;"></i> Gia hạn thêm 1 ngày
+									        </button>
+									    </form>									    
+									</td>
+									<!-- <td th:text="${orderWeb.formatPrice(orderWeb.totalAmount)}" class="font-weight-400"></td> -->
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<a th:href="@{/my-account/edit/{id}(id=${user.id})}" class="btn btn-border">Sửa thông tin</a>
-					<!--<a href="/my-account/edit" class="btn btn-border">Sửa thông tin</a>-->
 				</div>
 			</div>
 		</div>
