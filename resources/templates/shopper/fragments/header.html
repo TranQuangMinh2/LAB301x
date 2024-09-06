@@ -10,7 +10,7 @@
 <!-- 	</div> -->
 <!-- </div> -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<header>
+<header xmlns:th="http://www.thymeleaf.org">
 	<!-- tt-mobile menu -->
 	<nav class="panel-menu mobile-main-menu">
 		<ul>
@@ -44,7 +44,7 @@
 				<a href="/contact">LIÊN HỆ</a> <!-- nav desktop -->
 			</li>
 			<li>
-				<a href="/document2">EBOOK</a> <!-- nav desktop -->
+				<a href="/document2">EBOOK VÀ TÌM KIẾM NÂNG CAO HƠN</a> <!-- nav desktop -->
 			</li>
 		</ul>
 		<div class="mm-navbtn-names">
@@ -298,16 +298,33 @@
 					<!-- /logo -->
 				</div>
 				<div class="tt-col-obj tt-obj-search-type2">
-					<div class="tt-search-type2">
-			 			<!-- tt-search -->
-						<form action="/search" method="get" role="search">
-							<i class="icon-f-85"></i>
-							<input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu (nâng cao)..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
-							<button type="submit" class="tt-btn-search">TÌM KIẾM</button>
-							<div class="search-results" style="display: none;"></div>
-						</form>
-						<!-- /tt-search -->
-					</div>
+				    <div class="tt-search-type2">
+				        <!-- tt-search -->
+				        <form action="/search" method="get" role="search">
+				            <i class="icon-f-85"></i>
+				            <input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu (nâng cao)..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
+				            
+				            <!-- Dropdown for Category -->
+				            <select name="categoryId" class="tt-search-select">
+				                <option value="">Tất cả thể loại</option>
+				                <th:block th:each="category : ${categorys}">
+				                    <option th:value="${category.id}" th:text="${category.name}" th:selected="${category.id == categoryId}"></option>
+				                </th:block>
+				            </select>
+				
+				            <!-- Dropdown for Brand -->
+				            <select name="brandId" class="tt-search-select">
+				                <option value="">Tất cả tác giả</option>
+				                <th:block th:each="brand : ${brands}">
+				                    <option th:value="${brand.id}" th:text="${brand.name}" th:selected="${brand.id == brandId}"></option>
+				                </th:block>
+				            </select>
+				            
+				            <button type="submit" class="tt-btn-search">TÌM KIẾM</button>
+				            <div class="search-results" style="display: none;"></div>
+				        </form>
+				        <!-- /tt-search -->
+				    </div>
 				</div>
 				<div class="tt-col-obj obj-move-right">
 					<div class="header-tel-info">
@@ -585,7 +602,7 @@
 									<li class="dropdown megamenu">
 										<a href="/contact">LIÊN HỆ</a> <!-- nav desktop -->
 									</li><li class="dropdown megamenu">
-										<a href="/document2">EBOOK</a> <!-- nav desktop -->
+										<a href="/document2">EBOOK VÀ TÌM KIẾM NÂNG CAO HƠN</a> <!-- nav desktop -->
 									</li>
 								</ul>
 							</nav>
@@ -596,27 +613,44 @@
 				<div class="tt-col-obj tt-obj-options obj-move-right">
 					<!-- tt-search -->
 					<div class="tt-desctop-parent-search tt-parent-box tt-obj-desktop-hidden">
-						<div class="tt-search tt-dropdown-obj">
-							<button class="tt-dropdown-toggle" data-tooltip="Search" data-tposition="bottom" type="submit">
-								<i class="icon-f-85"></i>
-							</button>
-							<div class="tt-dropdown-menu">
-								<div class="container">
-									<form action="/search" method="get" role="search">
-										<div class="tt-col">
-											<input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
-											<button class="tt-btn-search" type="submit"></button>
-										</div>
-										<div class="tt-col">
-											<button class="tt-btn-close icon-g-80"></button>
-										</div>
-										<div class="tt-info-text">
-											Bạn muốn tìm gì?
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
+					    <div class="tt-search tt-dropdown-obj">
+					        <button class="tt-dropdown-toggle" data-tooltip="Search" data-tposition="bottom" type="submit">
+					            <i class="icon-f-85"></i>
+					        </button>
+					        <div class="tt-dropdown-menu">
+					            <div class="container">
+					                <form action="/search" method="get" role="search">
+					                    <div class="tt-col">
+					                        <input class="tt-search-input" type="search" name="q" placeholder="Tìm kiếm tài liệu..." aria-label="SEARCH PRODUCTS..." autocomplete="off" required>
+					                        
+					                        <!-- Dropdown for Category -->
+					                        <select name="categoryId" class="tt-search-select">
+					                            <option value="">Tất cả thể loại</option>
+					                            <th:block th:each="category : ${categorys}">
+					                                <option th:value="${category.id}" th:text="${category.name}" th:selected="${category.id == categoryId}"></option>
+					                            </th:block>
+					                        </select>
+					
+					                        <!-- Dropdown for Brand -->
+					                        <select name="brandId" class="tt-search-select">
+					                            <option value="">Tất cả tác giả</option>
+					                            <th:block th:each="brand : ${brands}">
+					                                <option th:value="${brand.id}" th:text="${brand.name}" th:selected="${brand.id == brandId}"></option>
+					                            </th:block>
+					                        </select>
+					
+					                        <button class="tt-btn-search" type="submit"></button>
+					                    </div>
+					                    <div class="tt-col">
+					                        <button class="tt-btn-close icon-g-80"></button>
+					                    </div>
+					                    <div class="tt-info-text">
+					                        Bạn muốn tìm gì?
+					                    </div>
+					                </form>
+					            </div>
+					        </div>
+					    </div>
 					</div>
 					<!-- /tt-search -->
 					<!-- tt-cart -->
@@ -637,7 +671,7 @@
 										<div class="tt-cart-content">
 											<a class="tt-cart-empty" href="/cart" title="Xem túi">
 								              	<i class="icon-f-39"></i>
-								              	<p class="roboto" th:text="'Hiện có ' + ${cartTotalQuantity != null ? cartTotalQuantity : 0} + ' sản phẩm'">Chưa có sản phẩm</p>
+								              	<p class="roboto" th:text="'Hiện có ' + ${cartTotalQuantity != null ? cartTotalQuantity : 0} + ' tài liệu'">Chưa có tài liệu</p>
 								            </a>
 											<!--<div class="tt-cart-list d-none">
 
@@ -692,8 +726,8 @@
 											<div th:unless="${user != null}" style="color: red; font-weight: bold;">Người dùng chưa đăng nhập</div>
 										</b></li>
 									    <li id="menu_myaccount" th:if="${user != null}"><a href="/my-account"><i class="icon-f-94"></i>Tài Khoản</a></li>
-<!-- 									    <li id="menu_favor" th:if="${user != null }"><a href="/my-account/wishlist"><i class="icon-n-072"></i>Danh Sách Yêu Thích</a></li>
- -->									    <li id="menu_login" th:unless="${user != null}"><a href="/customer/login"><i class="icon-f-76"></i>Đăng Nhập</a></li>
+									    <li id="menu_favor" th:if="${user != null }"><a href="/my-order"><i class="icon-n-072"></i>Đơn Mượn</a></li>
+									    <li id="menu_login" th:unless="${user != null}"><a href="/customer/login"><i class="icon-f-76"></i>Đăng Nhập</a></li>
 									    <li id="menu_logout" th:if="${user != null}"><a href="/shopper/logout"><i class="icon-f-77"></i>Đăng Xuất</a></li>
 									    <li id="menu_reg" th:unless="${user != null }"><a href="/register-user"><i class="icon-f-94"></i>Đăng Ký</a></li>
 									</ul>
@@ -721,5 +755,36 @@
 			</div>
 		</div>
 	</div>
+	<script>
+function searchGacSach() {
+    const query = document.getElementById('search-query').value.trim();
+    if (query === '') {
+        alert('Vui lòng nhập từ cần tìm kiếm!');
+        return;
+    }
+    const searchUrl = "https://gacsach.online/search/google/" + encodeURIComponent(query);
+    window.open(searchUrl, '_blank');
+}
+
+function searchTramDoc() {
+    const query = document.getElementById('search-query').value.trim();
+    if (query === '') {
+        alert('Vui lòng nhập từ cần tìm kiếm!');
+        return;
+    }
+    const searchUrl = "https://tramdoc.vn/search?q=" + encodeURIComponent(query);
+    window.open(searchUrl, '_blank');
+}
+
+function searchWaka() {
+    const query = document.getElementById('search-query').value.trim();
+    if (query === '') {
+        alert('Vui lòng nhập từ cần tìm kiếm!');
+        return;
+    }
+    const searchUrl = "https://waka.vn/search?keyword=" + encodeURIComponent(query);
+    window.open(searchUrl, '_blank');
+}
+</script>
 </header>
 
