@@ -228,17 +228,13 @@
 									    <thead>
 									        <tr class="w3-blue">
 									            <th>Mã mượn sách</th>
-									            <th>Ngày tạo</th>
-									            <th>Ngày cập nhật</th>
+									            <th>Ngày mượn</th>
+									            <th>Ngày dự kiến trả</th>
 									            <th>Người mượn</th>
-									            <th>Số điện thoại người nhận</th>
-									            <!-- <th>Địa chỉ giao hàng</th> -->
+									            <th>Số điện thoại người mượn</th>
 									            <th>Trạng thái mượn sách</th>
-									            <!-- <th>Phương thức thanh toán</th>
-									            <th>Trạng thái thanh toán</th> -->
-									            <!-- <th>Email</th> -->
-									            <!-- <th>Tổng số tiền</th> -->
-									            <!-- <th>ID người dùng</th> -->
+									            <th>Trong hạn / Quá hạn</th>
+									            <th>Gửi Email</th>
 									            <th>Xem chi tiết</th>
 									        </tr>
 									    </thead>
@@ -249,18 +245,22 @@
 									            <td th:text="${orderWeb.updatedAt}"></td>
 									            <td th:text="${orderWeb.consignee}"></td>
 									            <td th:text="${orderWeb.consigneePhone}"></td>
-									           <!--  <td th:text="${orderWeb.deliveryAddress}"></td> -->
 									            <td th:text="${orderWeb.deliveryStatus}"></td>
-									            <!-- <td th:text="${orderWeb.paymentMethod}"></td>
-									            <td th:text="${orderWeb.paymentStatus}"></td> -->
-									            <!-- <td th:text="${orderWeb.consigneeEmail}"></td> -->
-									            <!-- <td th:text="${orderWeb.totalAmount}"></td> -->
-									            <!-- <td th:text="${orderWeb.userId}"></td> -->
-						                		<td>
-													<a th:href="@{/order/{id}(id=${orderWeb.id})}" class="btn btn-primary">
-											        	<i class="la la-eye"></i> Xem chi tiết
-											    	</a>
-												</td>
+									            <td th:text="${orderWeb.paymentStatus}"></td>
+									            <td>
+									                <th:block th:if="${orderWeb.paymentStatus == 'Quá hạn'}">
+									                    <form th:action="@{/send-reminder-email/{id}(id=${orderWeb.id})}" method="post" style="display:inline;">
+									                        <button type="submit" class="btn btn-warning btn-sm" title="Gửi email nhắc nhở">
+									                            <i class="fa fa-envelope"></i> Gửi Email
+									                        </button>
+									                    </form>
+									                </th:block>
+									            </td>
+									            <td>
+									                <a th:href="@{/order/{id}(id=${orderWeb.id})}" class="btn btn-primary">
+									                    <i class="la la-eye"></i> Xem chi tiết
+									                </a>
+									            </td>
 									        </tr>
 									    </tbody>
 									</table>
