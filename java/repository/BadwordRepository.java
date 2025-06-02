@@ -1,0 +1,13 @@
+package com.trnqngmnh.library.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.trnqngmnh.library.entity.Badword;
+
+public interface BadwordRepository extends JpaRepository<Badword, Long> {
+	@Query("SELECT b.name FROM Badword b")
+	List<String> findAllNames();
+}
